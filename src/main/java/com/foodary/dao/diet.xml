@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.foodary.dao.DietDAO">
+
+	<insert id="insertDiet" parameterType="dvo">
+		insert into diet (idx, dietMemo, dietWriteDate, dietWriteTime, id) 
+		values (diet_idx_seq.nextval, #{dietMemo}, #{dietWriteDate}, #{dietWriteTime}, #{id})
+	</insert>
+	
+	<select id="selectDiet" parameterType="java.util.HashMap" resultType="dvo">
+		select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime}
+	</select>
+
+	<select id="getIdx" parameterType="int" resultType="dvo">
+		select * from diet where gup = 0
+	</select>
+	
+	<!-- 음식 정보 얻기 위한 쿼리문 -->
+	<select id="getFoodGup" parameterType="int" resultType="uvo">
+		select * from userfood where gup = #{gup}
+	</select> 
+	
+	<select id="selectDietList" parameterType="String" resultType="dvo">
+		select * from diet where dietWriteDate = #{dietWriteDate} order by dietWriteTime asc
+	</select>
+	
+	<select id="selectDietUpdateList" parameterType="dvo" resultType="dvo">
+		select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime} order by dietWriteTime asc	
+	</select>
+	
+	<select id="selectByDateTime" parameterType="dvo" resultType="dvo">
+		select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime} order by dietWriteTime asc		
+	</select>
+	
+	<update id="dietUpdateByDateTime" parameterType="dvo">
+		update diet set dietMemo = #{dietMemo}, dietPicture = #{dietPicture}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime} 
+			where dietWriteDate = dietWriteDate and dietWriteTime = dietWriteTime
+	</update>
+	
+   <select id="selectDietListTofoodwrite" parameterType="dvo" resultType="dvo">
+      select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime}   
+   </select>
+   
+   <update id="UpdateDietList" parameterType="dvo">
+   		update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime} 
+			where idx = #{idx}
+   </update>
+
+   <delete id="deleteDietList" parameterType="int">
+   		delete from diet where idx = #{idx}
+   </delete>
+   
+   <!-- dietListView.jsp에서 날짜, 시간 띄우기 -->
+   <select id="selectDateTime" parameterType="String" resultType="dvo">
+      select dietWriteDate, dietWriteTime from diet where dietWriteDate = #{dietWriteDate} order by dietWriteTime
+   </select>
+   
+	<update id="UpdateDiet" parameterType="dvo">
+      update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime}
+         where idx = #{idx}
+   </update>
+   
+   	<update id="setDietGup" parameterType="int">
+		update diet set gup = #{idx} where gup = 0
+	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

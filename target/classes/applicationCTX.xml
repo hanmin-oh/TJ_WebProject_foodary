@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="freeboardVO" class="com.foodary.vo.FreeboardVO"/>
+	<bean id="freeboardList" class="com.foodary.vo.FreeboardList"/>
+	
+	<bean id="freeboardCommentVO" class="com.foodary.vo.FreeboardCommentVO"/>
+	<bean id="freeboardCommentList" class="com.foodary.vo.FreeboardCommentList"/>
+	
+	<bean id="userRegisterVO" class="com.foodary.vo.UserRegisterVO"/>
+	<bean id="UserRegisterList" class="com.foodary.vo.UserRegisterList"/>
+
+	<bean id="dietVO" class="com.foodary.vo.DietVO"/>
+	<bean id="dietList" class="com.foodary.vo.DietList"/>
+
+	<bean id="foodVO" class="com.foodary.vo.FoodVO"/>
+	<bean id="foodList" class="com.foodary.vo.FoodList"/>
+
+	<bean id="userFoodVO" class="com.foodary.vo.UserFoodVO"/>
+	<bean id="userFoodList" class="com.foodary.vo.UserFoodList"/>
+</beans>

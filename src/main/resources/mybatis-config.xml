@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.foodary.vo.FreeboardVO" alias="vo"/>
+		<typeAlias type="com.foodary.vo.FreeboardCommentVO" alias="co"/>
+		<typeAlias type="com.foodary.vo.UserRegisterVO" alias="rvo"/>
+		<typeAlias type="com.foodary.vo.DietVO" alias="dvo"/>
+		<typeAlias type="com.foodary.vo.FoodVO" alias="fvo"/>
+		<typeAlias type="com.foodary.vo.UserFoodVO" alias="uvo"/>
+		<typeAlias type="com.foodary.foodary.Param" alias="pvo"/>
+	</typeAliases>
+</configuration>

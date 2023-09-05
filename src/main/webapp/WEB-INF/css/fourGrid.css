@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'insungitCutelivelyjisu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/insungitCutelivelyjisu.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'GangwonEduSaeeum_OTFMediumA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+	font-family: 'GangwonEduSaeeum_OTFMediumA';
+	font-size: 20pt;
+	margin: 0;
+    padding: 0;
+}
+.container {
+	width: 1400px;
+	height: 850px;
+	margin: 0 auto;
+	padding-top: 5px;
+  	display: grid;
+    grid-template: 100px 550px 200px / 600px 800px;
+    grid-gap: 5px;
+	
+	 grid-template-areas:
+         'header header'
+         'mainLeft mainRight'
+         'footer footer';
+}
+.header {
+	grid-area: header;
+}
+.mainLeft {
+	grid-area: mainLeft;
+}
+.mainRight {
+	grid-area: mainRight;
+}
+.footer {
+	grid-area: footer;
+}
+
