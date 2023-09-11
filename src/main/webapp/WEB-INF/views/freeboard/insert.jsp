@@ -67,81 +67,12 @@
 					</td>
 				</tr>
 				<tr>
-					<th style="font-size: 20pt;">
-						식단 불러오기 :
-					</th>
-					<td colspan="2" style="font-size: 20pt;">
-		<%
-			Calendar calendar = Calendar.getInstance();
-			int year = calendar.get(Calendar.YEAR);
-			int month = calendar.get(Calendar.MONTH) + 1;
-			int day = calendar.get(Calendar.DATE);
-		
-			try {
-				year = Integer.parseInt(request.getParameter("year"));
-				month = Integer.parseInt(request.getParameter("month"));
-				day = 1;
-				if(month >= 13) {
-					year++;
-					month = 1;
-				}else if(month <= 0) {
-					year--;
-					month = 12;
-				}
-			}	catch(NumberFormatException e) {
-				
-			}
-		%>
-						<fieldset style="display: inline;">
-							<select class="select" name="year" style="border: 0;">
-		<%
-		for(int i=1900; i<=2100; i++) {
-			if(calendar.get(Calendar.YEAR) == i) {
-				out.println("<option selected='selected'>" + i + "</option>");					
-			}else {
-				out.println("<option>" + i + "</option>");							
-			}
-		}
-		%>						
-								</select>
-							</fieldset> 년
-							&nbsp;&nbsp;
-							<fieldset style="display: inline;">
-								<select class="select" name="month" style="border: 0;">
-		<%
-						for(int i=1; i<=12; i++) {
-							if(calendar.get(Calendar.MONTH) + 1 == i) {
-								out.println("<option selected='selected'>" + i + "</option>");	
-							}else {
-								out.println("<option>" + i + "</option>");					
-							}
-						}
-		%>							
-								</select>
-							</fieldset> 월
-							&nbsp;&nbsp;
-							<fieldset style="display: inline;">
-								<select class="select" name="day"  style="border: 0;">
-		<%
-						for(int i=1; i<=31; i++) {
-								out.println("<option>" + i + "</option>");		
-						}
-		%>							
-								</select>
-							</fieldset> 일
-							&nbsp;&nbsp;
-					<button class="select" type="button" onclick="getDiet()"  style="border: 0; background: none; cursor: pointer;">
-						<span style="background: lavender; font-size: 24pt; font-weight: 600;">불러오기</span>
-					</button>
-					</td>
-				</tr>
-				<tr>
 					<th>
 						<label for="subject" style="font-size: 20pt;">사진 첨부 :</label>
 					</th>
 					<td colspan="2">
 		        		<input type="file" accept="image/*" name="fileName" onchange="photoView(event)" value="파일 선택"
-		        			style="font-size: 10pt;"/>
+		        			style="font-size: 20pt;"/>
 						<img id="output" style="max-width: 450px; max-height: 300px;"/><br/>
 					</td>
 				</tr>

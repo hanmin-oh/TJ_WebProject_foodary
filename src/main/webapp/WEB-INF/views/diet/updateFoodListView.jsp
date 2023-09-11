@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>음식 목록</title>
-<script type="text/javascript" src="../js/foodView.js"></script> 
+<script type="text/javascript" src="../js/foodViewUpdate.js"></script> 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="../css/threeGrid.css"/>
@@ -17,6 +17,7 @@
 <div class="container">
   	<div class="main" align="center">
 		<div class="dietContent_title">
+		==============식단수정============
 			<span style="background: #fafcd9; font-size: 30pt; font-weight: 900;">음식 검색</span>
 		</div>
 		   <br/>
@@ -82,6 +83,7 @@
 			      <td class="text-center">
 			           ${vo.fat}
 			      </td>
+			      <input type="text" id="gup" name="gup" value="${gup}"/>
 			      <td class="text-center">
 			         <input type="checkbox" value="선택" name="foodName"/>      
 			      </td>
@@ -189,7 +191,7 @@
 					</td>
 				</tr> 
 		        <tr style="height: 60px;">
-		        <input type="hidden" value="${rvo.id}" id="id" name="id"/>
+		        <input type="text" value="${rvo.id}" id="id" name="id"/>
 				   	<td colspan="8" align="center">
 						<button type="button" onclick="addData()" style="background: none; border: 0; cursor: pointer;">
 							<span style="background: lavender; font-size: 30px; font-weight: 900;">가져오기</span>

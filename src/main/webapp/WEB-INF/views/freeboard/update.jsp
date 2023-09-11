@@ -93,7 +93,7 @@
 							style="width: 550px; padding: 5px; resize: none;"
 							>${vo.content}</textarea>
 						<c:if test="${not empty vo.picture}">
-							<img id="output" src="./upload/${vo.picture}" style="max-width: 450px; max-height: 300px;">
+							<img id="output" src="/upload/${vo.picture}" style="max-width: 450px; max-height: 300px;">
 						</c:if>
 					</td>
 				</tr>
@@ -109,6 +109,9 @@
 				</tr>
 				<input type="hidden" name="idx" value="${vo.idx}"/>
 				<input type="hidden" name="currentPage" value="${currentPage}"/>
+				<input type="hidden" name="name" value="${vo.name}"/>
+				<input type="hidden" name="id" value="${vo.id}"/>
+				<input type="hidden" name="picture" value="${vo.picture}"/>
 				<tr class="table-secondary">
 					<td></td>
 					<td colspan="3" align="center">

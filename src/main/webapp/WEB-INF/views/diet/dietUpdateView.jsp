@@ -10,13 +10,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>음식목록</title>
+<title>식단수정</title>
 <!-- bootstrap -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="../js/foodWrite.js" defer="defer"></script>
+<script type="text/javascript" src="../js/dietUpdate.js" defer="defer"></script>
 <link rel="stylesheet" href="../css/threeGrid.css"/>
 <style type="text/css">
 	input[type='date']::before {
@@ -106,8 +106,8 @@
    </option>
 </select>
 
-	<span style="background: #fafcd9; font-size: 50pt; font-weight: 900;">푸드어리 쓰기</span>
-	<form action="dietInsert" method="post" enctype="multipart/form-data">
+	<span style="background: #fafcd9; font-size: 50pt; font-weight: 900;">푸드어리 수정</span>
+	<form action="dietUpdateOK" method="post" enctype="multipart/form-data">
       <!-- form값으로 시간 데이터 보내기 위한 input,hidden태그 -->
       <div class="diet">
       <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
@@ -118,6 +118,7 @@
  				<button  type="button" onclick="openPopup()" style="background: none; border: 0; cursor: pointer;">
                    <span style="background: #baffda; font-size: 35px; font-weight: 900;">음식 검색하러 가기</span>
                 </button>
+               
             </td>
          </tr>
        </table>
@@ -131,6 +132,7 @@ ${userFoodList}
        <c:if test="${list.size() != 0}">
        <c:forEach var="uvo" items="${list}" varStatus="status">
        ${uvo}
+        <input type="text" id="gup" name="gup" value="${uvo.gup}"/>
          <tr>
            <td>
              <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${uvo.foodName}"
@@ -165,11 +167,11 @@ ${userFoodList}
              	style="border: 1; font-size: 25pt; width: 80px; height: 45px;"/> g    
            </td>
            <td align="center">
-             <button type="button" onclick="updateUserFood(${uvo.idx}, ${status.index})" style="border: 0; font-size: 25pt; background: 0;">
+             <button type="button" onclick="dietUpdateUserFood(${uvo.idx}, ${status.index})" style="border: 0; font-size: 25pt; background: 0;">
                 <span style="background: lavender; font-size: 35px; font-weight: 900;">수정</span>
              </button>
              &nbsp;
-             <button type="button" onclick="location.href='deleteUserFood?idx=${uvo.idx}'"
+             <button type="button" onclick="location.href='diteDeleteUserFood?idx=${uvo.idx}'"
                 style="border: 0; font-size: 25pt; background: 0;">
                <span style="background: #fafcd9; font-size: 25pt; font-weight: 900;">삭제</span>
            </button>
@@ -192,6 +194,7 @@ ${userFoodList}
              	data-placeholder="날짜 선택"
              	required
   				aria-required="true"
+  				value="${dvo.dietWriteDate}"
              />
              &nbsp;&nbsp;&nbsp;
              <span style="background: lavender; font-size: 30pt;">시간:</span> &nbsp;&nbsp;&nbsp;
@@ -202,6 +205,7 @@ ${userFoodList}
              	data-placeholder="시간 선택"
              	required
   				aria-required="true"
+  				value="${dvo.dietWriteTime}"
              />
          </td>
       </tr>
@@ -219,7 +223,7 @@ ${userFoodList}
                rows="10" 
                name="dietMemo" 
                style="resize: none; width: 97%; height: 75%; vertical-align: middle;"
-               ></textarea>
+               >${dvo.dietMemo}</textarea>
          </td>
       </tr>
       <tr style="height: 50px;"></tr> <!-- 공백 -->
@@ -290,7 +294,7 @@ ${userFoodList}
           <tr>
              <td class="text-center">
                 <button type="submit" style="background: none; border: 0; cursor: pointer;">
-                	 <span style="background: #fafcd9; font-size: 30pt; font-weight: 900;">저장하기</span>
+                	 <span style="background: #fafcd9; font-size: 30pt; font-weight: 900;">수정하기</span>
                 </button>
              </td>
           </tr>

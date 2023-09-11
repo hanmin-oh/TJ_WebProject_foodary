@@ -14,6 +14,7 @@
 <script type="text/javascript" src="../js/mainFunction.js"></script>
 </head>
 <body>
+<!-- 곳곳에서 작업 후 넘어오는 얼럿창 (내용 없으면 아무것도 안 뜸) -->
 <c:if test="${not empty msg}">
 	<script type="text/javascript">
 		alert('${msg}')
@@ -24,8 +25,8 @@
 	<div class="header">
 		<jsp:include page="./headerAfter.jsp"></jsp:include>
 		<div style="text-align: center; padding-top: 20px;">
-			<a href="foodaryMainPageAfter.jsp" style="
-				font-family: 'insungitCutelivelyjisu'; font-size: 70pt; font-weight: 900;
+			<a href="foodaryMainPageAfter"
+				style=" font-family: 'insungitCutelivelyjisu'; font-size: 70pt; font-weight: 900;
 				color: black; cursor: pointer; text-decoration: none;">
 				Foodary
 			</a>

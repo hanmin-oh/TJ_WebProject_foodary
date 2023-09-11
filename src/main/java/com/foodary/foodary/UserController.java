@@ -1,6 +1,8 @@
 package com.foodary.foodary;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,10 +28,69 @@ public class UserController {
 	private SqlSession sqlSession; 
 		
 	   @RequestMapping("/user/register")
-	   public String register(HttpServletRequest request, Model model) {
+	   public String register() {
 	      // logger.info("register() 메소드 실행");
 	      return "user/register";
 	   }
+
+	   @RequestMapping("/user/loginForm")
+	   public String loginForm() {
+		   // logger.info("register() 메소드 실행");
+		   return "user/loginForm";
+	   }
+	   
+	   @RequestMapping("/user/findId")
+	   public String findId() {
+		   logger.info("findId() 메소드 실행");
+		   return "user/findId";
+	   }
+	   
+	    @RequestMapping("/user/findIdOK")
+	    public String findIdOK(HttpServletRequest request, Model model) {
+	        String username = request.getParameter("username");
+	        String email = request.getParameter("email");
+	        
+	        UserDAO mapper = sqlSession.getMapper(UserDAO.class);
+	        HashMap<String, String> hmap = new HashMap<String, String>();
+	        hmap.put("username", username);
+	        hmap.put("email", email);
+	        
+	        List<UserRegisterVO> userRegisterVO = mapper.findId(hmap);
+	        List<String> idList = new ArrayList<String>();
+	        for (UserRegisterVO user : userRegisterVO) {
+	            idList.add(user.getId());
+	        }
+	        logger.info("{}", idList);
+	        model.addAttribute("idList", idList);
+	        return "user/findIdAfter";
+	    }
+
+	   @RequestMapping("/user/findPassword")
+	   public String findPassword() {
+		   logger.info("findId() 메소드 실행");
+		   return "user/findPassword";
+	   }
+	   
+	    @RequestMapping("/user/findPasswordOK")
+	    public String findPasswordOK(HttpServletRequest request, Model model) {
+	        logger.info("findPasswordOK() 실행");
+	        UserDAO mapper = sqlSession.getMapper(UserDAO.class);
+	        String username = request.getParameter("username");
+	        String id = request.getParameter("id");
+	        HashMap<String, String> hmap = new HashMap<String, String>();
+	        hmap.put("username", username);
+	        hmap.put("id", id);
+	        UserRegisterVO userRegisterVO = mapper.findPassword(hmap);
+
+	        if (userRegisterVO == null) {
+	            model.addAttribute("msg", "아이디 또는 이름을 확인해주세요.");
+	        } else {
+	            model.addAttribute("password", userRegisterVO.getPassword());
+	        }
+
+	        logger.info("{}", userRegisterVO);
+	        return "user/findPasswordAfter";
+	    }
 	   
 	   @RequestMapping(value = "/UserRegisterCheck", method = RequestMethod.POST)
 	     @ResponseBody
@@ -50,15 +111,15 @@ public class UserController {
 	         return result + "";
 	      }
 	   
-	    @RequestMapping("/registerOK")
+	    @RequestMapping("/user/registerOK")
 	    public String registerOK(HttpServletRequest request, Model model, UserRegisterVO userRegisterVO) {
 	       // logger.info("registerOK() 실행");
 	       UserDAO mapper = sqlSession.getMapper(UserDAO.class);
 	       mapper.userInsertRegister(userRegisterVO);
-	       return "redirect:foodaryMainPageBefore";
+	       return "redirect:../";
 	    }
 	    
-	    @RequestMapping("/loginOK")
+	    @RequestMapping("/user/loginOK")
 	    public String loginOK(HttpServletRequest request, Model model, String id, String password) {
 	       // logger.info("loginOK() 실행");
 	       UserDAO mapper = sqlSession.getMapper(UserDAO.class);
@@ -76,7 +137,7 @@ public class UserController {
 		    	// logger.info("{}", userRegisterVO);
 		    	HttpSession session = request.getSession();
 		    	session.setAttribute("rvo", userRegisterVO);
-		    	return "redirect:main/foodaryMainPageAfter";
+		    	return "redirect:../main/foodaryMainPageAfter";
 		    } else {
 		    	String msg = "	<script type=\"text/javascript\">" + 
         				"		alert('등록되지 않은 회원입니다.')" + 
@@ -188,6 +249,7 @@ public class UserController {
 	    	mapper.deleteUserInfo(id); 
 	    	return "redirect:/";
 	    }
+	    
 }
 
 

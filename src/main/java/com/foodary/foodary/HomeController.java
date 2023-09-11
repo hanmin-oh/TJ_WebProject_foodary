@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -30,41 +31,25 @@ public class HomeController {
 	
 	@RequestMapping("/")
 	public String login(HttpServletRequest request, Model model) {
-		int currentPage = 1;
-		int pageSize = 11;
-		try {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		} catch (NumberFormatException e) { }
-		
-		FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
-		 int totalCount = mapper.freeboardSelectCount();
-	      
-		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
-		FreeboardList freeboardList = ctx.getBean("freeboardList", FreeboardList.class);
-		freeboardList.initFreeboardList(pageSize, totalCount, currentPage);
-		 
-		HashMap<String, Integer> hmap = new HashMap<String, Integer>();
-		hmap.put("startNo", freeboardList.getStartNo());
-		hmap.put("endNo", freeboardList.getEndNo());
-		freeboardList.setList(mapper.freeboardSelectList(hmap));
-		
-//		모든 공지글을 얻어온다.
-		ArrayList<FreeboardVO> notice = mapper.freeboardSelectNotice();
-
-//		공지글과 메인글의 댓글 개수를 얻어와서 FreeboardVO 클래스의 commentCount에 저장한다.
-		for (FreeboardVO vo : notice) {
-			vo.setCommentCount(mapper.commentCount(vo.getIdx()));
+		if (request.getParameter("message") != null) {
+			String name = request.getParameter("name");
+			String messages = "<script type='text/javascript'>" +
+					   "alert('" + name +"님 안녕히가세요!')</script>";
+			model.addAttribute("message", messages);
+			model.addAttribute("name", name);
 		}
-		for (FreeboardVO vo : freeboardList.getList()) {
-			vo.setCommentCount(mapper.commentCount(vo.getIdx()));
-		}
+		return "main/foodaryMainPageBefore2";
+	}
 
-//		공지글과 메인글의 목록을 request 영역에 저장해서 메인글을 화면에 표시하는 페이지(listView.jsp)로 넘겨준다.
-		model.addAttribute("notice", notice);
-		model.addAttribute("freeboardList", freeboardList);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("msg", request.getParameter("msg"));
-		return "main/foodaryMainPageBefore";
+	@RequestMapping("/main/logoutOK")
+	public String logout(HttpServletRequest request, Model model) {
+		logger.info("로그아웃");
+		String name = request.getParameter("name");
+		model.addAttribute("message", "logout");
+		model.addAttribute("name", name);
+		HttpSession session = request.getSession(false);
+		session.invalidate();
+		return "redirect:/";
 	}
 
 	@RequestMapping("/main/foodaryMainPageAfter")

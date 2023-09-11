@@ -1,6 +1,7 @@
 package com.foodary.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.foodary.vo.UserRegisterVO;
 
@@ -21,6 +22,10 @@ public interface UserDAO {
 	void userPasswordUpdate(HashMap<String, String> hmap);
 
 	void deleteUserInfo(String id);
+
+	List<UserRegisterVO> findId(HashMap<String, String> hmap);
+
+	UserRegisterVO findPassword(HashMap<String, String> hmap);
 	
 	
 

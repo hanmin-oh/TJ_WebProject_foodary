@@ -1,7 +1,10 @@
 package com.foodary.foodary;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -43,35 +46,35 @@ public class FreeboardController {
 	   public String insertOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO, UserRegisterVO userRegisterVO) {
 	      logger.info("insertOK() 메소드 실행 -  커맨드 객체 사용");
 	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
-	      String rootUploadDir = "C:\\start_nsy\\spring\\workspace\\foodary\\src\\main\\webapp\\WEB-INF";
-	      File dir = new File(rootUploadDir + File.separator + "upload");
-	      if (!dir.exists()) {
-	    	  dir.mkdirs();
-	      }
-	      Iterator<String> iterator = request.getFileNames();
-	      String uploadFileName = "";
-	      MultipartFile multipartFile = null;
-	      String originalName = "";
+	      String rootUploadDir = "C:\\upload\\freeboard"; // 업로드 될 파일 경로
 	      
-	      try {
-	    	  uploadFileName = iterator.next();
-	    	  multipartFile = request.getFile(uploadFileName);
-	    	  String picture = multipartFile.getOriginalFilename();
-	    	  String realFilePath = dir.getPath();
+	      // 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
+	      Date date = new Date();
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+	      
+	      MultipartFile multipartFile = request.getFile("fileName");
+	      String originalFilename = multipartFile.getOriginalFilename().trim();
+	      if (originalFilename.isEmpty())  {
+	    	  String picture = "";
+	    	  String realFilePath = "";
 	    	  freeboardVO.setId(userRegisterVO.getId());
 	    	  freeboardVO.setPicture(picture);
 	    	  freeboardVO.setRealFilePath(realFilePath);
 	    	  logger.info("{}", freeboardVO);
 	    	  mapper.freeboardInsert(freeboardVO);
-	    	  
-	      } catch (Exception e) {
-				String picture = "";
-				String realFilePath = "";
-				freeboardVO.setId(userRegisterVO.getId());
-				freeboardVO.setPicture(picture);
-				freeboardVO.setRealFilePath(realFilePath);
-				logger.info("{}", freeboardVO);
-				mapper.freeboardInsert(freeboardVO);
+	      }
+	      else {
+	    		  String picture = sdf.format(date) + "_" + originalFilename; // 업로드해서 실제로 저장될 파일명
+	    		  File dir = new File(rootUploadDir, picture);
+	    		  String realFilePath = dir.getPath();
+	    		  try {
+	    			  multipartFile.transferTo(dir);  // 업로드해주는 코드
+	    		  } catch (Exception e) { }
+	    		  freeboardVO.setId(userRegisterVO.getId());
+	    		  freeboardVO.setPicture(picture);
+	    		  freeboardVO.setRealFilePath(realFilePath);
+	    		  logger.info("{}", freeboardVO);
+	    		  mapper.freeboardInsert(freeboardVO);
 	      } 
 	      	model.addAttribute("result", "insertOK");
 	    	return "redirect:listView";
@@ -200,37 +203,46 @@ public class FreeboardController {
 	   
 	   @RequestMapping("/freeboard/updateOK")
 	   public String updateOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO) {
-	      logger.info("insertOK() 메소드 실행 -  커맨드 객체 사용");
-	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
-	      String rootUploadDir = "C:" + File.separator + "Upload";
-	      File dir = new File(rootUploadDir + File.separator + "foodary");
-	      if (!dir.exists()) {
-	    	  dir.mkdirs();
-	      }
-	      Iterator<String> iterator = request.getFileNames();
-	      String uploadFileName = "";
-	      MultipartFile multipartFile = null;
-	      String originalName = "";
-	      
-	      try {
-	    	  uploadFileName = iterator.next();
-	    	  multipartFile = request.getFile(uploadFileName);
-	    	  String picture = multipartFile.getOriginalFilename();
-	    	  String realFilePath = dir.getPath();
-	    	  freeboardVO.setPicture(picture);
-	    	  freeboardVO.setRealFilePath(realFilePath);
-	    	  logger.info("{}", freeboardVO);
-	    	  mapper.freeboardUpdate(freeboardVO);
-	      } catch (Exception e) {
-				String picture = "";
-				String realFilePath = "";
-				freeboardVO.setPicture(picture);
-				freeboardVO.setRealFilePath(realFilePath);
-				logger.info("{}", freeboardVO);
-				mapper.freeboardUpdate(freeboardVO);
-	      } 
-	      	model.addAttribute("result", "updateOK");
-	    	return "redirect:listView";
+		   FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+			   String rootUploadDir = "C:\\upload";
+				   
+			   Date date = new Date();
+			   SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+				   
+			   MultipartFile multipartFile = request.getFile("fileName");
+			   String originalFilename = multipartFile.getOriginalFilename().trim();
+			   logger.info("originalFilename이 뭔데;ㅋ :{}", originalFilename);
+			if (originalFilename.isEmpty())  {
+				if (freeboardVO.getPicture() != null) {
+					String picture = freeboardVO.getPicture();
+					String realFilePath = freeboardVO.getRealFilePath();
+					freeboardVO.setPicture(picture);
+					freeboardVO.setRealFilePath(realFilePath);
+					logger.info("수정에 파일 없고 원래 사진 있을 때: {}", freeboardVO.getPicture());
+					mapper.freeboardUpdate(freeboardVO);
+				} else {
+					String picture = "";
+					String realFilePath = "";
+					freeboardVO.setPicture(picture);
+					freeboardVO.setRealFilePath(realFilePath);
+					logger.info("수정에 사진 없고 올리지도 않을 때: {}", freeboardVO.getPicture(), freeboardVO);
+					mapper.freeboardUpdate(freeboardVO);
+				}
+		   } else {
+			   String picture = sdf.format(date) + "_" + originalFilename;
+			   File dir = new File(rootUploadDir, picture);
+			   String realFilePath = dir.getPath();
+			   try {
+				   multipartFile.transferTo(dir);
+			   } catch (Exception e) { }
+			   freeboardVO.setPicture(picture);
+			   freeboardVO.setRealFilePath(realFilePath);
+			   logger.info("수정에 파일 있을 때: {}", freeboardVO.getPicture());
+			   mapper.freeboardUpdate(freeboardVO);
+		   }
+			   
+		   model.addAttribute("result", "updateOK");
+		   return "redirect:listView";
 	   }
 	   
 	   @RequestMapping("/freeboard/commentOK")

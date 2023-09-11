@@ -37,6 +37,16 @@
 		select count(*) from userregister where id = #{id}
 	</select>
 	
+		<!-- 아이디 1건을 얻어온다. -->
+	<select id="findId" parameterType="java.util.HashMap" resultType="com.foodary.vo.UserRegisterVO">
+		select id from userregister where username = #{username} and email = #{email}
+	</select>
+	
+	<!-- 비밀번호 1건을 얻어온다. -->
+	<select id="findPassword" parameterType="String" resultType="com.foodary.vo.UserRegisterVO">
+		select password from userregister where username = #{username} and id = #{id}
+	</select>
+	
 </mapper>
 
 

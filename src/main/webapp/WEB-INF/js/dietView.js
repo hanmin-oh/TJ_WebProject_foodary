@@ -1,8 +1,6 @@
 function openPopup() {
     // 새 창을 열고 URL로 이동
-	var gup = document.getElementById("gup").value;
-	console.log(gup)
-   url = 'updateFoodList?gup='+ gup;
+   url = 'foodList'
    // 모니터의 가로 중앙 위치 계산
     var left = (screen.width - 800) / 2; // 800은 팝업 창의 가로 크기
     // 모니터의 세로 중앙 위치 계산
@@ -24,7 +22,7 @@ function foodPlus(index) {
     var protein = document.getElementsByName("dietProtein")[index].value;
     var fat = document.getElementsByName("dietFat")[index].value;
     var id = document.getElementsByName("id")[index].value;
-   var url = './updateUserFoodInsert' +
+   var url = './userFoodInsert' +
         '?foodName=' + encodeURIComponent(userFoodName) +
         '&kcal=' + encodeURIComponent(kcal) +
         '&carbs=' + encodeURIComponent(carbs) +
@@ -39,39 +37,34 @@ function photoView(event) {
 }
 
 //idx활용, index활용 수정 완료!! 
-function dietUpdateUserFood(idx , index) {
+function updateUserFood(idx , index) {
    var userFoodName = $('#userFoodName_' + index).val().trim();
    var userKcal = $('#userKcal_' + index).val().trim();
    var userCarbs = $('#userCarbs_' + index).val().trim();
    var userProtein = $('#userProtein_' + index).val().trim();
    var userFat = $('#userFat_' + index).val().trim();
-   var gup = document.getElementById("gup").value;
-	console.log(gup)
    console.log(userProtein);
-    var url = './dietUpdateUserFood' +
+    var url = './updateUserFood' +
       '?idx=' + idx +
       '&foodName=' + userFoodName +
       '&kcal=' + userKcal +
       '&carbs=' + userCarbs +
       '&protein=' + userProtein +
-      '&fat=' + userFat + 
-      '&gup=' + gup;
-    console.log(url);
+      '&fat=' + userFat;
     location.href = url;
 }
 
  function showNutrient() {
 	 
    var kcalElements = document.getElementsByClassName("kcals");
-   var carbsElements = document.getElementsByClassName("carbs");
-   var proteinElements = document.getElementsByClassName("proteins");
-   var fatElements = document.getElementsByClassName("fats");
+//   var carbsElements = document.getElementsByClassName("carbs");
+//   var proteinElements = document.getElementsByClassName("proteins");
+//   var fatElements = document.getElementsByClassName("fats");
    
    var userKcals = [];
    var userCarbs = [];
    var userProteins = [];
    var userFats = [];
-   
    // 각 태그의 값을 배열에 저장
    for (var i = 0; i < kcalElements.length; i++) {
      var kcalValue = document.getElementById("userKcal_" + i).value;
@@ -83,9 +76,13 @@ function dietUpdateUserFood(idx , index) {
      userCarbs.push(carbsValue);
      userProteins.push(proteinValue);
      userFats.push(fatValue);
-}
+     
 
-   console.log(userCarbs);    // ["50", "60", "70"]
+}
+	 console.log(userKcals);
+	 console.log(userCarbs);
+	 console.log(userProteins);
+	 console.log(userFats);    // ["50", "60", "70"]
      
    var kcalSum = 0;
    var carbsSum  = 0;

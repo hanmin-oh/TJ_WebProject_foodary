@@ -6,14 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>푸터 로그인 전</title>
+<title>푸터 로그인 후</title>
 </head>
 <body>
 	<div style="height: 200px; line-height: 70px; display: flex; justify-content: space-between; background: #f0f0f0">
 			<div style="line-height: 40px;">
 				<h5 style="margin:20px; font-size: 20pt;">Copyright &copy;</h5>
 				<h5 style="margin:20px; font-size: 20pt;">아무래도</h5>
-				<a href="/foodary_final/JSP_main/foodaryMainPageAfter.jsp"
+				<a href="../foodaryMainPageAfter"
 				style="font-family: 'insungitCutelivelyjisu';
 				margin:10px; font-size: 25pt; font-weight:900; color: black; text-decoration: none;">Foodary</a>
 			</div>
@@ -31,10 +31,11 @@
 				<fmt:formatDate  value="${time}" pattern="HH:mm" var="dietWriteTime"/>
 			<div style="text-align: center;">
 				<div>
-					<a href="/foodary_final/JSP_food/selectDate.jsp" style="font-size: 20pt; color: black; text-decoration: none;">식단 쓰기</a><br/>
-					<a href="/foodary_final/JSP_diet/dietList.jsp?dietWriteDate=${dietWriteDate}&dietWriteTime=${dietWriteTime}"
+					<a href="../diet/dietInsertView?id=${rvo.id}"
+						style="font-size: 20pt; color: black; text-decoration: none;">식단 쓰기</a><br/>
+					<a href="../diet/dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}"
 						style="font-size: 20pt; color: black; text-decoration: none;">식단 보기</a><br/>
-					<a href="/foodary_final/JSP_freeboard/list.jsp" style="font-size: 20pt; color: black; text-decoration: none;">자유게시판</a>
+					<a href="listView" style="font-size: 20pt; color: black; text-decoration: none;">자유게시판</a>
 				</div>
 			</div>
 			<div style="text-align: center; line-height: 50px;">

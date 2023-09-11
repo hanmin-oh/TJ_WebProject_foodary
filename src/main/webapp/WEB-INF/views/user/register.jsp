@@ -12,16 +12,11 @@
 <script type="text/javascript" src="../js/userRegister.js"></script> 
 </head>
 <body>
-<div class="container">
-	<div class="header">
-	   <jsp:include page="./header.jsp"></jsp:include>
-	</div>
-	<br>
 	<div class="main">	
 		<div>
 			<form action="registerOK" method="post" name="registerform">
 				<!-- 회원가입에 필요한 기본 정보 -->
-				<table cellspacing="25" cellpadding="5" style="width: 1000px; margin-left: auto; margin-right: auto; margin-top: 0px;">
+				<table cellspacing="25" cellpadding="10" style="width: 1000px; margin-left: auto; margin-right: auto; margin-top: 50px;">
 			      <thead>
 			         <tr class="info">
 			         	<th style="text-align: center;"><span style="background: #baffda; font-size: 40px;"><회원가입></span></th>
@@ -131,7 +126,7 @@
 			            </label>
 			         </th>
 			      </tr>
-			      <tr></tr>
+			      <tr height="30px;"></tr>
 			      <tr>
 			         <td colspan="2" align="center">
 			            <button id="register" type="button" onclick="Noregister()" disabled="disabled"
@@ -140,6 +135,9 @@
 			            </button>&nbsp;&nbsp;&nbsp;
 			            <button type="reset" style="background: none; border: 0; cursor: pointer;">
 							<span style="background: #fafcd9; font-size: 25pt; font-weight: 800;">다시쓰기</span>
+						</button>&nbsp;&nbsp;&nbsp;
+			            <button type="button" style="background: none; border: 0; cursor: pointer;" onclick="history.back()">
+							<span style="background: #fafcd9; font-size: 25pt; font-weight: 800;">돌아가기</span>
 						</button>
 			         </td>
 			      </tr>
@@ -149,10 +147,6 @@
 			   <%-- <input type="hidden" name="currentPage" value="<%=currentPage%>"/> --%>
 			</form>
 		</div>
-		<br><br><br>
-	<div class="footer">
-		<jsp:include page="./footer.jsp"></jsp:include>
-	</div>
 </div>
 <div id="messageModal" class="modal fade" role="dialog" aria-hidden="true">
    <div class="vertical-alignment-helper">
@@ -163,7 +157,7 @@
             <!-- 헤더 -->
             <div class="modal-header panel-heading">
                <button class="close" type="button" data-dismiss="modal" style="background: none; border: 0; cursor: pointer;">
-                  <span style="background: #fafcd9; font-size: 25pt;; font-weight: 800;">X</span>
+                  <span style="background: #fafcd9; font-size: 25pt;; font-weight: 800; ">X</span>
                </button>
                <!-- messageType이라는 id를 추가한다. -->
                <h4 id="messageType" class="modal-title">
@@ -175,10 +169,11 @@
             <div id="messageContent" class="modal-body">
                <%-- ${messageContent} --%>
             </div>
+            
             <!-- 풋터 -->
             <div class="modal-footer" style="border: 0;">
                <button type="button" data-dismiss="modal" style="background: none; border: 0; cursor: pointer;">
-               	<span style="background: #fafcd9; font-size: 25pt; font-weight: 800;">닫기</span>
+               	<span style="font-size: 25pt; font-weight: 800;">닫기</span>
 	               </button>
 	            </div>
 	         </div>

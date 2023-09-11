@@ -47,7 +47,7 @@
 			<td>
 				<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
 				<c:set var="subject" value="${fn:replace(subject, '>', '&gt;')}"/>
-				<button onclick="location.href='/foodary_final/JSP_freeboard/increment.jsp?idx=${vo.idx}&currentPage=1'"
+				<button onclick="../increment?idx=${vo.idx}&currentPage=1'"
 					style="font-size: 18pt; color: black; text-decoration: none;">
 					${subject}(${vo.commentCount})
 				</button>>

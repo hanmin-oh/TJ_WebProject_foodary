@@ -76,7 +76,7 @@
 					<c:set var="content" value="${fn:replace(content, enter, '<br/>')}"/>
 					${content}<br/>
 					<c:if test="${not empty vo.picture}">
-						<img src="../upload/${vo.picture}" style="max-width: 450px; max-height: 300px;">
+						<img src="/upload/freeboard/${vo.picture}" style="max-width: 450px; max-height: 300px;">
 					</c:if>
 				</td>
 			</tr>
@@ -131,7 +131,7 @@
 							style="text-align: center; border-bottom: 1px; border-left: 0; border-right: 0; border-top: 0; font-size: 22pt;"/>
 					</td>
 				</tr>
-				<tr style=""></tr>
+				<tr></tr>
 				<input id="id" type="hidden" name="id" value="${rvo.id}"/>
 				<tr>
 					<th><span style="background: lavender; font-size: 22pt;">내용: </span></th>

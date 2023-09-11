@@ -3,25 +3,20 @@
 <mapper namespace="com.foodary.dao.DietDAO">
 
 	<insert id="insertDiet" parameterType="dvo">
-		insert into diet (idx, dietMemo, dietWriteDate, dietWriteTime, id) 
-		values (diet_idx_seq.nextval, #{dietMemo}, #{dietWriteDate}, #{dietWriteTime}, #{id})
+		insert into diet (idx, dietMemo, dietWriteDate, dietWriteTime, id, dietPicture) 
+		values (diet_idx_seq.nextval, #{dietMemo}, #{dietWriteDate}, #{dietWriteTime}, #{id}, #{dietPicture})
 	</insert>
 	
 	<select id="selectDiet" parameterType="java.util.HashMap" resultType="dvo">
-		select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime}
+		select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime} and id = #{id}
 	</select>
 
 	<select id="getIdx" parameterType="int" resultType="dvo">
 		select * from diet where gup = 0
 	</select>
 	
-	<!-- 음식 정보 얻기 위한 쿼리문 -->
-	<select id="getFoodGup" parameterType="int" resultType="uvo">
-		select * from userfood where gup = #{gup}
-	</select> 
-	
 	<select id="selectDietList" parameterType="String" resultType="dvo">
-		select * from diet where dietWriteDate = #{dietWriteDate} order by dietWriteTime asc
+		select * from diet where dietWriteDate = #{dietWriteDate} and id = #{id} order by dietWriteTime asc
 	</select>
 	
 	<select id="selectDietUpdateList" parameterType="dvo" resultType="dvo">
@@ -55,7 +50,7 @@
       select dietWriteDate, dietWriteTime from diet where dietWriteDate = #{dietWriteDate} order by dietWriteTime
    </select>
    
-	<update id="UpdateDiet" parameterType="dvo">
+	<update id="updateDiet" parameterType="dvo">
       update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime}
          where idx = #{idx}
    </update>

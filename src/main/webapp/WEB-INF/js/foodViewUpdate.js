@@ -1,6 +1,7 @@
 function addData() {
 	var selectedRadios = document.querySelectorAll('input[name="foodName"]:checked');
 	var id = document.getElementsByName("id")[0].value;
+	var gup = document.getElementById("gup").value;
   if (selectedRadios.length > 0) {
     var foodNames = [];
     var kcals = [];
@@ -21,15 +22,21 @@ function addData() {
       proteins.push(protein);
       fats.push(fat);
     });
-    
+    console.log(foodNames);
+    console.log(kcals);
+    console.log(carbss);
+    console.log(proteins);
+    console.log(fats);
+    console.log(gup);
   for (var i = 0; i < foodNames.length; i++) {
-	  var url = './userFoodInsert?' +
+	  var url = './updateUserFoodInsert?' +
       'foodName=' + foodNames[i] +
       '&kcal=' + kcals[i] +
       '&carbs=' + carbss[i] +
       '&protein=' + proteins[i] +
       '&fat=' + fats[i] + 
-      '&id=' + id;
+      '&id=' + id + 
+      '&gup=' + gup;
     	window.location.href = url;
   }
 //  부모 창으로 데이터 전송 후 팝업 창 닫기
