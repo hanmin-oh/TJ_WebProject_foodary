@@ -44,10 +44,6 @@
 	<update id="updateUserFood" parameterType="uvo">
 		update userfood set foodName = #{foodName}, kcal = #{kcal}, carbs = #{carbs}, protein = #{protein}, fat = #{fat} where idx = #{idx}
 	</update>
-	
-	<delete id="deleteUserFood" parameterType="int">
-		delete from userfood where idx = #{idx}
-	</delete>
 
 	<update id="setUserFoodGup" parameterType="int">
 		update userfood set gup = #{idx} where gup = 0
@@ -68,6 +64,14 @@
 	
 	<delete id="diteDeleteUserFood" parameterType="int">
 		delete from userfood where idx = #{idx}
+	</delete>
+		
+	<delete id="deleteUserFood" parameterType="int">
+		delete from userfood where idx = #{idx}
+	</delete>
+	
+	<delete id="deleteDietUserFood" parameterType="int">
+		delete from userfood where gup = #{gup}
 	</delete>
 	
 </mapper>

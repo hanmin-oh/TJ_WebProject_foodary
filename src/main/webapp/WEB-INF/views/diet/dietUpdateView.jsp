@@ -118,7 +118,8 @@
  				<button  type="button" onclick="openPopup()" style="background: none; border: 0; cursor: pointer;">
                    <span style="background: #baffda; font-size: 35px; font-weight: 900;">음식 검색하러 가기</span>
                 </button>
-               
+                <!-- 음식 가져오기 위한 gup -->  
+               <input type="hidden" id="gup" name="gup" value="${dvo.gup}"/>
             </td>
          </tr>
        </table>
@@ -171,7 +172,7 @@ ${userFoodList}
                 <span style="background: lavender; font-size: 35px; font-weight: 900;">수정</span>
              </button>
              &nbsp;
-             <button type="button" onclick="location.href='diteDeleteUserFood?idx=${uvo.idx}'"
+             <button type="button" onclick="location.href='diteDeleteUserFood?idx=${uvo.idx}&gup=${uvo.gup}'"
                 style="border: 0; font-size: 25pt; background: 0;">
                <span style="background: #fafcd9; font-size: 25pt; font-weight: 900;">삭제</span>
            </button>
@@ -224,6 +225,7 @@ ${userFoodList}
                name="dietMemo" 
                style="resize: none; width: 97%; height: 75%; vertical-align: middle;"
                >${dvo.dietMemo}</textarea>
+               <input type="text" id="idx" name="idx" value="${dvo.idx}"/>
          </td>
       </tr>
       <tr style="height: 50px;"></tr> <!-- 공백 -->

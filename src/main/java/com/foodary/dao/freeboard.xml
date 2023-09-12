@@ -49,6 +49,14 @@
 		select * from freeboard where notice = 'on' order by idx desc
 	</select>
 	
+	<select id="selectUserFood" parameterType="int" resultType="uvo">
+		select * from userfood where gup = #{gup}
+	</select>
+	
+	<select id="selectDiet" parameterType="int" resultType="dvo">
+      	select * from diet where gup = #{gup}
+   </select>
+	
 </mapper>
 
 

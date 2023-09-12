@@ -28,14 +28,16 @@
 <title>식단 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/threeGrid.css"/>
+<script type="text/javascript" src="../js/boardDiet.js" defer="defer"></script>
 </head>
 <body>
+<%--    ${javascriptCode} --%>
 <div class="container">
    <div class="header">
       <jsp:include page="./headerAfter.jsp"></jsp:include>
    </div>
    <div class="main" style="display: flex;">
-   
+
 <%
    request.setCharacterEncoding("UTF-8");
 %>
@@ -184,10 +186,12 @@
 				       <c:forEach var="dvo" items="${list}">
 				         <tr>
 				            <th>
-				            	<a href="dietView?dietWriteDate=${dvo.dietWriteDate}&dietWriteTime=${dvo.dietWriteTime}&id=${rvo.id}"
+				            	<a href="#" onclick="transferDiet();"
 				            	style="text-decoration: none; color: black; cursor: pointer;">
 				            	<span style="background: #baffda; font-size: 25pt; font-weight: 900;">${dvo.dietWriteTime}</span> &nbsp;&nbsp;
 				            	</a>
+				            	<input id="id" type="text" name="id" value="${dvo.id}" style="width: 200px;"/>
+				            	<input id="gup" type="text" name="gup" value="${dvo.gup}" style="width: 200px;"/>
 				            </th>
 				      	<c:set var="list" value="${userFoodList.list}"/>
 					        <td>

@@ -1,14 +1,13 @@
 package com.foodary.foodary;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -22,11 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.foodary.dao.DietDAO;
 import com.foodary.dao.FreeboardDAO;
+import com.foodary.vo.DietList;
+import com.foodary.vo.DietVO;
 import com.foodary.vo.FreeboardCommentList;
 import com.foodary.vo.FreeboardCommentVO;
 import com.foodary.vo.FreeboardList;
 import com.foodary.vo.FreeboardVO;
+import com.foodary.vo.UserFoodList;
+import com.foodary.vo.UserFoodVO;
 import com.foodary.vo.UserRegisterVO;
 
 @Controller
@@ -147,6 +151,23 @@ public class FreeboardController {
 	      return "redirect:contentView";
 	   }
 	   
+	   @RequestMapping("/freeboard/shareIncrement")
+	   public String shareIncrement(HttpServletRequest request, Model model) {
+		   logger.info("shareIncrement() 메소드 실행");
+		   
+		   FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+		   
+		   int idx = Integer.parseInt(request.getParameter("idx"));
+		   int gup = Integer.parseInt(request.getParameter("gup"));
+		   mapper.freeboardIncrement(idx);
+		   
+		   model.addAttribute("idx", request.getParameter("idx"));
+		   model.addAttribute("gup", request.getParameter("gup"));
+		   model.addAttribute("currentPage", request.getParameter("currentPage"));
+		   
+		   return "redirect:shareView";
+	   }
+	   
 	   @RequestMapping("/freeboard/contentView")
 	   public String contentView(HttpServletRequest request, Model model) {
 	      logger.info("contentView() 메소드 실행");
@@ -165,6 +186,30 @@ public class FreeboardController {
   			freeboardCommentList.setList(mapper.selectCommentList(idx));
   			model.addAttribute("freeboardCommentList", freeboardCommentList);
 	      return "freeboard/contentView";
+	   }
+	   
+	   @RequestMapping("/freeboard/shareView")
+	   public String shareView(HttpServletRequest request, Model model) {
+		   logger.info("shareView() 메소드 실행");
+		   FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+		   int idx = Integer.parseInt(request.getParameter("idx"));
+		   int gup = Integer.parseInt(request.getParameter("gup"));
+		   FreeboardVO freeboardVO = mapper.freeboardSelectByIdx(idx);
+		   logger.info("{}", freeboardVO);
+		   DietVO dvo = mapper.selectDiet(gup);
+		   ArrayList<UserFoodVO> userFoodList = mapper.selectUserFood(gup);
+		   model.addAttribute("dvo", dvo);
+		   model.addAttribute("userFoodList", userFoodList);
+		   
+		   model.addAttribute("vo", freeboardVO);
+		   model.addAttribute("currentPage", request.getParameter("currentPage"));
+		   model.addAttribute("enter", "\r\n");
+		   
+		   AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+		   FreeboardCommentList freeboardCommentList = ctx.getBean("freeboardCommentList", FreeboardCommentList.class);
+		   freeboardCommentList.setList(mapper.selectCommentList(idx));
+		   model.addAttribute("freeboardCommentList", freeboardCommentList);
+		   return "freeboard/shareView";
 	   }
 	   
 	   @RequestMapping("/freeboard/selectByIdx")
@@ -268,6 +313,96 @@ public class FreeboardController {
 		   model.addAttribute("job", "contentView");
 		   return "redirect:selectByIdx";
 	   }
+	   
+	   @RequestMapping("/freeboard/dietListView")
+		public String dietListView(HttpServletRequest request, Model model) {
+			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+			String dietWriteDate = request.getParameter("dietWriteDate");
+			String id = request.getParameter("id");
+			logger.info("#####################" + id + "########################");
+
+			AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+			DietList dietList = ctx.getBean("dietList", DietList.class);
+
+			HashMap<String, String> hmap = new HashMap<String, String>();
+			hmap.put("dietWriteDate", dietWriteDate);
+			hmap.put("id", id);
+			dietList.setList(mapper.selectDietList(hmap));
+			UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
+
+			logger.info("{}", dietList.getList());
+			for (int i = 0; i < dietList.getList().size(); i++) {
+				DietVO dietVO = dietList.getList().get(i);
+				ArrayList<UserFoodVO> userFoodGup = mapper.userFoodListGup(dietVO.getGup());
+
+				userFoodList.getList().addAll(userFoodGup);
+			}
+
+			logger.info("{}", userFoodList);
+			model.addAttribute("dietList", dietList);
+			model.addAttribute("userFoodList", userFoodList);
+			model.addAttribute("dietWriteDate", dietWriteDate);
+
+			return "freeboard/dietListView";
+		}
+	   
+	   @RequestMapping("/freeboard/boardDiet")
+		public String boardDiet(HttpServletRequest request, Model model, HttpSession session) {
+			logger.info("freeboard의 boardDiet 메소드 실행");
+			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+			int gup = Integer.parseInt(request.getParameter("gup"));
+			System.out.println(gup);
+			ArrayList<UserFoodVO> userFoodList = mapper.userFoodListGup(gup);
+			System.out.println(userFoodList);
+			
+			session.setAttribute("userFoodList", userFoodList);
+			return "freeboard/shareInsert";
+		}
+	   
+	   @RequestMapping("/freeboard/shareInsert")
+	   public String shareInsert(HttpServletRequest request, Model model, UserRegisterVO userRegisterVO) {
+	      logger.info("shareInsert() 메소드 실행"); 
+	      return "freeboard/shareInsert";
+	   }
+	   
+	   @RequestMapping("/freeboard/shareInsertOK")
+	   public String shareInsertOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO, UserRegisterVO userRegisterVO) {
+	      logger.info("shareInsertOK() 메소드 실행 -  커맨드 객체 사용");
+	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+	      String rootUploadDir = "C:\\upload\\freeboard"; // 업로드 될 파일 경로
+	      
+	      // 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
+	      Date date = new Date();
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+	      MultipartFile multipartFile = request.getFile("fileName");
+	      String originalFilename = multipartFile.getOriginalFilename().trim();
+	      if (originalFilename.isEmpty())  {
+	    	  String picture = "";
+	    	  String realFilePath = "";
+	    	  freeboardVO.setId(userRegisterVO.getId());
+	    	  freeboardVO.setPicture(picture);
+	    	  freeboardVO.setRealFilePath(realFilePath);
+	    	  logger.info("{}", freeboardVO);
+	    	  mapper.freeboardInsert(freeboardVO);
+	      }
+	      else {
+	    		  String picture = sdf.format(date) + "_" + originalFilename; // 업로드해서 실제로 저장될 파일명
+	    		  File dir = new File(rootUploadDir, picture);
+	    		  String realFilePath = dir.getPath();
+	    		  try {
+	    			  multipartFile.transferTo(dir);  // 업로드해주는 코드
+	    		  } catch (Exception e) { }
+	    		  freeboardVO.setId(userRegisterVO.getId());
+	    		  freeboardVO.setPicture(picture);
+	    		  freeboardVO.setRealFilePath(realFilePath);
+	    		  logger.info("{}", freeboardVO);
+	    		  mapper.freeboardInsert(freeboardVO);
+	      } 
+	      	model.addAttribute("result", "insertOK");
+	    	return "redirect:listView";
+	   }
+	   
+	   
 }
 
 

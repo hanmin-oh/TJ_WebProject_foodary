@@ -143,26 +143,31 @@
 			   </c:forEach>
 			   <!-- 3 -->
 			   <tr>
-			      <th colspan="1"><span style="background: lavender; font-size: 30pt;">메모</span></th>
-			      <th colspan="4">
-			         <textarea 
-			            rows="10" 
-			            name="dietMemo" 
-			            style="resize: none; width: 90%; height: 90%; vertical-align: middle; padding: 10px;"
-			            readonly="readonly"
-			            >${dvo.dietMemo}</textarea>
-			      </th>
-			   </tr>
+		  		 <tr>
+					<th><span style="background: lavender; font-size: 22pt;">내용</span></th>
+					<td colspan="3" style="font-size: 22pt; padding: 10px;">
+						<c:set var="content" value="${fn:replace(vo.content, '<', '&lt;')}"/>
+						<c:set var="content" value="${fn:replace(content, '>', '&gt;')}"/>
+						<c:set var="content" value="${fn:replace(content, enter, '<br/>')}"/>
+						${content}<br/>
+						<c:if test="${not empty vo.picture}">
+							<img src="/upload/freeboard/${vo.picture}" style="max-width: 450px; max-height: 300px;">
+						</c:if>
+					</td>
+				</tr>
 			   <tr>
-			   	<th colspan="5">
-			       	<c:if test="${not empty dvo.dietPicture}">
-						<img src="/upload/diet/${dvo.dietPicture}" style="max-width: 450px; max-height: 300px;">
-					</c:if>
-				</th>
-				<tr>
-				<%-- ${dietList}가 null이 아닌 경우에만 테이블을 표시합니다. --%>
-			<c:choose>
-			  <c:when test="${not empty dietList}">
+			   	<!-- 사진 첨부 -->
+				      <tr>
+				         <td colspan="6" class="text-center" align="center">
+				            <span style="background: lavender; font-size: 30pt; margin-left: 200px;">사진첨부</span>
+				         </td>
+						<td colspan="6" class="text-center" align="center">
+				       		<input type="file" accept="image/*" name="fileName" onchange="photoView(event)" value="파일 선택"
+				       			style="font-size: 20pt;"/>
+							<img id="output" style="max-width: 450px; max-height: 300px;"/><br/>
+						</td>
+				      </tr>
+				      <tr style="height: 50px;"></tr> <!-- 공백 -->
 				   <!-- 영양소 그래프 -->
 		    <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
 		    <tr style="height: 30px;"></tr>
@@ -213,12 +218,6 @@
              </td>
 		    </tr>
 		    </table>
-		     </c:when>
-			  <c:otherwise>
-			    <!-- ${dietList}가 null이거나 비어있는 경우, 아무것도 표시하지 않습니다. -->
-			    <div style="display: none;"></div>
-			  </c:otherwise>
-			</c:choose>
 			   <!-- 6 -->
 			   <tr>
 			      <th colspan="10">

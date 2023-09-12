@@ -56,6 +56,25 @@
 						<input id="subject" type="text" name="subject" style="font-size: 20pt; padding: 5px; width:450px;"/>
 					</td>
 				</tr>
+			   <tr>
+		            <td align="center">
+		 				<button  type="button" onclick="openPopup()" style="background: none; border: 0; cursor: pointer;">
+		                   <span style="background: #baffda; font-size: 35px; font-weight: 900;">음식 불러오기</span>
+		                </button>
+		            </td>
+         		</tr>
+         		<tr>
+         			<td><span style="background: lavender; font-size: 25pt;">음식 이름</span> :&nbsp; </td>
+         		     <c:forEach var="UserFood" items="${userFoodList}">
+                	<td>
+		                    <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${UserFood.foodName}" 
+		                    style="width: 20%; height: 50%; text-align: center;" readonly="readonly"/>      
+		                    <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${UserFood.foodName}" 
+		                   readonly="readonly"/>      
+		            <input type="text" id="gup" name="gup" value="${UserFood.gup}"/>
+		            </td>
+	                </c:forEach>
+                </tr> 
 				<tr>
 					<th>
 						<label for="content" style="font-size: 20pt;">내용</label>
@@ -67,6 +86,7 @@
 							name="content"
 							style="resize: none; font-size: 20pt; padding: 10px; width:450px;"></textarea>
 					</td>
+					  <!-- 음식검색 팝업창 띄우는 버튼 -->
 				</tr>
 				<tr>
 					<th>

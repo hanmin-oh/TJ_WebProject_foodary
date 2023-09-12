@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>푸드어리 보기</title>
-<script type="text/javascript" src="../js/dietView.js" defer="defer"></script>
+<script type="text/javascript" src="../js/dietViewAll.js" defer="defer"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,8 +52,7 @@
 	  display: none;
 	}
 </style>
-</head>
-<body onload = "showNutrient()">
+</head><body onload = "showNutrient()">
 <div class="container">
    <div class="header">
       <jsp:include page="./headerAfter.jsp"></jsp:include>
@@ -102,69 +101,101 @@
    </option>
 </select>
 
-
-	<form action="dietUpdateView" method="post">
-   		<span style="background: #fafcd9; font-size: 35pt; font-weight: 900;">${dvo.dietWriteDate}  ${dvo.dietWriteTime} 푸드어리</span>
-		<div class="diet">
-			  <tr>
-		         <td align="center" colspan="12" class="text-center">
-		             <input type="hidden" id="dietWriteDate" name="dietWriteTime" value="${dvo.dietWriteTime}" />
-		           	 <input	type="hidden" id="dietWriteDate" name="dietWriteDate" value="${dvo.dietWriteDate}"  />
-		             <input	type="hidden" id="id" name="id" value="${dvo.id}"  />
-		             <input	type="hidden" id="idx" name="idx" value="${dvo.idx}"  />
-		             <input	type="hidden" id="gup" name="gup" value="${dvo.gup}"  />
-		         </td>
-		      </tr>
-			<c:set var="list" value="${userFoodList.list}"/>
-			<table width="1500" align="center" border="0" cellpadding="10" cellspacing="10">
-			   <!-- 1 -->
-			   <tr>
-
-			   </tr>
-			   <!-- 2 -->
-			   <c:forEach var="uvo" items="${list}" varStatus="status">
-			   <tr>
-			      <th class="kcals" id="kcal"><span style="background: lavender; font-size: 25pt;">음식 이름</span> :&nbsp; 
-			         <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${uvo.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
-			      </th>
-			      <th><span style="background: lavender; font-size: 25pt;">칼로리</span> :&nbsp; 
-			         <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${uvo.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
-			      </th>
-			      <th><span style="background: lavender; font-size: 25pt;">탄수화물</span> :&nbsp; 
-			         <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${uvo.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
-			      </th>
-			      <th><span style="background: lavender; font-size: 25pt;">단백질</span> :&nbsp; 
-			         <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${uvo.protein}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
-			      </th>
-			      <th><span style="background: lavender; font-size: 25pt;">지방</span> :&nbsp; 
-			         <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${uvo.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
-			      </th>
-			   </tr>
-			   </c:forEach>
-			   <!-- 3 -->
-			   <tr>
-			      <th colspan="1"><span style="background: lavender; font-size: 30pt;">메모</span></th>
-			      <th colspan="4">
-			         <textarea 
-			            rows="10" 
-			            name="dietMemo" 
-			            style="resize: none; width: 90%; height: 90%; vertical-align: middle; padding: 10px;"
-			            readonly="readonly"
-			            >${dvo.dietMemo}</textarea>
-			      </th>
-			   </tr>
-			   <tr>
-			   	<th colspan="5">
-			       	<c:if test="${not empty dvo.dietPicture}">
-						<img src="/upload/diet/${dvo.dietPicture}" style="max-width: 450px; max-height: 300px;">
-					</c:if>
-				</th>
-				<tr>
-				<%-- ${dietList}가 null이 아닌 경우에만 테이블을 표시합니다. --%>
-			<c:choose>
-			  <c:when test="${not empty dietList}">
-				   <!-- 영양소 그래프 -->
-		    <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
+         <span style="background: #fafcd9; font-size: 35pt; font-weight: 900;">${dietWriteDate} 푸드어리</span>
+                           <button
+                     type="button" 
+                     onclick="location.href='dietListView?dietWriteDate=${dietWriteDate}&id=${rvo.id}'" 
+                      style="background: none; border: 0; cursor: pointer;">
+                     <span style="background: #baffda; font-size: 25pt; font-weight: 900;">목록보기</span>
+                     </button>&nbsp;&nbsp;
+         
+      <div class="diet">
+         <form action="dietUpdate" method="post">
+         <c:set var="list" value="${userFoodList.list}"/><!-- 해당 시간대만 -->
+         <table width="1500" align="center" border="0" cellpadding="10" cellspacing="10">
+            <!-- 1 -->
+    <%--         <tr>
+          ${selectDietList}<br/>
+          ${userFoodList}<br/>   
+          ${selectDietList[0]}
+            </tr> --%>
+          <c:forEach var="diet" items="${selectDietList}">
+             <tr>
+		        <th colspan="5">
+		            <span style="background: lavender; font-size: 30pt;">${diet.dietWriteTime}</span>
+		        </th>
+		    </tr>
+			    <!-- UserFoodVO 그룹화 -->
+			    <c:forEach var="food" items="${userFoodList.list}" varStatus="status">
+			        <c:if test="${food.gup eq diet.gup}">
+			            <!-- UserFood 정보 출력 -->
+			            <tr>
+			                <th class="kcals" id="kcal">
+			                    <span style="background: lavender; font-size: 25pt;">음식 이름</span> :&nbsp; 
+			                    <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${food.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
+			                </th>
+			                <th>
+			                    <span style="background: lavender; font-size: 25pt;">칼로리</span> :&nbsp; 
+			                    <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${food.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
+			                </th>
+			                <th>
+			                    <span style="background: lavender; font-size: 25pt;">탄수화물</span> :&nbsp; 
+			                    <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${food.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			                </th>
+			                <th>
+			                    <span style="background: lavender; font-size: 25pt;">단백질</span> :&nbsp; 
+			                    <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${food.protein}" style="width: 30%; height; 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
+			                </th>
+			                <th>
+			                    <span style="background: lavender; font-size: 25pt;">지방</span> :&nbsp; 
+			                    <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${food.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			                </th>
+			            </tr>
+			        </c:if>
+			    </c:forEach>
+		    <!-- Diet 정보 출력 -->
+		    <tr>
+		        <th colspan="5">
+		            <span style="background: lavender; font-size: 30pt;">Diet 메모</span>
+		        </th>
+		    </tr>
+		    <tr>
+		        <td colspan="5">
+		            <textarea 
+		                rows="10" 
+		                name="dietMemo" 
+		                style="resize: none; width: 90%; height: 90%; vertical-align: middle; padding: 10px;"
+		                readonly="readonly"
+		            >${diet.dietMemo}</textarea>
+		        </td>
+		    </tr>
+            <tr>
+               <th colspan="5">
+                   <c:if test="${not empty diet.dietPicture}">
+                  <img src="/upload/diet/${diet.dietPicture}" style="max-width: 450px; max-height: 300px;">
+               </c:if>
+            </th>
+            <tr>
+		     <tr>
+               <th colspan="10">
+                  <button
+                     type="submit" 
+                     style="background: none; border: 0; cursor: pointer;"
+                  onclick="location.href='dietUpdateView?gup=${diet.gup}&id=${rvo.id}'">
+                  <span style="background: #baffda; font-size: 25pt; font-weight: 900;">수정하기</span>
+                  </button>&nbsp;&nbsp;
+                  <button 
+                     type="button" 
+                      style="background: none; border: 0; cursor: pointer;"
+                     onclick="location.href='dietDelete?idx=${dvo.idx}'">
+                     <span style="background: #baffda; font-size: 25pt; font-weight: 900;">삭제하기</span>
+                     </button>&nbsp;&nbsp;
+               </th>
+            </tr>		   
+			</c:forEach>
+		    </table>
+		    <!-- 영양소 그래프 -->
+		      <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
 		    <tr style="height: 30px;"></tr>
 		     <tr>
 		        <td style="height: 40px; text-align: left;">
@@ -176,7 +207,6 @@
                  </div>
                </td>   
             </tr>
-           <!-- 5 -->
            <tr style="height: 30px;"></tr>
             <tr>
              <td style="height: 40px; text-align: left;">
@@ -184,7 +214,6 @@
                 <div class="progress" style="height: 40px; width: 800px; margin-left: auto; margin-right: auto;">
                   <div id="carbsGraph" class="progress-bar progress-bar-info" role="progressbar" 
                      aria-valuemin="0" style="width:0%; height: 40px; font-size: 18pt; background: #8800ff;">
-                     
                   </div>
                 </div>
              </td>
@@ -212,40 +241,16 @@
                 </div>
              </td>
 		    </tr>
-		    </table>
-		     </c:when>
-			  <c:otherwise>
-			    <!-- ${dietList}가 null이거나 비어있는 경우, 아무것도 표시하지 않습니다. -->
-			    <div style="display: none;"></div>
-			  </c:otherwise>
-			</c:choose>
-			   <!-- 6 -->
-			   <tr>
-			      <th colspan="10">
-			         <button
-			            type="submit" 
-			            style="background: none; border: 0; cursor: pointer;"
-			         >
-						<span style="background: #baffda; font-size: 25pt; font-weight: 900;">수정하기</span>
-			         </button>&nbsp;&nbsp;
-			         <button 
-			            type="button" 
-			             style="background: none; border: 0; cursor: pointer;"
-			            onclick="location.href='dietDelete?idx=${dvo.idx}&id=${rvo.id}&dietWriteDate=${dvo.dietWriteDate}&gup=${dvo.gup}'">
-			            <span style="background: #baffda; font-size: 25pt; font-weight: 900;">삭제하기</span>
-			            </button>&nbsp;&nbsp;
-			         <button
-			            type="button" 
-			            onclick="location.href='dietListView?dietWriteDate=${dvo.dietWriteDate}'" 
-			             style="background: none; border: 0; cursor: pointer;">
-			            <span style="background: #baffda; font-size: 25pt; font-weight: 900;">목록보기</span>
-			            </button>&nbsp;&nbsp;
-			      </th>
-			   </tr>
-			</table>
-		</form>
-		</div>
-	</div>
+         </table>
+      </form>
+      </div>
+       <button
+    type="button" 
+    onclick="location.href='dietListView?dietWriteDate=${dietWriteDate}&id=${rvo.id}'" 
+     style="background: none; border: 0; cursor: pointer;">
+    <span style="background: #baffda; font-size: 25pt; font-weight: 900;">목록보기</span>
+    </button>&nbsp;&nbsp;
+   </div>
    <div class="footer">
       <jsp:include page="./footerAfter.jsp"></jsp:include>
    </div>

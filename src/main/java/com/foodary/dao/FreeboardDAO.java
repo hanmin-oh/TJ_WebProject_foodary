@@ -3,9 +3,11 @@ package com.foodary.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.foodary.vo.DietVO;
 import com.foodary.vo.FreeboardCommentList;
 import com.foodary.vo.FreeboardCommentVO;
 import com.foodary.vo.FreeboardVO;
+import com.foodary.vo.UserFoodVO;
 
 public interface FreeboardDAO {
 
@@ -34,6 +36,10 @@ public interface FreeboardDAO {
 	void deleteComment(FreeboardCommentVO freeboardCommentVO);
 
 	ArrayList<FreeboardCommentVO> selectCommentList(int idx);
+
+	DietVO selectDiet(int gup);
+
+	ArrayList<UserFoodVO> selectUserFood(int gup);
 
 
 
