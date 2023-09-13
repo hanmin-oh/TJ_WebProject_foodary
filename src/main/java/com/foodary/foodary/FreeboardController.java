@@ -46,6 +46,51 @@ public class FreeboardController {
 	      return "freeboard/insert";
 	   }
 	   
+	   @RequestMapping("/freeboard/dietListView")
+		public String dietListView(HttpServletRequest request, Model model) {
+			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+			String dietWriteDate = request.getParameter("dietWriteDate");
+			String id = request.getParameter("id");
+			logger.info("#####################" + id + "########################");
+
+			AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+			DietList dietList = ctx.getBean("dietList", DietList.class);
+
+			HashMap<String, String> hmap = new HashMap<String, String>();
+			hmap.put("dietWriteDate", dietWriteDate);
+			hmap.put("id", id);
+			dietList.setList(mapper.selectDietList(hmap));
+			UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
+
+			logger.info("{}", dietList.getList());
+			for (int i = 0; i < dietList.getList().size(); i++) {
+				DietVO dietVO = dietList.getList().get(i);
+				ArrayList<UserFoodVO> userFoodGup = mapper.userFoodListGup(dietVO.getGup());
+
+				userFoodList.getList().addAll(userFoodGup);
+			}
+
+			logger.info("{}", userFoodList);
+			model.addAttribute("dietList", dietList);
+			model.addAttribute("userFoodList", userFoodList);
+			model.addAttribute("dietWriteDate", dietWriteDate);
+
+			return "freeboard/dietListView";
+		}
+	   
+	   @RequestMapping("/freeboard/boardDiet")
+		public String boardDiet(HttpServletRequest request, Model model, HttpSession session) {
+			logger.info("freeboard의 boardDiet 메소드 실행");
+			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+			int gup = Integer.parseInt(request.getParameter("gup"));
+			System.out.println(gup);
+			ArrayList<UserFoodVO> userFoodList = mapper.userFoodListGup(gup);
+			System.out.println(userFoodList);
+			
+			model.addAttribute("userFoodList", userFoodList);
+			return "freeboard/insert";
+		}
+	   
 	   @RequestMapping("/freeboard/insertOK")
 	   public String insertOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO, UserRegisterVO userRegisterVO) {
 	      logger.info("insertOK() 메소드 실행 -  커맨드 객체 사용");
@@ -142,30 +187,15 @@ public class FreeboardController {
 	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 	      
 	      int idx = Integer.parseInt(request.getParameter("idx"));
-	      
-	      mapper.freeboardIncrement(idx);
-	      
-	      model.addAttribute("idx", request.getParameter("idx"));
-	      model.addAttribute("currentPage", request.getParameter("currentPage"));
-	      
-	      return "redirect:contentView";
-	   }
-	   
-	   @RequestMapping("/freeboard/shareIncrement")
-	   public String shareIncrement(HttpServletRequest request, Model model) {
-		   logger.info("shareIncrement() 메소드 실행");
-		   
-		   FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
-		   
-		   int idx = Integer.parseInt(request.getParameter("idx"));
-		   int gup = Integer.parseInt(request.getParameter("gup"));
+	      int gup = Integer.parseInt(request.getParameter("gup"));
+	      System.out.println(gup);
 		   mapper.freeboardIncrement(idx);
 		   
 		   model.addAttribute("idx", request.getParameter("idx"));
 		   model.addAttribute("gup", request.getParameter("gup"));
 		   model.addAttribute("currentPage", request.getParameter("currentPage"));
-		   
-		   return "redirect:shareView";
+	      
+	      return "redirect:contentView";
 	   }
 	   
 	   @RequestMapping("/freeboard/contentView")
@@ -173,10 +203,16 @@ public class FreeboardController {
 	      logger.info("contentView() 메소드 실행");
 	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 	      int idx = Integer.parseInt(request.getParameter("idx"));
-		
+		   int gup = Integer.parseInt(request.getParameter("gup"));
 	      FreeboardVO freeboardVO = mapper.freeboardSelectByIdx(idx);
 	      logger.info("{}", freeboardVO);
-		
+	      System.out.println("contentView()의 gup " + gup);
+	      DietVO dvo = mapper.selectDiet(gup);
+		   ArrayList<UserFoodVO> userFoodList = mapper.selectUserFood(gup);
+		   System.out.println(dvo);
+		   System.out.println(userFoodList);
+		   model.addAttribute("dvo", dvo);
+		   model.addAttribute("userFoodList", userFoodList);
 	      model.addAttribute("vo", freeboardVO);
 	      model.addAttribute("currentPage", request.getParameter("currentPage"));
 	      model.addAttribute("enter", "\r\n");
@@ -185,31 +221,7 @@ public class FreeboardController {
   			FreeboardCommentList freeboardCommentList = ctx.getBean("freeboardCommentList", FreeboardCommentList.class);
   			freeboardCommentList.setList(mapper.selectCommentList(idx));
   			model.addAttribute("freeboardCommentList", freeboardCommentList);
-	      return "freeboard/contentView";
-	   }
-	   
-	   @RequestMapping("/freeboard/shareView")
-	   public String shareView(HttpServletRequest request, Model model) {
-		   logger.info("shareView() 메소드 실행");
-		   FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
-		   int idx = Integer.parseInt(request.getParameter("idx"));
-		   int gup = Integer.parseInt(request.getParameter("gup"));
-		   FreeboardVO freeboardVO = mapper.freeboardSelectByIdx(idx);
-		   logger.info("{}", freeboardVO);
-		   DietVO dvo = mapper.selectDiet(gup);
-		   ArrayList<UserFoodVO> userFoodList = mapper.selectUserFood(gup);
-		   model.addAttribute("dvo", dvo);
-		   model.addAttribute("userFoodList", userFoodList);
-		   
-		   model.addAttribute("vo", freeboardVO);
-		   model.addAttribute("currentPage", request.getParameter("currentPage"));
-		   model.addAttribute("enter", "\r\n");
-		   
-		   AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
-		   FreeboardCommentList freeboardCommentList = ctx.getBean("freeboardCommentList", FreeboardCommentList.class);
-		   freeboardCommentList.setList(mapper.selectCommentList(idx));
-		   model.addAttribute("freeboardCommentList", freeboardCommentList);
-		   return "freeboard/shareView";
+	      return "freeboard/contentView2";
 	   }
 	   
 	   @RequestMapping("/freeboard/selectByIdx")
@@ -313,51 +325,7 @@ public class FreeboardController {
 		   model.addAttribute("job", "contentView");
 		   return "redirect:selectByIdx";
 	   }
-	   
-	   @RequestMapping("/freeboard/dietListView")
-		public String dietListView(HttpServletRequest request, Model model) {
-			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-			String dietWriteDate = request.getParameter("dietWriteDate");
-			String id = request.getParameter("id");
-			logger.info("#####################" + id + "########################");
-
-			AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
-			DietList dietList = ctx.getBean("dietList", DietList.class);
-
-			HashMap<String, String> hmap = new HashMap<String, String>();
-			hmap.put("dietWriteDate", dietWriteDate);
-			hmap.put("id", id);
-			dietList.setList(mapper.selectDietList(hmap));
-			UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
-
-			logger.info("{}", dietList.getList());
-			for (int i = 0; i < dietList.getList().size(); i++) {
-				DietVO dietVO = dietList.getList().get(i);
-				ArrayList<UserFoodVO> userFoodGup = mapper.userFoodListGup(dietVO.getGup());
-
-				userFoodList.getList().addAll(userFoodGup);
-			}
-
-			logger.info("{}", userFoodList);
-			model.addAttribute("dietList", dietList);
-			model.addAttribute("userFoodList", userFoodList);
-			model.addAttribute("dietWriteDate", dietWriteDate);
-
-			return "freeboard/dietListView";
-		}
-	   
-	   @RequestMapping("/freeboard/boardDiet")
-		public String boardDiet(HttpServletRequest request, Model model, HttpSession session) {
-			logger.info("freeboard의 boardDiet 메소드 실행");
-			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-			int gup = Integer.parseInt(request.getParameter("gup"));
-			System.out.println(gup);
-			ArrayList<UserFoodVO> userFoodList = mapper.userFoodListGup(gup);
-			System.out.println(userFoodList);
-			
-			session.setAttribute("userFoodList", userFoodList);
-			return "freeboard/shareInsert";
-		}
+	
 	   
 	   @RequestMapping("/freeboard/shareInsert")
 	   public String shareInsert(HttpServletRequest request, Model model, UserRegisterVO userRegisterVO) {
@@ -370,7 +338,7 @@ public class FreeboardController {
 	      logger.info("shareInsertOK() 메소드 실행 -  커맨드 객체 사용");
 	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 	      String rootUploadDir = "C:\\upload\\freeboard"; // 업로드 될 파일 경로
-	      
+	      System.out.println("게시판 gup===" + freeboardVO.getGup());
 	      // 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
 	      Date date = new Date();
 	      SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
@@ -400,6 +368,31 @@ public class FreeboardController {
 	      } 
 	      	model.addAttribute("result", "insertOK");
 	    	return "redirect:listView";
+	   }
+	   
+	   @RequestMapping("/freeboard/shareView")
+	   public String shareView(HttpServletRequest request, Model model) {
+		   logger.info("shareView() 메소드 실행");
+		   FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+		   int idx = Integer.parseInt(request.getParameter("idx"));
+		   int gup = Integer.parseInt(request.getParameter("gup"));
+		   FreeboardVO freeboardVO = mapper.freeboardSelectByIdx(idx);
+		   logger.info("{}", freeboardVO);
+		   DietVO dvo = mapper.selectDiet(gup);
+		   ArrayList<UserFoodVO> userFoodList = mapper.selectUserFood(gup);
+		   model.addAttribute("dvo", dvo);
+		   model.addAttribute("userFoodList", userFoodList);
+		   System.out.println(dvo);
+		   System.out.println(userFoodList);
+		   model.addAttribute("vo", freeboardVO);
+		   model.addAttribute("currentPage", request.getParameter("currentPage"));
+		   model.addAttribute("enter", "\r\n");
+		   
+		   AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+		   FreeboardCommentList freeboardCommentList = ctx.getBean("freeboardCommentList", FreeboardCommentList.class);
+		   freeboardCommentList.setList(mapper.selectCommentList(idx));
+		   model.addAttribute("freeboardCommentList", freeboardCommentList);
+		   return "freeboard/contentView2";
 	   }
 	   
 	   

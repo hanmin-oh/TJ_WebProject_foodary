@@ -17,12 +17,11 @@
 <div class="container">
   	<div class="main" align="center">
 		<div class="dietContent_title">
-		==============식단수정============
 			<span style="background: #fafcd9; font-size: 30pt; font-weight: 900;">음식 검색</span>
 		</div>
 		   <br/>
 		<!-- 4 -->
-		<form id="myForm" action="foodList" method="POST">
+		<form id="myForm" action="updateFoodList" method="POST">
 		   <table  width="1000" align="center" border="1" cellpadding="30" cellspacing="0" style="text-align: center;">
 				<thead>
 				   <tr style="height: 60px;">
@@ -83,7 +82,7 @@
 			      <td class="text-center">
 			           ${vo.fat}
 			      </td>
-			      <input type="text" id="gup" name="gup" value="${gup}"/>
+			      <input type="hidden" id="gup" name="gup" value="${gup}"/>
 			      <td class="text-center">
 			         <input type="checkbox" value="선택" name="foodName"/>      
 			      </td>
@@ -119,7 +118,7 @@
 							<button 
 								type="button" 
 								title="이전 10페이지로 이동합니다." 
-								onclick="location.href='?currentPage=${foodList.startPage - 1}'"
+								onclick="location.href='?currentPage=${foodList.startPage - 1}&gup=${gup}'"
 								style="background: none; border: 0; cursor: pointer;"
 							>◀</button>
 						</c:if>
@@ -143,7 +142,7 @@
 								<button 
 									type='button' 
 									title="${i}페이지로 이동합니다."
-									onclick="location.href='?currentPage=${i}'"
+									onclick="location.href='?currentPage=${i}&gup=${gup}'"
 									style="background: none; border: 0; cursor: pointer;"
 								>
 									<span style="background: lavender; font-size: 25pt;">${i}</span>
@@ -157,7 +156,7 @@
 								class='button button1' 
 								type="button" 
 								title="다음 10페이지로 이동합니다." 
-								onclick="location.href='?currentPage=${foodList.endPage + 1}'"
+								onclick="location.href='?currentPage=${foodList.endPage + 1}&gup=${gup}'"
 								style="background: none; border: 0; cursor: pointer;"
 							>▶</button>
 						</c:if>
@@ -176,7 +175,7 @@
 						<button
 							type="button" 
 							title="마지막 페이지로 이동합니다." 
-							onclick="location.href='?currentPage=${foodList.totalPage}'"
+							onclick="location.href='?currentPage=${foodList.totalPage}&gup=${gup}'"
 							style="background: none; border: 0; cursor: pointer;"
 						>▶▶</button>
 						</c:if>
@@ -191,7 +190,7 @@
 					</td>
 				</tr> 
 		        <tr style="height: 60px;">
-		        <input type="text" value="${rvo.id}" id="id" name="id"/>
+		        <input type="hidden" value="${rvo.id}" id="id" name="id"/>
 				   	<td colspan="8" align="center">
 						<button type="button" onclick="addData()" style="background: none; border: 0; cursor: pointer;">
 							<span style="background: lavender; font-size: 30px; font-weight: 900;">가져오기</span>

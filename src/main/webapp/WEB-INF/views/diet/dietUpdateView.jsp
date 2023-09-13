@@ -123,7 +123,6 @@
             </td>
          </tr>
        </table>
-${userFoodList}
      <!-- 팝업창에서 추가된 음식 목록 -->
      <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
      <tbody id="tableBody">
@@ -132,8 +131,7 @@ ${userFoodList}
        <c:set var="list" value="${userFoodList.list}"/>
        <c:if test="${list.size() != 0}">
        <c:forEach var="uvo" items="${list}" varStatus="status">
-       ${uvo}
-        <input type="text" id="gup" name="gup" value="${uvo.gup}"/>
+        <input type="hidden" id="gup" name="gup" value="${uvo.gup}"/>
          <tr>
            <td>
              <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${uvo.foodName}"
@@ -225,7 +223,7 @@ ${userFoodList}
                name="dietMemo" 
                style="resize: none; width: 97%; height: 75%; vertical-align: middle;"
                >${dvo.dietMemo}</textarea>
-               <input type="text" id="idx" name="idx" value="${dvo.idx}"/>
+               <input type="hidden" id="idx" name="idx" value="${dvo.idx}"/>
          </td>
       </tr>
       <tr style="height: 50px;"></tr> <!-- 공백 -->

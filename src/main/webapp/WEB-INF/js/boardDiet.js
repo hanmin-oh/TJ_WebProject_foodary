@@ -16,6 +16,7 @@ function transferDiet() {
   var idEl = document.getElementById("id");
   const gup = gupEl.value;
   const id = idEl.value;
+  console.log(gup, id);
 
   // XMLHttpRequest 객체를 생성합니다.
   var xhr = new XMLHttpRequest();

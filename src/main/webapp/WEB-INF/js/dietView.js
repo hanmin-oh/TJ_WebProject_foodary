@@ -1,37 +1,3 @@
-function openPopup() {
-    // 새 창을 열고 URL로 이동
-   url = 'foodList'
-   // 모니터의 가로 중앙 위치 계산
-    var left = (screen.width - 800) / 2; // 800은 팝업 창의 가로 크기
-    // 모니터의 세로 중앙 위치 계산
-    var top = (screen.height - 600) / 2; // 600은 팝업 창의 세로 크기
- // 새 창을 열고 URL로 이동하며 위치를 중앙으로 설정
-    window.open(url, '_blank', 'width=1200,height=600,left=' + left + ',top=' + top);
-}
-function refreshParent() {
-    // 부모 창 새로고침
-    window.location.reload();
-}
-
-//인덱스 활용 음식 저장 형태 완료 
-function foodPlus(index) {
-   // console.log(index);
-    var userFoodName = document.getElementsByName("dietFoodName")[index].value;
-    var kcal = document.getElementsByName("dietKcal")[index].value;
-    var carbs = document.getElementsByName("dietCarbs")[index].value;
-    var protein = document.getElementsByName("dietProtein")[index].value;
-    var fat = document.getElementsByName("dietFat")[index].value;
-    var id = document.getElementsByName("id")[index].value;
-   var url = './userFoodInsert' +
-        '?foodName=' + encodeURIComponent(userFoodName) +
-        '&kcal=' + encodeURIComponent(kcal) +
-        '&carbs=' + encodeURIComponent(carbs) +
-        '&protein=' + encodeURIComponent(protein) +
-        '&fat=' + encodeURIComponent(fat) +
-        '&id=' + encodeURIComponent(id);
-    location.href = url;
-}
-
 function photoView(event) {
 	   $('#output').attr('src', URL.createObjectURL(event.target.files[0]));
 }

@@ -98,7 +98,9 @@ ${result}
 				<c:if test="${vo.gup != 0}">
 					<td align="center" style="width: 70px;">[식단공유]${vo.idx}</td>
 				</c:if>
+				<c:if test="${vo.gup == 0}">
 				<td align="center" style="width: 70px;">${vo.idx}</td>
+				</c:if>
 				<td style="width: 610px; text-align: center;">
 					<!-- 제목에 태그를 적용할 수 없게 한다. -->
 					<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
@@ -106,16 +108,9 @@ ${result}
 					
 					<!-- 제목에 하이퍼링크를 걸어준다. -->
 					<!-- 하이퍼링크를 클릭하면 조회수를 증가시키고 클릭한 메인글의 내용을 표시한다. -->
-					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}" style="color: black; text-decoration: none;">
+					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}&gup=${vo.gup}" style="color: black; text-decoration: none;">
 						${subject}(${vo.commentCount})
 					</a>
-					<c:if test="${vo.gup != 0}">
-					<!-- 하이퍼링크를 클릭하면 조회수를 증가시키고 클릭한 메인글의 내용을 표시한다. -->
-					<a href="shareIncrement?idx=${vo.idx}&currentPage=${currentPage}&gup=${gup} style="color: black; text-decoration: none;">
-						${subject}(${vo.commentCount})
-					</a>
-					</c:if>
-					
 					<!-- 오늘 입력된 글에 new 아이콘 이미지를 표시한다. -->
 					<c:if test="${date.year == vo.writeDate.year && date.month == vo.writeDate.month &&
 						date.date == vo.writeDate.date}">
@@ -234,11 +229,6 @@ ${result}
 				<td align="right">
 					<button type="button" onclick="location.href='insert'" style="background: none; border:0;">
 						<span style="background:#baffda; font-size: 30px; font-weight: 800; cursor: pointer;">글쓰기</span>
-					</button>
-				</td>
-				<td align="right">
-					<button type="button" onclick="location.href='shareInsert'" style="background: none; border:0;">
-						<span style="background:#baffda; font-size: 30px; font-weight: 800; cursor: pointer;">식단공유</span>
 					</button>
 				</td>
 			</tr>

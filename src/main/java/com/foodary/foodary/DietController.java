@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -49,6 +48,8 @@ public class DietController {
 		session.setAttribute("userFoodList", userFoodList);
 		return "diet/dietInsertView";
 	}
+	
+	
 		
 	@RequestMapping(value = {"/diet/foodList", "/diet/updateFoodList"})
 	public String foodListView(HttpServletRequest request, Model model , DietVO dvo) {
@@ -82,6 +83,7 @@ public class DietController {
 			param.setFoodName(foodName);
 			System.out.println(param.getFoodName());
 			foodList.setList(mapper.foodSearchList(param));
+			System.out.println(foodList);
 		}
 
 		model.addAttribute("foodList", foodList);
@@ -129,39 +131,6 @@ public class DietController {
 		return "redirect:dietInsertView";
 	}
 	
-	@RequestMapping("/diet/dietUpdateUserFood")
-	public String dietUpdateUserFood(HttpServletRequest request, Model model, UserFoodVO userFoodVO, DietVO dvo) {
-		System.out.println("1. ======= dietUpdateUserFood");
-		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		int gup = dvo.getGup();
-		dvo = mapper.updateDeleteFoodDiet(dvo.getGup());
-		System.out.println("######### " + dvo);
-		System.out.println("2 " + userFoodVO);
-		mapper.updateUserFood(userFoodVO);
-		model.addAttribute("dvo", dvo);
-		model.addAttribute("gup" , dvo.getGup());
-		return "redirect:dietUpdateView";
-	}
-	
-	@RequestMapping("/diet/dietUpdateView")
-	public String dietUpdate(HttpServletRequest request, Model model, HttpSession session, DietVO dvo) {
-		logger.info("============dietUpdateView 이동하는 메소드 실행");
-		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		String id = (String) session.getAttribute("id");
-		logger.info("id ==== {}", id);
-		int gup = Integer.parseInt(request.getParameter("gup"));
-		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
-		UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
-		dvo = mapper.updateDeleteFoodDiet(dvo.getGup());
-		System.out.println("1. ============" + dvo);
-		System.out.println("2 :  " + dvo.getGup());
-		userFoodList.setList(mapper.userFoodListGup(dvo.getGup()));
-		System.out.println("3. ============" + userFoodList);
-		model.addAttribute("userFoodList", userFoodList);
-		model.addAttribute("dvo", dvo);
-		return "diet/dietUpdateView";
-		}
-	
 	@RequestMapping("/diet/deleteUserFood")
 	public String deleteUserFood(HttpServletRequest request, Model model, UserFoodVO userFoodVO) {
 		logger.info("updateUserFood 메소드 실행");
@@ -171,66 +140,53 @@ public class DietController {
 		mapper.deleteUserFood(userFoodVO.getIdx());
 		return "redirect:dietInsertView";
 	}
-	
-	@RequestMapping("/diet/diteDeleteUserFood")
-	public String diteDeleteUserFood(HttpServletRequest request, Model model,  HttpSession session, UserFoodVO userFoodVO, DietVO dvo) {
-		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		System.out.println("이동. ======= diteDeleteUserFood");
-		int idx = Integer.parseInt(request.getParameter("idx"));
-		int gup = Integer.parseInt(request.getParameter("gup"));
-		System.out.println("idx " + idx);
-		System.out.println("gup " + gup);
-		mapper.deleteUserFood(idx);
-		dvo = mapper.updateDeleteFoodDiet(gup);
-		System.out.println("######### " + dvo);
-		model.addAttribute("dvo", dvo);
-		model.addAttribute("gup" , dvo.getGup());
-		return "redirect:dietUpdateView";
-	}
 
-	@RequestMapping("diet/dietUpdateOK")
-	public String dietUpdateOK(HttpServletRequest request, Model model, DietVO dvo) {
-		logger.info("============dietUpdateOK 메소드 실행");
+	@RequestMapping("/diet/dietInsert")
+	public String dietInsert(MultipartHttpServletRequest request, Model model, DietVO dietVO, UserFoodList userFoodList,
+			UserRegisterVO userRegisterVO) {
+		logger.info("========== dietInsert 메소드 실행 ===========");
+		HttpSession session = request.getSession();
 		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		logger.info("============" + dvo);
-		mapper.updateDiet(dvo);
-		int gup = dvo.getGup();
-		model.addAttribute("dvo", dvo);
-		model.addAttribute("gup", gup);
-		return "redirect:dietViewUpdate";
-	}
-	
-	@RequestMapping("/diet/dietViewUpdate")
-	public String dietViewUpdate(HttpServletRequest request, Model model, DietVO dvo) {
-		logger.info("dietViewUpdate 메소드 실행");
-		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		int gup = Integer.parseInt(request.getParameter("gup"));
-		dvo = mapper.updateDeleteFoodDiet(gup);
-		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
-		UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
-		userFoodList.setList(mapper.userFoodListGup(dvo.getGup()));
-		model.addAttribute("dvo", dvo);
-		model.addAttribute("userFoodList", userFoodList);
-		return "diet/dietView";
-	}
-	
-	@RequestMapping("diet/dietDelete")
-	public String dietDelete(HttpServletRequest request, Model model, DietVO dvo) {
-		logger.info("============dietDelete 메소드 실행");
-		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		int idx = Integer.parseInt(request.getParameter("idx"));
-		String dietWriteDate = request.getParameter("dietWriteDate");
-		int gup = Integer.parseInt(request.getParameter("gup"));
-		System.out.println("===================== : " + dietWriteDate);
-		String id = request.getParameter("id");
-		logger.info("#####################" + id + "########################");
-		mapper.deleteDietList(idx);
-		mapper.deleteDietUserFood(gup);
-		model.addAttribute("id", id);
-		model.addAttribute("dietWriteDate", dietWriteDate);
+
+		String rootUploadDir = "C:\\coding\\Tjoeun\\07_web_project_foodary\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\diet"; // 업로드
+																																// 될
+																																// 파일
+																																// 경로
+		// 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+
+		MultipartFile multipartFile = request.getFile("fileName");
+		String originalFilename = multipartFile.getOriginalFilename().trim();
+		if (originalFilename.isEmpty()) {
+			String picture = "no picture";
+			dietVO.setDietPicture(picture);
+			dietVO.setId(userRegisterVO.getId());
+			logger.info("{}", dietVO);
+			mapper.insertDiet(dietVO);
+		} else {
+			String picture = sdf.format(date) + "_" + originalFilename;
+			File dir = new File(rootUploadDir, picture);
+			try {
+				multipartFile.transferTo(dir); // 업로드해주는 코드
+			} catch (Exception e) {
+			}
+			dietVO.setDietPicture(picture);
+			dietVO.setId(userRegisterVO.getId());
+			logger.info("{}", dietVO);
+			mapper.insertDiet(dietVO);
+		}
+
+		DietVO getIdx = mapper.getIdx(0);
+		int idx = getIdx.getIdx();
+		mapper.setDietGup(idx);
+		mapper.setUserFoodGup(idx);
+		session.setAttribute("foodNames", null);
+		model.addAttribute("gup", idx);
+		model.addAttribute("dietWriteDate", dietVO.getDietWriteDate());
+		model.addAttribute("id", userRegisterVO.getId());
 		return "redirect:dietListView";
 	}
-	
 
 	@RequestMapping("/diet/dietListView")
 	public String dietListView(HttpServletRequest request, Model model) {
@@ -342,64 +298,100 @@ public class DietController {
 	         model.addAttribute("selectDietList", selectDietList);
 	         model.addAttribute("userFoodList", userFoodList);
 	         model.addAttribute("dietWriteDate", dietWriteDate);
-	         
 	      }
-	      
 	      return "diet/dietViewAll";
 	   }
 	
-
-	@RequestMapping("/diet/dietInsert")
-	public String dietInsert(MultipartHttpServletRequest request, Model model, DietVO dietVO, UserFoodList userFoodList,
-			UserRegisterVO userRegisterVO) {
-		logger.info("========== dietInsert 메소드 실행 ===========");
-		HttpSession session = request.getSession();
+	@RequestMapping("/diet/dietUpdateView")
+	public String dietUpdate(HttpServletRequest request, Model model, HttpSession session, DietVO dvo) {
+		logger.info("============dietUpdateView 이동하는 메소드 실행");
 		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-
-		String rootUploadDir = "C:\\coding\\Tjoeun\\07_web_project_foodary\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\diet"; // 업로드
-																																// 될
-																																// 파일
-																																// 경로
-		// 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
-
-		MultipartFile multipartFile = request.getFile("fileName");
-		String originalFilename = multipartFile.getOriginalFilename().trim();
-		if (originalFilename.isEmpty()) {
-			String picture = "no picture";
-			dietVO.setDietPicture(picture);
-			dietVO.setId(userRegisterVO.getId());
-			logger.info("{}", dietVO);
-			mapper.insertDiet(dietVO);
-		} else {
-			String picture = sdf.format(date) + "_" + originalFilename;
-			File dir = new File(rootUploadDir, picture);
-			try {
-				multipartFile.transferTo(dir); // 업로드해주는 코드
-			} catch (Exception e) {
-			}
-			dietVO.setDietPicture(picture);
-			dietVO.setId(userRegisterVO.getId());
-			logger.info("{}", dietVO);
-			mapper.insertDiet(dietVO);
+		String id = (String) session.getAttribute("id");
+		logger.info("id ==== {}", id);
+		int gup = Integer.parseInt(request.getParameter("gup"));
+		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+		UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
+		dvo = mapper.updateDeleteFoodDiet(dvo.getGup());
+		System.out.println("1. ============" + dvo);
+		System.out.println("2 :  " + dvo.getGup());
+		userFoodList.setList(mapper.userFoodListGup(dvo.getGup()));
+		System.out.println("3. ============" + userFoodList);
+		model.addAttribute("userFoodList", userFoodList);
+		model.addAttribute("dvo", dvo);
+		return "diet/dietUpdateView";
 		}
+	
+	@RequestMapping("/diet/dietUpdateUserFood")
+	public String dietUpdateUserFood(HttpServletRequest request, Model model, UserFoodVO userFoodVO, DietVO dvo) {
+		System.out.println("1. ======= dietUpdateUserFood");
+		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+		int gup = dvo.getGup();
+		dvo = mapper.updateDeleteFoodDiet(dvo.getGup());
+		System.out.println("######### " + dvo);
+		System.out.println("2 " + userFoodVO);
+		mapper.updateUserFood(userFoodVO);
+		model.addAttribute("dvo", dvo);
+		model.addAttribute("gup" , dvo.getGup());
+		return "redirect:dietUpdateView";
+	}
 
-		DietVO getIdx = mapper.getIdx(0);
-		int idx = getIdx.getIdx();
-		mapper.setDietGup(idx);
-		mapper.setUserFoodGup(idx);
-		session.setAttribute("foodNames", null);
-		model.addAttribute("gup", idx);
-		model.addAttribute("dietWriteDate", dietVO.getDietWriteDate());
-		model.addAttribute("id", userRegisterVO.getId());
-		return "redirect:dietListView";
+	@RequestMapping("/diet/diteDeleteUserFood")
+	public String diteDeleteUserFood(HttpServletRequest request, Model model,  HttpSession session, UserFoodVO userFoodVO, DietVO dvo) {
+		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+		System.out.println("이동. ======= diteDeleteUserFood");
+		int idx = Integer.parseInt(request.getParameter("idx"));
+		int gup = Integer.parseInt(request.getParameter("gup"));
+		System.out.println("idx " + idx);
+		System.out.println("gup " + gup);
+		mapper.deleteUserFood(idx);
+		dvo = mapper.updateDeleteFoodDiet(gup);
+		System.out.println("######### " + dvo);
+		model.addAttribute("dvo", dvo);
+		model.addAttribute("gup" , dvo.getGup());
+		return "redirect:dietUpdateView";
 	}
 	
+	@RequestMapping("diet/dietUpdateOK")
+	public String dietUpdateOK(HttpServletRequest request, Model model, DietVO dvo) {
+		logger.info("============dietUpdateOK 메소드 실행");
+		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+		logger.info("============" + dvo);
+		mapper.updateDiet(dvo);
+		int gup = dvo.getGup();
+		model.addAttribute("dvo", dvo);
+		model.addAttribute("gup", gup);
+		return "redirect:dietViewUpdate";
+	}
 	
+	@RequestMapping("/diet/dietViewUpdate")
+	public String dietViewUpdate(HttpServletRequest request, Model model, DietVO dvo) {
+		logger.info("dietViewUpdate 메소드 실행");
+		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+		int gup = Integer.parseInt(request.getParameter("gup"));
+		dvo = mapper.updateDeleteFoodDiet(gup);
+		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
+		UserFoodList userFoodList = ctx.getBean("userFoodList", UserFoodList.class);
+		userFoodList.setList(mapper.userFoodListGup(dvo.getGup()));
+		model.addAttribute("dvo", dvo);
+		model.addAttribute("userFoodList", userFoodList);
+		return "diet/dietView";
+	}
 	
-
-	
-	
+	@RequestMapping("diet/dietDelete")
+	public String dietDelete(HttpServletRequest request, Model model, DietVO dvo) {
+		logger.info("============dietDelete 메소드 실행");
+		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
+		int idx = Integer.parseInt(request.getParameter("idx"));
+		String dietWriteDate = request.getParameter("dietWriteDate");
+		int gup = Integer.parseInt(request.getParameter("gup"));
+		System.out.println("===================== : " + dietWriteDate);
+		String id = request.getParameter("id");
+		logger.info("#####################" + id + "########################");
+		mapper.deleteDietList(idx);
+		mapper.deleteDietUserFood(gup);
+		model.addAttribute("id", id);
+		model.addAttribute("dietWriteDate", dietWriteDate);
+		return "redirect:dietListView";
+	}
 
 }

@@ -160,10 +160,6 @@
 					</c:if>
 				</th>
 				<tr>
-				<%-- ${dietList}가 null이 아닌 경우에만 테이블을 표시합니다. --%>
-			<c:choose>
-			  <c:when test="${not empty dietList}">
-				   <!-- 영양소 그래프 -->
 		    <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
 		    <tr style="height: 30px;"></tr>
 		     <tr>
@@ -213,12 +209,6 @@
              </td>
 		    </tr>
 		    </table>
-		     </c:when>
-			  <c:otherwise>
-			    <!-- ${dietList}가 null이거나 비어있는 경우, 아무것도 표시하지 않습니다. -->
-			    <div style="display: none;"></div>
-			  </c:otherwise>
-			</c:choose>
 			   <!-- 6 -->
 			   <tr>
 			      <th colspan="10">

@@ -4,8 +4,8 @@
 
 	<!-- 메인글 1건을 저장한다. -->
 	<insert id="freeboardInsert" parameterType="vo">
-		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath) 
-		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath})
+		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, gup) 
+		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{gup})
 	</insert>
 	
 	<!-- 메인글 전체 개수를 얻어온다. -->

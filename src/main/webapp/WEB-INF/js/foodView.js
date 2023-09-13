@@ -2,11 +2,11 @@ function addData() {
 	var selectedRadios = document.querySelectorAll('input[name="foodName"]:checked');
 	var id = document.getElementsByName("id")[0].value;
   if (selectedRadios.length > 0) {
-    var foodNames = [];
-    var kcals = [];
-    var carbss = [];
-    var proteins = [];
-    var fats = [];
+	  var foodNames = [];
+	  var kcals = [];
+	  var carbss = [];
+	  var proteins = [];
+	  var fats = [];
     selectedRadios.forEach(function(selectedRadio) {
       var parentRow = selectedRadio.closest('tr');
       var foodName = parentRow.querySelector('td:nth-child(2)').innerHTML.trim();
