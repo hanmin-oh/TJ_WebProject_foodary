@@ -204,7 +204,11 @@ public class DietController {
 		HttpSession session = request.getSession();
 		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
 		
+<<<<<<< HEAD
 		String rootUploadDir = "C:\\coding\\Tjoeun\\07_web_project_foodary\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\diet"; // 업로드 될 파일 경로
+=======
+		String rootUploadDir = "C:\\k_digital\\Spring_pj_foodary\\workspace\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\diet"; // 업로드 될 파일 경로
+>>>>>>> 19796b5b40dcf0c9c3826d143212d00d2633109a
 		// 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
 	    Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
@@ -409,7 +413,11 @@ public class DietController {
 		logger.info("웨않뒈눈뒈 아롱나어ㅏ리나ㅓ리ㅏ어라 {}", dietVO);
 		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
 		
+<<<<<<< HEAD
 		String rootUploadDir = "C:\\coding\\Tjoeun\\07_web_project_foodary\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\diet";
+=======
+		String rootUploadDir = "C:\\k_digital\\Spring_pj_foodary\\workspace\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\diet";
+>>>>>>> 19796b5b40dcf0c9c3826d143212d00d2633109a
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
 		

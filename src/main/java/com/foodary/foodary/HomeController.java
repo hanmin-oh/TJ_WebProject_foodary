@@ -73,6 +73,8 @@ public class HomeController {
 //		if() 이게 gup가 0인 데이터가 없으면 안되는가?
 		mapper.deleteGupZero();
 		
+		mapper.deleteGupZero();
+		
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
 		FreeboardList freeboardList = ctx.getBean("freeboardList", FreeboardList.class);
 		freeboardList.initFreeboardList(pageSize, totalCount, currentPage);

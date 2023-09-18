@@ -47,7 +47,11 @@ public class FreeboardController {
 			UserRegisterVO userRegisterVO) {
 		logger.info("insertOK() 메소드 실행 -  커맨드 객체 사용");
 		FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+<<<<<<< HEAD
 		String rootUploadDir = "C:\\coding\\Tjoeun\\07_web_project_foodary\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\freeboard"; // 업로드 될 파일 경로
+=======
+		String rootUploadDir = "C:\\k_digital\\Spring_pj_foodary\\workspace\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\freeboard"; // 업로드 될 파일 경로
+>>>>>>> 19796b5b40dcf0c9c3826d143212d00d2633109a
 
 		// 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
 		Date date = new Date();
@@ -262,7 +266,11 @@ public class FreeboardController {
 	@RequestMapping("/freeboard/updateOK")
 	public String updateOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO) {
 		FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+<<<<<<< HEAD
 		String rootUploadDir = "C:\\coding\\Tjoeun\\07_web_project_foodary\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\freeboard";
+=======
+		String rootUploadDir = "C:\\k_digital\\Spring_pj_foodary\\workspace\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\freeboard";
+>>>>>>> 19796b5b40dcf0c9c3826d143212d00d2633109a
 
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
