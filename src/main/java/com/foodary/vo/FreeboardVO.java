@@ -16,11 +16,9 @@ public class FreeboardVO {
 	private int commentCount; // 댓글의 개수
 	private String id;
 	private String realFilePath;
-	private int gup;
-	
 	public FreeboardVO() { }
 	public FreeboardVO(int idx, String subject, String content, Date writeDate, int hit, String name, String notice,
-			String picture, int commentCount, String id, String realFilePath, int gup) {
+			String picture, int commentCount, String id, String realFilePath) {
 		super();
 		this.idx = idx;
 		this.subject = subject;
@@ -33,7 +31,6 @@ public class FreeboardVO {
 		this.commentCount = commentCount;
 		this.id = id;
 		this.realFilePath = realFilePath;
-		this.gup = gup;
 	}
 	public int getIdx() {
 		return idx;
@@ -101,17 +98,11 @@ public class FreeboardVO {
 	public void setRealFilePath(String realFilePath) {
 		this.realFilePath = realFilePath;
 	}
-	public int getGup() {
-		return gup;
-	}
-	public void setGup(int gup) {
-		this.gup = gup;
-	}
 	@Override
 	public String toString() {
 		return "FreeboardVO [idx=" + idx + ", subject=" + subject + ", content=" + content + ", writeDate=" + writeDate
 				+ ", hit=" + hit + ", name=" + name + ", notice=" + notice + ", picture=" + picture + ", commentCount="
-				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + ", gup=" + gup +"]";
+				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + "]";
 	}
 	
 }

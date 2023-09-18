@@ -7,50 +7,40 @@
 <head>
 <meta charset="UTF-8">
 <title>푸터 로그인 후</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<div style="height: 200px; line-height: 70px; display: flex; justify-content: space-between; background: #f0f0f0">
-			<div style="line-height: 40px;">
-				<h5 style="margin:20px; font-size: 20pt;">Copyright &copy;</h5>
-				<h5 style="margin:20px; font-size: 20pt;">아무래도</h5>
-				<a href="../foodaryMainPageAfter"
-				style="font-family: 'insungitCutelivelyjisu';
-				margin:10px; font-size: 25pt; font-weight:900; color: black; text-decoration: none;">Foodary</a>
-			</div>
-			<div>
-				<h5 style="margin:10px; font-size: 17pt; font-weight:500; line-height: 25px;">
-					아무래도<br><br>
-					02.8282.8282<br><br>
-					ahmooraedo@gmail.com<br><br>
-					서울시 종로구 우정국로2길 21 9층
-				</h5>
-			</div>
-				<jsp:useBean id="date" class="java.util.Date"/>
-				<jsp:useBean id="time" class="java.util.Date"/>
-				<fmt:formatDate  value="${date}" pattern="yyyy-MM-dd" var="dietWriteDate"/>
-				<fmt:formatDate  value="${time}" pattern="HH:mm" var="dietWriteTime"/>
-			<div style="text-align: center;">
-				<div>
-					<a href="dietInsertView?id=${rvo.id}"
-						style="font-size: 20pt; color: black; text-decoration: none;">식단 쓰기</a><br/>
-					<a href="dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}"
-						style="font-size: 20pt; color: black; text-decoration: none;">식단 보기</a><br/>
-					<a href="../freeboard/listView" style="font-size: 20pt; color: black; text-decoration: none;">자유게시판</a>
-				</div>
-			</div>
-			<div style="text-align: center; line-height: 50px;">
-				<div>
-					<a href="#" style="font-size: 20pt; color: black; text-decoration: none; padding: 2px;">오한민</a><br/>
-					<a href="#" style="font-size: 20pt; color: black; text-decoration: none;">남수연</a><br/>
-					<a href="#" style="font-size: 20pt; color: black; text-decoration: none;">박상아</a><br/>
-					<a href="#" style="font-size: 20pt; color: black; text-decoration: none;">남현서</a><br/>
-				</div>
-			</div>
-			<div>
-				<h5 style="margin:20px; font-size: 25pt;">
-					by 아무래도
-				</h5>
-			</div>
-		</div>
+<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <p class="col-md-4 mb-0 text-body-secondary">ⓒ 2023 아무래도</p>
+
+		<a href="../main/foodaryMainPageAfter"
+			style="font-family: 'insungitCutelivelyjisu';
+			margin:10px; font-size: 25pt; font-weight:900; color: black; text-decoration: none;">Foodary</a>
+
+    <ul class="nav col-md-4 justify-content-end">
+      
+      	<jsp:useBean id="date" class="java.util.Date"/>
+		<jsp:useBean id="time" class="java.util.Date"/>
+		<fmt:formatDate  value="${date}" pattern="yyyy-MM-dd" var="dietWriteDate"/>
+		<fmt:formatDate  value="${time}" pattern="HH:mm" var="dietWriteTime"/>
+      <li class="nav-item">
+      	<a href="dietInsertView?id=${rvo.id}" class="nav-link px-2 text-body-secondary" style="color: black;">
+      		Foodary 쓰기
+      	</a>
+      </li>
+      <li class="nav-item">
+      	<a href="dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}" class="nav-link px-2 text-body-secondary" style="color: black;">
+      		Foodary 보기
+      	</a>
+      </li>
+      <li class="nav-item">
+      	<a href="../freeboard/listView" class="nav-link px-2 text-body-secondary" style="color: black;">
+      		자유게시판
+      	</a>
+      </li>
+    </ul>
+  </footer>
+
 </body>
 </html>

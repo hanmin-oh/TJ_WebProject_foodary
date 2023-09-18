@@ -29,14 +29,22 @@ public class HomeController {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private HttpSession session;
+	
 	@RequestMapping("/")
 	public String login(HttpServletRequest request, Model model) {
 		if (request.getParameter("message") != null) {
-			String name = request.getParameter("name");
-			String messages = "<script type='text/javascript'>" +
-					   "alert('" + name +"님 안녕히가세요!')</script>";
-			model.addAttribute("message", messages);
-			model.addAttribute("name", name);
+			if (request.getParameter("message").equals("logout")) {
+				String name = request.getParameter("name");
+				String messages = "<script type='text/javascript'>" +
+						   "alert('" + name +"님 안녕히가세요!')</script>";
+				model.addAttribute("message", messages);
+			} else if (request.getParameter("message").equals("Fail")) {
+				String messages = "<script type='text/javascript'>" +
+						   "alert('등록되지 않은 회원입니다.')</script>";
+				model.addAttribute("message", messages);
+			}
 		}
 		return "main/foodaryMainPageBefore2";
 	}
@@ -54,7 +62,6 @@ public class HomeController {
 
 	@RequestMapping("/main/foodaryMainPageAfter")
 	public String foodaryMainPageAfter(HttpServletRequest request, Model model, UserRegisterVO userRegisterVO) {
-		
 		int currentPage = 1;
 		int pageSize = 11;
 		try {
@@ -63,6 +70,8 @@ public class HomeController {
 		
 		FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 		int totalCount = mapper.freeboardSelectCount();
+		
+		mapper.deleteGupZero();
 		
 		AbstractApplicationContext ctx = new GenericXmlApplicationContext("classpath:applicationCTX.xml");
 		FreeboardList freeboardList = ctx.getBean("freeboardList", FreeboardList.class);
@@ -84,11 +93,11 @@ public class HomeController {
 			vo.setCommentCount(mapper.commentCount(vo.getIdx()));
 		}
 		
-//		공지글과 메인글의 목록을 request 영역에 저장해서 메인글을 화면에 표시하는 페이지(listView.jsp)로 넘겨준다.
 		model.addAttribute("notice", notice);
 		model.addAttribute("freeboardList", freeboardList);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("msg", request.getParameter("msg"));
-		return "main/foodaryMainPageAfter";
+	   	model.addAttribute("id", session.getAttribute("id"));
+		return "main/foodaryMainPageAfter2";
 	}
 }

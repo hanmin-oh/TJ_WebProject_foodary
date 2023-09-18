@@ -12,17 +12,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="../css/threeGrid.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div class="container">
   	<div class="main" align="center">
+  	<br>
 		<div class="dietContent_title">
 			<span style="background: #fafcd9; font-size: 30pt; font-weight: 900;">음식 검색</span>
 		</div>
-		   <br/>
-		<!-- 4 -->
 		<form id="myForm" action="foodList" method="POST">
-		   <table  width="1000" align="center" border="1" cellpadding="30" cellspacing="0" style="text-align: center;">
+		   <table  width="1000" align="center" class="table table-hover table-sm" style="text-align: center;">
 				<thead>
 				   <tr style="height: 60px;">
 			   		<th colspan="7" class="text-center"">
@@ -31,30 +32,34 @@
 				          <button class='button button1' type="submit" style="width: 100px; height: 30px;
 				          	background: none; border: 0; cursor: pointer;">
 				          	<span style="background: lavender; font-size: 30px; font-weight: 900;">검색</span>
-				          </button>     
+				          </button>   
+				           <button class='button button1' type="button" onclick="location.href='./foodAll'" style="width: 100px; height: 30px;
+				          	background: none; border: 0; cursor: pointer;">
+				          	<span style="background: lavender; font-size: 30px; font-weight: 900;">전체보기</span>
+				          </button>    
 			      	</th>
 				   </tr>
-					<tr class="info">
+					<tr class="info" style="background: lavender;">
 						<th style="text-align: center; width: 100px;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">번호</span>
+							<span style="font-size: 25px; font-weight: 900;">번호</span>
 						</th>
 						<th style="text-align: center; width: 250px;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">음식 이름</span>
+							<span style="font-size: 25px; font-weight: 900;">음식 이름</span>
 						</th>
 						<th style="text-align: center; width: 150px;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">칼로리</span>
+							<span style="font-size: 25px; font-weight: 900;" >칼로리</span>
 						</th>
 						<th style="text-align: center;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">탄수화물</span>
+							<span style="font-size: 25px; font-weight: 900;">탄수화물</span>
 						</th>
 						<th style="text-align: center;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">단백질</span>
+							<span style="font-size: 25px; font-weight: 900;">단백질</span>
 						</th>
 						<th style="text-align: center;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">지방</span>
+							<span style="font-size: 25px; font-weight: 900;">지방</span>
 						</th>
 						<th style="text-align: center; width: 100px;">
-							<span style="background: #baffda; font-size: 30px; font-weight: 900;">선택</span>
+							<span style="font-size: 25px; font-weight: 900;">선택</span>
 						</th>
 					</tr>
 				</thead>
@@ -64,7 +69,7 @@
 		       	<c:set var="list" value="${foodList.list}"/>
 			   <c:forEach var="vo" items="${list}">
 				<tr>
-			      <td class="text-center">
+			      <td class="text-center" style="background: #f0fff6;">
 			         ${vo.idx}
 			      </td>
 			      <td class="text-center">
@@ -82,8 +87,8 @@
 			      <td class="text-center">
 			           ${vo.fat}
 			      </td>
-			      <td class="text-center">
-			         <input type="checkbox" value="선택" name="foodName"/>      
+			      <td class="text-center" style="background: #fffdf5;">
+			         <input type="checkbox" value="선택" name="foodName" style="accent-color: #7a33ff;"/>      
 			      </td>
 			   </tr>
 			   </c:forEach>
@@ -192,10 +197,10 @@
 		        <input type="hidden" value="${rvo.id}" id="id" name="id"/>
 				   	<td colspan="8" align="center">
 						<button type="button" onclick="addData()" style="background: none; border: 0; cursor: pointer;">
-							<span style="background: lavender; font-size: 30px; font-weight: 900;">가져오기</span>
+							<span style="background: #baffda; font-size: 30px; font-weight: 900;">가져오기</span>
 						</button>&nbsp;&nbsp;&nbsp;
-						<button type="button" onclick="history.back()" style="background: none; border: 0; cursor: pointer;">
-							<span style="background: lavender; font-size: 30px; font-weight: 900;">돌아가기</span>
+						<button type="button" onclick="popupClose()" style="background: none; border: 0; cursor: pointer;">
+							<span style="background: #baffda; font-size: 30px; font-weight: 900;">돌아가기</span>
 						</button>
 				   	</td>
 			   	</tr>

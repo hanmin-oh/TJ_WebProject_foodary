@@ -22,7 +22,8 @@ function transferDiet() {
   var xhr = new XMLHttpRequest();
 
   // 요청을 보낼 URL을 지정합니다.
-  var url = './boardDiet?gup=' + gup + '&id=' + id;
+//  var url = './boardDiet?gup=' + gup + '&id=' + id;
+  var url = './insert?gup=' + gup + '&id=' + id;
 
   // GET 요청을 보냅니다. 필요에 따라 POST 요청으로 변경할 수 있습니다.
   xhr.open("GET", url, true);
