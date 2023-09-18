@@ -9,12 +9,21 @@ function setting(idx, mode, title, name, content) {
 //	수정 또는 삭제할 댓글 작성자 이름을 댓글 폼의 name 속성이 name인 텍스트 상자에 넣어준다.
 	frm.name.value = name;
 	
+	document.getElementById("commentBtnText").textContent = title;
+	
 	while (content.indexOf('<br/>') != -1) {
 		content = content.replace('<br/>', '\r\n');
 	}
 	frm.content.value = content;
 }
 
+function deleteOK() {
+    var confirmation = confirm("해당 글을 삭제하시겠습니까?\n(삭제 후에는 복구가 불가능 합니다.)");
+    if (confirmation) {
+    	location.href = "deleteOK?idx=" + $('#idx').val() +
+		"&currentPage=" + $('#currentPage').val()
+    }
+}
 
 
 

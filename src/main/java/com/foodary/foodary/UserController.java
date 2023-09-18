@@ -34,8 +34,10 @@ public class UserController {
 	   }
 
 	   @RequestMapping("/user/loginForm")
-	   public String loginForm() {
-		   // logger.info("register() 메소드 실행");
+	   public String loginForm(HttpServletRequest request, Model model) {
+			if (request.getParameter("message") != null) {
+					model.addAttribute("message", request.getParameter("message"));
+				}
 		   return "user/loginForm";
 	   }
 	   
@@ -111,7 +113,7 @@ public class UserController {
 	         return result + "";
 	      }
 	   
-	    @RequestMapping("/user/registerOK")
+	    @RequestMapping("/registerOK")
 	    public String registerOK(HttpServletRequest request, Model model, UserRegisterVO userRegisterVO) {
 	       // logger.info("registerOK() 실행");
 	       UserDAO mapper = sqlSession.getMapper(UserDAO.class);
@@ -123,11 +125,13 @@ public class UserController {
 	    public String loginOK(HttpServletRequest request, Model model, String id, String password) {
 	       // logger.info("loginOK() 실행");
 	       UserDAO mapper = sqlSession.getMapper(UserDAO.class);
-			try {
-				id = request.getParameter("id").trim();
-				password = request.getParameter("password").trim();
-			} catch (Exception e) { }
-			
+	        if (id == null || id.isEmpty()) {
+	            model.addAttribute("message", "아이디를 입력해주세요.");
+	            return "redirect:loginForm";
+	        } else if (password == null || password.isEmpty()) {
+	            model.addAttribute("message", "비밀번호를 입력해주세요.");
+	            return "redirect:loginForm";
+	        }
 			HashMap<String, String> hmap = new HashMap<String, String>();
 		    hmap.put("id", id);
 		    hmap.put("password", password);
@@ -137,20 +141,20 @@ public class UserController {
 		    	// logger.info("{}", userRegisterVO);
 		    	HttpSession session = request.getSession();
 		    	session.setAttribute("rvo", userRegisterVO);
+		    	session.setAttribute("id", userRegisterVO.getId());
 		    	return "redirect:../main/foodaryMainPageAfter";
 		    } else {
-		    	String msg = "	<script type=\"text/javascript\">" + 
-        				"		alert('등록되지 않은 회원입니다.')" + 
-        				"	</script>";
-                model.addAttribute("msg", msg);
-                return "redirect:/";
+                model.addAttribute("message", "일치하는 회원정보가 없습니다.");
+                return "redirect:loginForm";
 		    }
 		    
 	    }
 
 	    @RequestMapping("/user/myPageOK")
 	    public String myPageOK(HttpServletRequest request, Model model, UserRegisterVO userRegisterVO) {
-	       return "user/myPageView";
+	    	UserDAO mapper = sqlSession.getMapper(UserDAO.class);
+	        mapper.deleteGupZero();
+	    	return "user/myPageView";
 	    }
 	    
 	    @RequestMapping("user/userInfoUpdate")

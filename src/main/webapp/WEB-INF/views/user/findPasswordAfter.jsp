@@ -13,10 +13,7 @@
 </head>
 <body>
 <body>
-<div class="container">
-   <div class="header">
-      <jsp:include page="./headerAfter.jsp"></jsp:include>
-   </div>
+<div class="container" style="margin-top: 13%;">
    <div style="text-align: center;" align="center">
       <form>
       <c:choose>

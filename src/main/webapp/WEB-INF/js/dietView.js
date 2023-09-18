@@ -1,5 +1,5 @@
 function photoView(event) {
-	   $('#output').attr('src', URL.createObjectURL(event.target.files[0]));
+      $('#output').attr('src', URL.createObjectURL(event.target.files[0]));
 }
 
 //idx활용, index활용 수정 완료!! 
@@ -21,7 +21,7 @@ function updateUserFood(idx , index) {
 }
 
  function showNutrient() {
-	 
+    
    var kcalElements = document.getElementsByClassName("kcals");
 //   var carbsElements = document.getElementsByClassName("carbs");
 //   var proteinElements = document.getElementsByClassName("proteins");
@@ -45,10 +45,10 @@ function updateUserFood(idx , index) {
      
 
 }
-	 console.log(userKcals);
-	 console.log(userCarbs);
-	 console.log(userProteins);
-	 console.log(userFats);    // ["50", "60", "70"]
+    console.log(userKcals);
+    console.log(userCarbs);
+    console.log(userProteins);
+    console.log(userFats);    // ["50", "60", "70"]
      
    var kcalSum = 0;
    var carbsSum  = 0;
@@ -109,17 +109,30 @@ function updateUserFood(idx , index) {
       }
       
        
-	   var kcalGraph = document.getElementById("kcalGraph");
-	   var carbsGraph = document.getElementById("carbsGraph");
-	   var proteinGraph = document.getElementById("proteinGraph");
-	   var fatGraph = document.getElementById("fatGraph");
-	   
-	   
-	   	kcalGraph.style.width =  kcalSum / kcal * 100 + "%";// 너비 값을 변경
-		carbsGraph.style.width = carbsSum / carbs * 100 + "%";// 너비 값을 변경
-		proteinGraph.style.width = proteinSum / protein * 100 + "%";// 너비 값을 변경
-		fatGraph.style.width = fatSum / fat * 100  + "%";// 너비 값을 변경
-		
+      var kcalGraph = document.getElementById("kcalGraph");
+      var carbsGraph = document.getElementById("carbsGraph");
+      var proteinGraph = document.getElementById("proteinGraph");
+      var fatGraph = document.getElementById("fatGraph");
+      
+     // 본인의 총 칼로리양 초과 시 그래프 색 변경
+      if(parseInt(kcalSum) > parseInt(kcal)) {
+         $('#kcalGraph').css('background', '#F07272');
+      }
+      if(parseInt(carbsSum) > parseInt(carbs)) {
+         $('#carbsGraph').css('background', '#F07272');
+      }
+      if(parseInt(proteinSum) > parseInt(protein)) {
+         $('#proteinGraph').css('background', '#F07272');
+      }
+      if(parseInt(fatSum) > parseInt(fat)) {
+         $('#fatGraph').css('background', '#F07272');
+      }
+      
+      kcalGraph.style.width =  kcalSum / kcal * 100 + "%";// 너비 값을 변경
+      carbsGraph.style.width = carbsSum / carbs * 100 + "%";// 너비 값을 변경
+      proteinGraph.style.width = proteinSum / protein * 100 + "%";// 너비 값을 변경
+      fatGraph.style.width = fatSum / fat * 100  + "%";// 너비 값을 변경
+      
       // console.log(kcal, carbs, protein, fat);
       $('#kcalGraph').attr('aria-valuemax', parseInt(kcal)); 
       $('#kcalGraph').text(parseInt(kcalSum) + 'kcal / ' + parseInt(kcal) + ' kcal');
@@ -142,3 +155,29 @@ function updateUserFood(idx , index) {
       $('#height').val('');
    }
 }
+
+function deleteOK() {
+    var confirmation = confirm("해당 글을 삭제하시겠습니까?\n(삭제 후에는 복구가 불가능 합니다.)");
+    if (confirmation) {
+    	location.href="dietDelete?idx=" + $('#idx').val() +
+    				"&id=" + $('#id').val() +
+    				"&dietWriteDate=" + $('#dietWriteDate').val() +
+    				"&gup=" + $('#gup').val()
+    }
+} 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

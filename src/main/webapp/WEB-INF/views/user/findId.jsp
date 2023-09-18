@@ -11,10 +11,7 @@
 <link rel="stylesheet" href="../css/threeGrid.css"/>
 </head>
 <body>
-<div class="container">
-      <div class="header">
-      <jsp:include page="./headerAfter.jsp"></jsp:include>
-   </div>
+<div class="container" style="margin-top: 13%;">
    <div style="text-align: center;" align="center">
       <form action="findIdOK" method="post" enctype="multipart/form-data" onsubmit="return changeIdBefore()">
          <div>
@@ -34,9 +31,6 @@
             </button>
          </div>
       </form>
-   </div>
-   <div class="footer">
-      <jsp:include page="./footerAfter.jsp"></jsp:include>
    </div>
 </div>
 </body>

@@ -53,9 +53,6 @@
 
 				// Remove original image.
 					$img.remove();
-
 			});
-
 	});
-
 })(jQuery);

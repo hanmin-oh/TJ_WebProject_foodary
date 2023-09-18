@@ -6,7 +6,6 @@ import java.util.HashMap;
 import com.foodary.foodary.Param;
 import com.foodary.vo.DietVO;
 import com.foodary.vo.FoodVO;
-import com.foodary.vo.UserFoodList;
 import com.foodary.vo.UserFoodVO;
 
 public interface DietDAO {
@@ -38,7 +37,7 @@ public interface DietDAO {
 	ArrayList<UserFoodVO> userFoodListGup(int gup);
 
 	DietVO selectDiet(HashMap<String, String> hmap);
-
+	
 	ArrayList<UserFoodVO> updateDietUserFood(int gup);
 
 	void updateDiet(DietVO dvo);
@@ -52,11 +51,16 @@ public interface DietDAO {
 	void deleteDietList(int idx);
 
 	void deleteDietUserFood(int gup);
+
+	ArrayList<DietVO> selectGup(HashMap<String, String> hmap);
+
+	ArrayList<DietVO> selectDietGup(int gup);
+
+	void deleteGupZero();
+
+	int selectCountFood(String foodName);
 	
-   ArrayList<DietVO> selectGup(HashMap<String, String> hmap);
-
-   ArrayList<DietVO> selectDietGup(int gup);
-
 	
-
+	
+	
 }

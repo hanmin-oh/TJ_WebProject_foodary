@@ -20,37 +20,37 @@
 <link rel="stylesheet" href="./css/style.css"/>
 </head>
 <body>
-	   <table>
-	      <tr>
+	   <table class="table table-hover table-sm" style="width: 1000px;">
+	      <tr style="background: #f5f5ff; height: 40px; vertical-align: middle;">
 	         <th colspan="2" style="text-align: left;">
-	           	&nbsp; <span style="background: #baffda; font-size: 30pt;">★ 자유게시판 ★</span>
+	           	&nbsp; <span style="font-size: 30pt;">< 자유게시판 ></span>
 	         </th>
 	         <td>
-	       		<button type="button" onclick="location.href='/foodary_final/JSP_freeboard/list.jsp'">
-	       			<span style="text-align: right; font-size: 22pt; background: #d4ffe8; font-weight: 800;">보러가기</span>
+	       		<button type="button" onclick="location.href='../freeboard/listView'" style="background: none;">
+	       			<span style="text-align: right; font-size: 22pt; background: #d1ffe5; font-weight: 800;">보러가기</span>
 	       		</button>
 	       	</td>
 	      </tr>
-	      <tr style="background: lavender;">
+	      <tr style="background: lavender; height: 30px;">
 			 <td style="width: 100px; text-align: center; font-size: 18pt; font-weight: 800;">No</td>
-	         <td style="width: 520px; font-size: 18pt; font-weight: 800; padding-left: 20px;">제목</td>
-	         <td style="width: 70px; text-align: center; font-size: 18pt; font-weight: 800;" colspan="2">조회수</td>
+	         <td style="width: 800px; font-size: 18pt; font-weight: 800; padding-left: 20px;">제목</td>
+	         <td style="width: 100px; text-align: center; font-size: 18pt; font-weight: 800;" colspan="2">조회수</td>
 	      </tr>
 		<jsp:useBean id="date" class="java.util.Date"/>
 		
 		<!-- 공지글을 출력한다. -->
 		<c:forEach var="vo" items="${notice}" begin="0" end="1">
-		<tr class="table-warning">
+		<tr style="background: #fffdf5;">
 			<td align="center" style="font-size: 18pt;">
 				[공지]
 			</td>
 			<td>
 				<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
 				<c:set var="subject" value="${fn:replace(subject, '>', '&gt;')}"/>
-				<button onclick="../increment?idx=${vo.idx}&currentPage=1'"
-					style="font-size: 18pt; color: black; text-decoration: none;">
+				<button onclick="location.href='../freeboard/increment?idx=${vo.idx}&currentPage=1'"
+					style="font-size: 18pt; color: black; text-decoration: none; background: none;">
 					${subject}(${vo.commentCount})
-				</button>>
+				</button>
 			</td>
 			<td align="center" style="font-size: 18pt;">${vo.hit}</td>
 		</tr>
@@ -79,7 +79,7 @@
 				<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
 				<c:set var="subject" value="${fn:replace(subject, '>', '&gt;')}"/>
 				
-				<button onclick="location.href='freeboard/increment?idx=${vo.idx}&currentPage=1'"
+				<button onclick="location.href='../freeboard/increment?idx=${vo.idx}&currentPage=1'"
 					style="font-size: 18pt; color: black; background: none; border: 0;">
 					${subject}(${vo.commentCount})
 				</button>

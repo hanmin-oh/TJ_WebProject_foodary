@@ -145,6 +145,19 @@ function updateUserFood(idx , index) {
 	   var proteinGraph = document.getElementById("proteinGraph");
 	   var fatGraph = document.getElementById("fatGraph");
 	   
+	   // 본인의 총 칼로리양 초과 시 그래프 색 변경
+	      if(parseInt(kcalSum) > parseInt(kcal)) {
+	         $('#kcalGraph').css('background', '#F07272');
+	      }
+	      if(parseInt(carbsSum) > parseInt(carbs)) {
+	         $('#carbsGraph').css('background', '#F07272');
+	      }
+	      if(parseInt(proteinSum) > parseInt(protein)) {
+	         $('#proteinGraph').css('background', '#F07272');
+	      }
+	      if(parseInt(fatSum) > parseInt(fat)) {
+	         $('#fatGraph').css('background', '#F07272');
+	      }
 	   
 	   	kcalGraph.style.width =  kcalSum / kcal * 100 + "%";// 너비 값을 변경
 		carbsGraph.style.width = carbsSum / carbs * 100 + "%";// 너비 값을 변경
@@ -172,4 +185,15 @@ function updateUserFood(idx , index) {
       $('#age').val('');
       $('#height').val('');
    }
+}
+ 
+function insertCheck() {
+		if ($('#memo').val().trim() === "") {
+		alert('메모를 입력해주세요')
+		$('#memo').val('');
+		$('#memo').focus();
+		return false;
+	} else {
+		return true;
+	}
 }
