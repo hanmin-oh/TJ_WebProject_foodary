@@ -67,7 +67,7 @@
 	<!-- 중간영역 -->
 	<div class="main">
 	<br/><br/>
-		<form action="shareInsertOK" method="post" enctype="multipart/form-data" onsubmit="return insertCheck()">
+		<form action="insertOK" method="post" enctype="multipart/form-data" onsubmit="return insertCheck()">
 			<table cellpadding="5" cellspacing="20" style="width: 700px; margin-left: auto; margin-right: auto; vertical-align: middle;">
 				<tr>
 					<th colspan="4" style="text-align: center;"><span style="background: #baffda; font-size: 45px;"><아무 말이나 끄적여 보세요></span></th>
@@ -110,9 +110,6 @@
          		<tr> 
 			<tr>
 			${userFoodList}
-		  <%--  <c:set var="list" value="${userFoodList.UserFoodVO}"/> 
-		   <c:forEach var="uvo" items="${UserFoodVO.list}" varStatus="status">--%>
-<%-- 		    <c:forEach var="uvo" items="${list}" varStatus="status"> --%>
          		<c:if test="${vo.gup != null}">
  				<c:forEach items="${userFoodList}" var="uvo" varStatus="status">
 			   <tr>

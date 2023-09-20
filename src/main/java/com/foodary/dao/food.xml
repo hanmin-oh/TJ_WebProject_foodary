@@ -37,9 +37,9 @@
 		values (userfood_idx_seq.nextval, #{gup}, #{foodName}, #{kcal}, #{carbs}, #{protein}, #{fat}, #{id})
 	</insert>
 	
-	<select id="userFoodList" parameterType="int" resultType="uvo">
+	<select id="userFoodList" resultType="uvo">
 		select * from userfood where gup = 0 order by IDX desc
-	</select>
+	</select> 
 	
 	<update id="updateUserFood" parameterType="uvo">
 		update userfood set foodName = #{foodName}, kcal = #{kcal}, carbs = #{carbs}, protein = #{protein}, fat = #{fat} where idx = #{idx}

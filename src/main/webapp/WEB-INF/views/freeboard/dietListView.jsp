@@ -192,6 +192,7 @@
 				            	</a>
 				            	<input id="id" type="text" name="id" value="${dvo.id}" style="width: 200px;"/>
 				            	<input id="gup" type="text" name="gup" value="${dvo.gup}" style="width: 200px;"/>
+				            	<input id="dietWriteDate" type="text" name="dietWriteDate" value="${dvo.dietWriteDate}" style="width: 200px;"/>
 				            </th>
 				      	<c:set var="list" value="${userFoodList.list}"/>
 					        <td>
@@ -208,7 +209,7 @@
 	   		<button type="button" 
                      style="background: none; border: 0; 
                      cursor: pointer;"
-                     onclick="location.href='dietViewAll?dietWriteDate=${dietWriteDate}&id=${rvo.id}'">
+                     onclick="transferDiet()">
                      <span style="background: lavender; font-size: 27pt; font-weight: 900;">식단 보기</span>
                </button>
 		</div>

@@ -4,8 +4,8 @@
 
 	<!-- 메인글 1건을 저장한다. -->
 	<insert id="freeboardInsert" parameterType="vo">
-		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, gup) 
-		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{gup})
+		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, userfood_gup) 
+		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{userfood_gup})
 	</insert>
 	
 	<!-- 메인글 전체 개수를 얻어온다. -->
@@ -50,11 +50,11 @@
 	</select>
 	
 	<select id="selectUserFood" parameterType="int" resultType="uvo">
-		select * from userfood where gup = #{gup}
+		select * from userfood where gup = #{userfood_gup}
 	</select>
 	
 	<select id="selectDiet" parameterType="int" resultType="dvo">
-      	select * from diet where gup = #{gup}
+      	select * from diet where gup = #{userfood_gup}
    </select>
 	
 </mapper>

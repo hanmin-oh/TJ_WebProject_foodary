@@ -162,7 +162,7 @@
 					</c:if>
 				</td>
 			</tr>
-			<c:if test="${vo.gup != 0}">
+			<c:if test="${vo.userfood_gup != 0}">
 			<tr>
 			${userFoodList}
 		  <%--  <c:set var="list" value="${userFoodList.UserFoodVO}"/> 

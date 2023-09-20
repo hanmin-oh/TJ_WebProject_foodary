@@ -14,15 +14,18 @@
 function transferDiet() {
   var gupEl = document.getElementById("gup");
   var idEl = document.getElementById("id");
+  var dietWriteDateEl = document.getElementById("dietWriteDate");
   const gup = gupEl.value;
   const id = idEl.value;
-  console.log(gup, id);
+  const dietWriteDate = dietWriteDateEl.value;
+  console.log(gup, id, dietWriteDate);
 
   // XMLHttpRequest 객체를 생성합니다.
   var xhr = new XMLHttpRequest();
 
   // 요청을 보낼 URL을 지정합니다.
-  var url = './boardDiet?gup=' + gup + '&id=' + id;
+  var url = './boardDiet?gup=' + gup + '&id=' + id + '&dietWriteDate=' + encodeURIComponent(dietWriteDate);
+//  encodeURIComponent(protein)
 
   // GET 요청을 보냅니다. 필요에 따라 POST 요청으로 변경할 수 있습니다.
   xhr.open("GET", url, true);

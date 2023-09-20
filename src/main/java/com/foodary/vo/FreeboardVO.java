@@ -16,11 +16,12 @@ public class FreeboardVO {
 	private int commentCount; // 댓글의 개수
 	private String id;
 	private String realFilePath;
-	private int gup;
+	private int userfood_gup;
 	
 	public FreeboardVO() { }
+
 	public FreeboardVO(int idx, String subject, String content, Date writeDate, int hit, String name, String notice,
-			String picture, int commentCount, String id, String realFilePath, int gup) {
+			String picture, int commentCount, String id, String realFilePath, int userfood_gup) {
 		super();
 		this.idx = idx;
 		this.subject = subject;
@@ -33,85 +34,113 @@ public class FreeboardVO {
 		this.commentCount = commentCount;
 		this.id = id;
 		this.realFilePath = realFilePath;
-		this.gup = gup;
+		this.userfood_gup = userfood_gup;
 	}
+
 	public int getIdx() {
 		return idx;
 	}
+
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}
+
 	public String getSubject() {
 		return subject;
 	}
+
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+
 	public String getContent() {
 		return content;
 	}
+
 	public void setContent(String content) {
 		this.content = content;
 	}
+
 	public Date getWriteDate() {
 		return writeDate;
 	}
+
 	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
+
 	public int getHit() {
 		return hit;
 	}
+
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getNotice() {
 		return notice;
 	}
+
 	public void setNotice(String notice) {
 		this.notice = notice;
 	}
+
 	public String getPicture() {
 		return picture;
 	}
+
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+
 	public int getCommentCount() {
 		return commentCount;
 	}
+
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getRealFilePath() {
 		return realFilePath;
 	}
+
 	public void setRealFilePath(String realFilePath) {
 		this.realFilePath = realFilePath;
 	}
-	public int getGup() {
-		return gup;
+
+	public int getUserfood_gup() {
+		return userfood_gup;
 	}
-	public void setGup(int gup) {
-		this.gup = gup;
+
+	public void setUserfood_gup(int userfood_gup) {
+		this.userfood_gup = userfood_gup;
 	}
+
 	@Override
 	public String toString() {
 		return "FreeboardVO [idx=" + idx + ", subject=" + subject + ", content=" + content + ", writeDate=" + writeDate
 				+ ", hit=" + hit + ", name=" + name + ", notice=" + notice + ", picture=" + picture + ", commentCount="
-				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + ", gup=" + gup +"]";
+				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + ", userfood_gup=" + userfood_gup
+				+ "]";
 	}
+	
+	
 	
 }

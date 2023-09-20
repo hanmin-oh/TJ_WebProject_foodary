@@ -114,11 +114,6 @@
          <c:set var="list" value="${userFoodList.list}"/><!-- 해당 시간대만 -->
          <table width="1500" align="center" border="0" cellpadding="10" cellspacing="10">
             <!-- 1 -->
-    <%--         <tr>
-          ${selectDietList}<br/>
-          ${userFoodList}<br/>   
-          ${selectDietList[0]}
-            </tr> --%>
           <c:forEach var="diet" items="${selectDietList}">
              <tr>
 		        <th colspan="5">

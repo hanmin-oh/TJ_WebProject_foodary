@@ -3,6 +3,7 @@ package com.foodary.foodary;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -18,6 +19,7 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -79,16 +81,31 @@ public class FreeboardController {
 		}
 	   
 	   @RequestMapping("/freeboard/boardDiet")
-		public String boardDiet(HttpServletRequest request, Model model, HttpSession session) {
+		public String boardDiet(HttpServletRequest request, Model model, @RequestParam("dietWriteDate") String dietWriteDate,HttpSession session) {
 			logger.info("freeboard의 boardDiet 메소드 실행");
 			DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-			int gup = Integer.parseInt(request.getParameter("gup"));
-			System.out.println(gup);
-			ArrayList<UserFoodVO> userFoodList = mapper.userFoodListGup(gup);
+			System.out.println(dietWriteDate);
+			ArrayList<DietVO> dietList = mapper.dateGetDiet(dietWriteDate);
+			System.out.println(dietList.get(0).getGup());
+			System.out.println(dietList.get(1).getGup());
+			System.out.println(dietList);
+			
+			// gupList 배열 선언
+			int[] gupList = new int[dietList.size()];
+
+			// 반복문을 사용하여 dietList의 각 요소의 getGup() 값을 gupList 배열에 넣기
+			for (int i = 0; i < dietList.size(); i++) {
+				int gup = dietList.get(i).getGup(); // 리스트에서 Diet 객체 가져오기
+			    gupList[i] = gup; // gup 값을 배열에 저장
+			}
+			System.out.println(Arrays.toString(gupList));
+			ArrayList<UserFoodVO> userFoodList = mapper.getFoodListGup(gupList);
 			System.out.println(userFoodList);
 			
-			model.addAttribute("userFoodList", userFoodList);
-			return "freeboard/insert";
+			//새로운 테이블에 음식 이름, 칼,탄,단,지,시간 넣기
+			
+			//인서트 페이지에 구현하기
+			return "1";
 		}
 	   
 	   @RequestMapping("/freeboard/insertOK")
@@ -187,12 +204,12 @@ public class FreeboardController {
 	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 	      
 	      int idx = Integer.parseInt(request.getParameter("idx"));
-	      int gup = Integer.parseInt(request.getParameter("gup"));
-	      System.out.println(gup);
+	      int userfood_gup = Integer.parseInt(request.getParameter("userfood_gup"));
+	      System.out.println(userfood_gup);
 		   mapper.freeboardIncrement(idx);
 		   
 		   model.addAttribute("idx", request.getParameter("idx"));
-		   model.addAttribute("gup", request.getParameter("gup"));
+		   model.addAttribute("userfood_gup", request.getParameter("userfood_gup"));
 		   model.addAttribute("currentPage", request.getParameter("currentPage"));
 	      
 	      return "redirect:contentView";
@@ -203,12 +220,12 @@ public class FreeboardController {
 	      logger.info("contentView() 메소드 실행");
 	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 	      int idx = Integer.parseInt(request.getParameter("idx"));
-		   int gup = Integer.parseInt(request.getParameter("gup"));
+		   int userfood_gup = Integer.parseInt(request.getParameter("userfood_gup"));
 	      FreeboardVO freeboardVO = mapper.freeboardSelectByIdx(idx);
 	      logger.info("{}", freeboardVO);
-	      System.out.println("contentView()의 gup " + gup);
-	      DietVO dvo = mapper.selectDiet(gup);
-		   ArrayList<UserFoodVO> userFoodList = mapper.selectUserFood(gup);
+	      System.out.println("contentView()의 gup " + userfood_gup);
+	      DietVO dvo = mapper.selectDiet(userfood_gup);
+		   ArrayList<UserFoodVO> userFoodList = mapper.selectUserFood(userfood_gup);
 		   System.out.println(dvo);
 		   System.out.println(userFoodList);
 		   model.addAttribute("dvo", dvo);
@@ -333,42 +350,42 @@ public class FreeboardController {
 	      return "freeboard/shareInsert";
 	   }
 	   
-	   @RequestMapping("/freeboard/shareInsertOK")
-	   public String shareInsertOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO, UserRegisterVO userRegisterVO) {
-	      logger.info("shareInsertOK() 메소드 실행 -  커맨드 객체 사용");
-	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
-	      String rootUploadDir = "C:\\upload\\freeboard"; // 업로드 될 파일 경로
-	      System.out.println("게시판 gup===" + freeboardVO.getGup());
-	      // 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
-	      Date date = new Date();
-	      SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
-	      MultipartFile multipartFile = request.getFile("fileName");
-	      String originalFilename = multipartFile.getOriginalFilename().trim();
-	      if (originalFilename.isEmpty())  {
-	    	  String picture = "";
-	    	  String realFilePath = "";
-	    	  freeboardVO.setId(userRegisterVO.getId());
-	    	  freeboardVO.setPicture(picture);
-	    	  freeboardVO.setRealFilePath(realFilePath);
-	    	  logger.info("{}", freeboardVO);
-	    	  mapper.freeboardInsert(freeboardVO);
-	      }
-	      else {
-	    		  String picture = sdf.format(date) + "_" + originalFilename; // 업로드해서 실제로 저장될 파일명
-	    		  File dir = new File(rootUploadDir, picture);
-	    		  String realFilePath = dir.getPath();
-	    		  try {
-	    			  multipartFile.transferTo(dir);  // 업로드해주는 코드
-	    		  } catch (Exception e) { }
-	    		  freeboardVO.setId(userRegisterVO.getId());
-	    		  freeboardVO.setPicture(picture);
-	    		  freeboardVO.setRealFilePath(realFilePath);
-	    		  logger.info("{}", freeboardVO);
-	    		  mapper.freeboardInsert(freeboardVO);
-	      } 
-	      	model.addAttribute("result", "insertOK");
-	    	return "redirect:listView";
-	   }
+//	   @RequestMapping("/freeboard/shareInsertOK")
+//	   public String shareInsertOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO, UserRegisterVO userRegisterVO) {
+//	      logger.info("shareInsertOK() 메소드 실행 -  커맨드 객체 사용");
+//	      FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
+//	      String rootUploadDir = "C:\\upload\\freeboard"; // 업로드 될 파일 경로
+//	      System.out.println("게시판 gup===" + freeboardVO.getUserfood_gup());
+//	      // 사진 파일명에 날짜를 붙여주기 위해 가져온 Date클래스 객체
+//	      Date date = new Date();
+//	      SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+//	      MultipartFile multipartFile = request.getFile("fileName");
+//	      String originalFilename = multipartFile.getOriginalFilename().trim();
+//	      if (originalFilename.isEmpty())  {
+//	    	  String picture = "";
+//	    	  String realFilePath = "";
+//	    	  freeboardVO.setId(userRegisterVO.getId());
+//	    	  freeboardVO.setPicture(picture);
+//	    	  freeboardVO.setRealFilePath(realFilePath);
+//	    	  logger.info("{}", freeboardVO);
+//	    	  mapper.freeboardInsert(freeboardVO);
+//	      }
+//	      else {
+//	    		  String picture = sdf.format(date) + "_" + originalFilename; // 업로드해서 실제로 저장될 파일명
+//	    		  File dir = new File(rootUploadDir, picture);
+//	    		  String realFilePath = dir.getPath();
+//	    		  try {
+//	    			  multipartFile.transferTo(dir);  // 업로드해주는 코드
+//	    		  } catch (Exception e) { }
+//	    		  freeboardVO.setId(userRegisterVO.getId());
+//	    		  freeboardVO.setPicture(picture);
+//	    		  freeboardVO.setRealFilePath(realFilePath);
+//	    		  logger.info("{}", freeboardVO);
+//	    		  mapper.freeboardInsert(freeboardVO);
+//	      } 
+//	      	model.addAttribute("result", "insertOK");
+//	    	return "redirect:listView";
+//	   }
 	   
 	   @RequestMapping("/freeboard/shareView")
 	   public String shareView(HttpServletRequest request, Model model) {
