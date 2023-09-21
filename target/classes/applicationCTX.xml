@@ -20,4 +20,7 @@
 
 	<bean id="userFoodVO" class="com.foodary.vo.UserFoodVO"/>
 	<bean id="userFoodList" class="com.foodary.vo.UserFoodList"/>
+	
+	<bean id="shareDietVO" class="com.foodary.vo.ShareDietVO"/>
+	<bean id="shareDietList" class="com.foodary.vo.ShareDietList"/>
 </beans>

@@ -82,7 +82,14 @@
 	  <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
 	    #{item}
 	  </foreach>
-  </select>
+  	</select>
+  	
+  	<insert id="insertShare" parameterType="java.util.List">
+    		INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime) VALUES
+	    <foreach collection="list" item="list" separator=",">
+	        (shareDiet_idx_seq.nextval, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime})
+	    </foreach>
+	</insert>
    
 </mapper>
 

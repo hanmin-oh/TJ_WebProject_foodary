@@ -184,15 +184,15 @@
 			    <table width="400" border="0" align="center">
 			      <c:set var="list" value="${dietList.list}"/>
 				       <c:forEach var="dvo" items="${list}">
+				       <input id="id" type="text" name="id" value="${dvo.id}" style="width: 200px;"/>
+				            	<input id="gup" type="text" name="gup" value="${dvo.gup}" style="width: 200px;"/>
+				            	<input id="dietWriteDate" type="text" name="dietWriteDate" value="${dvo.dietWriteDate}" style="width: 200px;"/>
 				         <tr>
 				            <th>
 				            	<a href="#" onclick="transferDiet();"
 				            	style="text-decoration: none; color: black; cursor: pointer;">
 				            	<span style="background: #baffda; font-size: 25pt; font-weight: 900;">${dvo.dietWriteTime}</span> &nbsp;&nbsp;
 				            	</a>
-				            	<input id="id" type="text" name="id" value="${dvo.id}" style="width: 200px;"/>
-				            	<input id="gup" type="text" name="gup" value="${dvo.gup}" style="width: 200px;"/>
-				            	<input id="dietWriteDate" type="text" name="dietWriteDate" value="${dvo.dietWriteDate}" style="width: 200px;"/>
 				            </th>
 				      	<c:set var="list" value="${userFoodList.list}"/>
 					        <td>

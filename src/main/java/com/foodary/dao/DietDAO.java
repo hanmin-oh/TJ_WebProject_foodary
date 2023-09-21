@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.foodary.foodary.Param;
 import com.foodary.vo.DietVO;
 import com.foodary.vo.FoodVO;
+import com.foodary.vo.ShareDietVO;
 import com.foodary.vo.UserFoodVO;
 
 public interface DietDAO {
@@ -59,6 +60,9 @@ public interface DietDAO {
    ArrayList<DietVO> dateGetDiet(String dietWriteDate);
 
    ArrayList<UserFoodVO> getFoodListGup(int[] gupList);
+
+   void insertShare(ArrayList<ShareDietVO> shareDietList);
+
 
 
 

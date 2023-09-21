@@ -109,24 +109,24 @@
          		</tr>
          		<tr> 
 			<tr>
-			${userFoodList}
+			${shareDietList}
          		<c:if test="${vo.gup != null}">
- 				<c:forEach items="${userFoodList}" var="uvo" varStatus="status">
+ 				<c:forEach items="${shareDietList}" var="svo" varStatus="status">
 			   <tr>
 			      <th class="kcals" id="kcal"><span style="background: lavender; font-size: 25pt;">음식 이름</span> :&nbsp; 
-			         <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${uvo.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
+			         <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${svo.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">칼로리</span> :&nbsp; 
-			         <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${uvo.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
+			         <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${svo.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">탄수화물</span> :&nbsp; 
-			         <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${uvo.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			         <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${svo.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">단백질</span> :&nbsp; 
-			         <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${uvo.protein}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
+			         <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${svo.protein}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">지방</span> :&nbsp; 
-			         <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${uvo.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			         <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${svo.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
 			      </th>
 			   </tr>
 			   </c:forEach>

@@ -31,6 +31,8 @@ import com.foodary.vo.FreeboardCommentList;
 import com.foodary.vo.FreeboardCommentVO;
 import com.foodary.vo.FreeboardList;
 import com.foodary.vo.FreeboardVO;
+import com.foodary.vo.ShareDietList;
+import com.foodary.vo.ShareDietVO;
 import com.foodary.vo.UserFoodList;
 import com.foodary.vo.UserFoodVO;
 import com.foodary.vo.UserRegisterVO;
@@ -100,12 +102,45 @@ public class FreeboardController {
 			}
 			System.out.println(Arrays.toString(gupList));
 			ArrayList<UserFoodVO> userFoodList = mapper.getFoodListGup(gupList);
-			System.out.println(userFoodList);
 			
 			//새로운 테이블에 음식 이름, 칼,탄,단,지,시간 넣기
+			//shareList 배열 생성
+			ArrayList<ShareDietVO> shareDietList = new ArrayList<>();
+			for (UserFoodVO userFood : userFoodList) {
+			    ShareDietVO shareDietVO = new ShareDietVO();
+			    shareDietVO.setFoodName(userFood.getFoodName());
+			    shareDietVO.setKcal(userFood.getKcal());
+			    shareDietVO.setCarbs(userFood.getCarbs());
+			    shareDietVO.setProtein(userFood.getProtein());
+			    shareDietVO.setFat(userFood.getFat());
+			    shareDietVO.setDietDate(dietWriteDate);
+			    
+			    // userFoodVO의 gup을 기준으로 해당 dietVO를 찾음
+			    DietVO matchingDiet = null;
+			    for (DietVO diet : dietList) {
+			        if (diet.getGup() == userFood.getGup()) {
+			            matchingDiet = diet;
+			            break; // 일치하는 dietVO를 찾았으므로 루프 종료
+			        }
+			    }
+			    
+			    // matchingDiet에서 dietWriteTime을 가져와 설정
+			    if (matchingDiet != null) {
+			        shareDietVO.setDietTime(matchingDiet.getDietWriteTime());
+			    } else {
+			        // 일치하는 dietVO를 찾지 못한 경우에 대한 처리 (선택적)
+			        // 예: 기본값 설정 또는 예외 처리
+			        shareDietVO.setDietTime("기본값"); // 또는 예외 처리 등
+			    }
+			    
+			    shareDietList.add(shareDietVO);
+			}
 			
-			//인서트 페이지에 구현하기
-			return "1";
+			System.out.println(shareDietList);
+			mapper.insertShare(shareDietList);
+			model.addAttribute("shareDietList" , shareDietList);
+			
+			return "freeboard/insert";
 		}
 	   
 	   @RequestMapping("/freeboard/insertOK")
