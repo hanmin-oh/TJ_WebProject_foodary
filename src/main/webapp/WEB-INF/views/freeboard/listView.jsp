@@ -10,6 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="../css/threeGrid.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 ${result}
@@ -18,36 +20,32 @@ ${result}
 	   <jsp:include page="./headerAfter.jsp"></jsp:include>
 	</div>
 	<div class="main">
-		<table style="width: 1000px; margin-left: auto; margin-right: auto;" cellpadding="5" cellspacing="8">
-			<tr>
+		<table style="width: 1000px; margin-left: auto; margin-right: auto;" class="table table-hover table-sm">
+			<tr style="background: lavender; height: 30px;">
 				<th colspan="5" style="text-align: center;">
-					<span style="background: #baffda; font-size: 40px;">< 자유게시판 ></span>
+					<span style="font-size: 40px; background: #fcf9dc;">< 자유게시판 ></span>
 				</th>
 			</tr>
-			<tr>
+			<tr style="background: #fffdf5;">
 				<td colspan="5" align="right">
-					<span style="background: #fafcd9;">${freeboardList.totalCount}(${freeboardList.currentPage} / ${freeboardList.totalPage})</span> 
+					<span>${freeboardList.totalCount}(${freeboardList.currentPage} / ${freeboardList.totalPage})</span> 
 				</td>
 			</tr>
-			<tr style="font-weight: 800;">
+			<tr style="font-weight: 800; background: #f0fff6;">
 				<td style="width: 70px; text-align: center;"><span style="background: lavender;">No.</span></td>
-				<td style="width: 610px; text-align: center;"><span style="background: lavender;">제목</span></td>
-				<td style="width: 100px; text-align: center;"><span style="background: lavender;">이름</span></td>
+				<td style="width: 590px; text-align: center;"><span style="background: lavender;">제목</span></td>
+				<td style="width: 200px; text-align: center;"><span style="background: lavender;">이름</span></td>
 				<td style="width: 150px; text-align: center;"><span style="background: lavender;">작성일</span></td>
 				<td style="width: 70px; text-align: center;"><span style="background: lavender;">조회수</span></td>
 			</tr>
 			<tr></tr>
-		</table>
-		<hr style="width: 1000px; margin-left: 200px; margin-bottom: 5px;">
-		<table style="width: 1000px; margin-left: auto; margin-right: auto;" cellpadding="5" cellspacing="8">
-		<tr></tr>
+			<tr></tr>
 			<!-- 오늘 날짜를 기억하는 Date 클래스 객체를 useBean으로 만든다. -->
 			<jsp:useBean id="date" class="java.util.Date"/>
-			
 			<!-- 공지글을 출력한다. -->
 			<c:if test="${currentPage == 1}">
 			<c:forEach var="vo" items="${notice}">
-			<tr>
+			<tr style="background: #f7f2ff;">
 				<td align="center" style="width: 70px;">
 					[공지]
 				</td>
@@ -95,12 +93,14 @@ ${result}
 			<c:if test="${list.size() != 0}">
 			<c:forEach var="vo" items="${list}">
 			<tr>
+<<<<<<< HEAD
 				<c:if test="${vo.sharediet_gup != 0}">
 					<td align="center" style="width: 70px;">[식단공유]${vo.idx}</td>
 				</c:if>
 				<c:if test="${vo.sharediet_gup == 0}">
+=======
+>>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 				<td align="center" style="width: 70px;">${vo.idx}</td>
-				</c:if>
 				<td style="width: 610px; text-align: center;">
 					<!-- 제목에 태그를 적용할 수 없게 한다. -->
 					<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
@@ -108,9 +108,14 @@ ${result}
 					
 					<!-- 제목에 하이퍼링크를 걸어준다. -->
 					<!-- 하이퍼링크를 클릭하면 조회수를 증가시키고 클릭한 메인글의 내용을 표시한다. -->
+<<<<<<< HEAD
 					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}&sharediet_gup=${vo.sharediet_gup}" style="color: black; text-decoration: none;">
+=======
+					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}" style="color: black; text-decoration: none;">
+>>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 						${subject}(${vo.commentCount})
 					</a>
+					
 					<!-- 오늘 입력된 글에 new 아이콘 이미지를 표시한다. -->
 					<c:if test="${date.year == vo.writeDate.year && date.month == vo.writeDate.month &&
 						date.date == vo.writeDate.date}">
@@ -145,7 +150,7 @@ ${result}
 			</c:if>
 			<tr></tr><tr></tr><tr></tr>
 			<!-- 페이지 이동 버튼 -->
-			<tr>
+			<tr style="background: #fffdf5;">
 				<td colspan="4" align="center">
 					<!-- 처음으로 -->
 					<c:if test="${freeboardList.currentPage > 1}">
@@ -166,7 +171,7 @@ ${result}
 					<!-- 10페이지 앞으로 -->
 					<c:if test="${freeboardList.startPage > 1}">
 						<button 
-							type="button" 
+							type="button"
 							title="이전 10페이지로 이동합니다." 
 							onclick="location.href='?currentPage=${freeboardList.startPage - 1}'" style="background: none; border: 0; font-size: 15pt; color: gray; cursor: pointer;"
 						>◀</button>
@@ -196,7 +201,7 @@ ${result}
 					<!-- 10페이지 뒤로 -->
 					<c:if test="${freeboardList.endPage < freeboardList.totalPage}">
 						<button 
-							type="button" 
+							type="button"
 							title="다음 10페이지로 이동합니다." style="background: none; border: 0; font-size: 15pt; color: gray; cursor: pointer;"
 							onclick="location.href='?currentPage=${freeboardList.endPage + 1}'"
 						>▶</button>
@@ -211,11 +216,11 @@ ${result}
 					
 					<!-- 마지막으로 -->
 					<c:if test="${freeboardList.currentPage < freeboardList.totalPage}">
-					<button
-						type="button" 
-						title="마지막 페이지로 이동합니다." style="background: none; border: 0;font-size: 15pt; color: gray; cursor: pointer;"
-						onclick="location.href='?currentPage=${freeboardList.totalPage}'"
-					>▶▶</button>
+						<button
+							type="button" 
+							title="마지막 페이지로 이동합니다." style="background: none; border: 0;font-size: 15pt; color: gray; cursor: pointer;"
+							onclick="location.href='?currentPage=${freeboardList.totalPage}'"
+						>▶▶</button>
 					</c:if>
 					<c:if test="${freeboardList.currentPage >= freeboardList.totalPage}">
 						<button 
@@ -224,7 +229,6 @@ ${result}
 							title="이미 마지막 페이지 입니다."
 						>▶▶</button>
 					</c:if>
-					
 				</td>
 				<td align="right">
 					<button type="button" onclick="location.href='insert'" style="background: none; border:0;">

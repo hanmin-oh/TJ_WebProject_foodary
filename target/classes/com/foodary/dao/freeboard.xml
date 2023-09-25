@@ -4,8 +4,13 @@
 
 	<!-- 메인글 1건을 저장한다. -->
 	<insert id="freeboardInsert" parameterType="vo">
+<<<<<<< HEAD
 		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, sharediet_gup) 
 		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{sharediet_gup})
+=======
+		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath) 
+		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath})
+>>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 	</insert>
 	
 	<!-- 메인글 전체 개수를 얻어온다. -->
@@ -49,6 +54,7 @@
 		select * from freeboard where notice = 'on' order by idx desc
 	</select>
 	
+<<<<<<< HEAD
 	<select id="selectUserFood" parameterType="int" resultType="uvo">
 		select * from userfood where gup = #{userfood_gup}
 	</select>
@@ -60,6 +66,12 @@
    <select id="getIdx" parameterType="int" resultType="vo">
 		select * from freeboard where sharediet_gup = 0
 	</select>
+=======
+	<!-- gup = 0인 userfood 데이터를 삭제한다. -->
+	<delete id="deleteGupZero">
+		delete from userfood where gup = 0
+	</delete>
+>>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 	
 	<update id="setFreeboardGup" parameterType="int">
 		update freeboard set sharediet_gup = #{idx} where sharediet_gup = 0

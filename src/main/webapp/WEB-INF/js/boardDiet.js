@@ -24,8 +24,13 @@ function transferDiet() {
   var xhr = new XMLHttpRequest();
 
   // 요청을 보낼 URL을 지정합니다.
+<<<<<<< HEAD
   var url = './boardDiet?gup=' + gup + '&id=' + id + '&dietWriteDate=' + encodeURIComponent(dietWriteDate);
 //  encodeURIComponent(protein)
+=======
+//  var url = './boardDiet?gup=' + gup + '&id=' + id;
+  var url = './insert?gup=' + gup + '&id=' + id;
+>>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 
   // GET 요청을 보냅니다. 필요에 따라 POST 요청으로 변경할 수 있습니다.
   xhr.open("GET", url, true);
