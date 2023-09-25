@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +32,6 @@ import com.foodary.vo.FreeboardCommentList;
 import com.foodary.vo.FreeboardCommentVO;
 import com.foodary.vo.FreeboardList;
 import com.foodary.vo.FreeboardVO;
-import com.foodary.vo.ShareDietList;
 import com.foodary.vo.ShareDietVO;
 import com.foodary.vo.UserFoodList;
 import com.foodary.vo.UserFoodVO;
@@ -78,7 +78,6 @@ public class FreeboardController {
 			model.addAttribute("dietList", dietList);
 			model.addAttribute("userFoodList", userFoodList);
 			model.addAttribute("dietWriteDate", dietWriteDate);
-
 			return "freeboard/dietListView";
 		}
 	   
@@ -89,7 +88,6 @@ public class FreeboardController {
 			System.out.println(dietWriteDate);
 			ArrayList<DietVO> dietList = mapper.dateGetDiet(dietWriteDate);
 			System.out.println(dietList.get(0).getGup());
-			System.out.println(dietList.get(1).getGup());
 			System.out.println(dietList);
 			
 			// gupList 배열 선언
@@ -108,6 +106,7 @@ public class FreeboardController {
 			ArrayList<ShareDietVO> shareDietList = new ArrayList<>();
 			for (UserFoodVO userFood : userFoodList) {
 			    ShareDietVO shareDietVO = new ShareDietVO();
+			    shareDietVO.setIdx(1); // idx를 1로 고정
 			    shareDietVO.setFoodName(userFood.getFoodName());
 			    shareDietVO.setKcal(userFood.getKcal());
 			    shareDietVO.setCarbs(userFood.getCarbs());
@@ -134,12 +133,19 @@ public class FreeboardController {
 			    }
 			    
 			    shareDietList.add(shareDietVO);
+			    System.out.println("shaerInsert에 들어갈 정보: " + shareDietList);
+			    mapper.insertShare(shareDietVO);
 			}
-			
-			System.out.println(shareDietList);
-			mapper.insertShare(shareDietList);
+			/*
+			----- 다중 인서트문을 이용해서 insert하기
+			// HashMap을 생성하고 shareDietList를 "shareDietVOList"라는 키로 추가합니다.
+			HashMap<String, Object> paramMap = new HashMap<>();
+			paramMap.put("shareDietVOList", shareDietList);
+			System.out.println(paramMap);
+			// MyBatis 매퍼에 HashMap을 전달합니다.
+			mapper.insertShare(paramMap);
+			 */
 			model.addAttribute("shareDietList" , shareDietList);
-			
 			return "freeboard/insert";
 		}
 	   
@@ -177,7 +183,12 @@ public class FreeboardController {
 	    		  logger.info("{}", freeboardVO);
 	    		  mapper.freeboardInsert(freeboardVO);
 	      } 
-	      	model.addAttribute("result", "insertOK");
+        FreeboardVO getIdx = mapper.getIdx();
+        System.out.println(getIdx);
+		int idx = getIdx.getIdx();
+		mapper.setFreeboardGup(idx);
+		mapper.setShareDietGup(idx);
+        model.addAttribute("result", "insertOK");
 	    	return "redirect:listView";
 	   }
 	   

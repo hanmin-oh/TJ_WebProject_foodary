@@ -41,6 +41,12 @@ public interface FreeboardDAO {
 
 	ArrayList<UserFoodVO> selectUserFood(int gup);
 
+	FreeboardVO getIdx();
+
+	void setFreeboardGup(int idx);
+
+	void setShareDietGup(int idx);
+
 
 
 

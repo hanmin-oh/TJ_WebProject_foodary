@@ -4,8 +4,8 @@
 
 	<!-- 메인글 1건을 저장한다. -->
 	<insert id="freeboardInsert" parameterType="vo">
-		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, userfood_gup) 
-		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{userfood_gup})
+		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, sharediet_gup) 
+		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{sharediet_gup})
 	</insert>
 	
 	<!-- 메인글 전체 개수를 얻어온다. -->
@@ -56,7 +56,18 @@
 	<select id="selectDiet" parameterType="int" resultType="dvo">
       	select * from diet where gup = #{userfood_gup}
    </select>
+   
+   <select id="getIdx" parameterType="int" resultType="vo">
+		select * from freeboard where sharediet_gup = 0
+	</select>
 	
+	<update id="setFreeboardGup" parameterType="int">
+		update freeboard set sharediet_gup = #{idx} where sharediet_gup = 0
+	</update>
+	
+	<update id="setShareDietGup" parameterType="int">
+		update sharediet set gup = #{idx} where gup = 0
+	</update>
 </mapper>
 
 

@@ -84,12 +84,36 @@
 	  </foreach>
   	</select>
   	
-  	<insert id="insertShare" parameterType="java.util.List">
-    		INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime) VALUES
-	    <foreach collection="list" item="list" separator=",">
-	        (shareDiet_idx_seq.nextval, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime})
+	<insert id="insertShare" parameterType="svo">
+    		INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime, gup) VALUES
+	        (shareDiet_idx_seq.nextval, #{foodName}, #{kcal}, #{carbs}, #{protein}, #{fat}, #{dietDate}, #{dietTime}, 0)
+	</insert> 
+	
+<!-- 	<insert id="insertShare" parameterType="svo">
+	    <selectKey keyProperty="idx" resultType="int" order="BEFORE">
+	        SELECT shareDiet_idx_seq.nextval FROM DUAL
+	    </selectKey>
+	  		  INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime)
+	    <foreach collection="list" item="list" separator="UNION">
+	       SELECT (#{idx}, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime}) FROM dual
 	    </foreach>
-	</insert>
+	</insert> -->
+<!-- 	<update id="insertShare" parameterType="java.util.HashMap">
+		 <selectKey keyProperty="idx" resultType="int" order="BEFORE">
+	        SELECT shareDiet_idx_seq.nextval FROM DUAL
+	    </selectKey>
+	    <foreach collection="shareDietVOList" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+	        INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime) VALUES
+	        (#{item.idx}, #{item.foodName}, #{item.kcal}, #{item.carbs}, #{item.protein}, #{item.fat}, #{item.dietDate}, #{item.dietTime})
+	    </foreach>
+	</update> -->
+	
+<!-- 	 <insert id="insertShare" parameterType="svo">
+	    <foreach collection="list" item="list">
+  		   INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime)
+	       value (shareDiet_idx_seq.nextval, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime}) 
+	    </foreach>
+	</insert> -->
    
 </mapper>
 

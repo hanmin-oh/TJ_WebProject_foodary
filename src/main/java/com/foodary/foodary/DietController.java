@@ -78,6 +78,7 @@ public class DietController {
 			param.setStartNo(foodList.getStartNo());
 			param.setEndNo(foodList.getEndNo());
 			param.setFoodName(foodName);
+			System.out.println(param);
 			System.out.println(param.getFoodName());
 			foodList.setList(mapper.foodSearchList(param));
 			System.out.println(foodList);

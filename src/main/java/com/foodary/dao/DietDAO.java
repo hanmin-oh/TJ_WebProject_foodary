@@ -61,7 +61,8 @@ public interface DietDAO {
 
    ArrayList<UserFoodVO> getFoodListGup(int[] gupList);
 
-   void insertShare(ArrayList<ShareDietVO> shareDietList);
+   void insertShare(ShareDietVO shareDietVO);
+//   void insertShare(HashMap<String, Object> paramMap);
 
 
 

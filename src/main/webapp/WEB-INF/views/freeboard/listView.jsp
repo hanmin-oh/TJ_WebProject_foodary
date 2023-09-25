@@ -95,10 +95,10 @@ ${result}
 			<c:if test="${list.size() != 0}">
 			<c:forEach var="vo" items="${list}">
 			<tr>
-				<c:if test="${vo.userfood_gup != 0}">
+				<c:if test="${vo.sharediet_gup != 0}">
 					<td align="center" style="width: 70px;">[식단공유]${vo.idx}</td>
 				</c:if>
-				<c:if test="${vo.userfood_gup == 0}">
+				<c:if test="${vo.sharediet_gup == 0}">
 				<td align="center" style="width: 70px;">${vo.idx}</td>
 				</c:if>
 				<td style="width: 610px; text-align: center;">
@@ -108,7 +108,7 @@ ${result}
 					
 					<!-- 제목에 하이퍼링크를 걸어준다. -->
 					<!-- 하이퍼링크를 클릭하면 조회수를 증가시키고 클릭한 메인글의 내용을 표시한다. -->
-					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}&userfood_gup=${vo.userfood_gup}" style="color: black; text-decoration: none;">
+					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}&sharediet_gup=${vo.sharediet_gup}" style="color: black; text-decoration: none;">
 						${subject}(${vo.commentCount})
 					</a>
 					<!-- 오늘 입력된 글에 new 아이콘 이미지를 표시한다. -->
