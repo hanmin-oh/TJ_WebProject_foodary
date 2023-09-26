@@ -11,10 +11,10 @@ function showNutrient() {
    var userFats = [];
    // 각 태그의 값을 배열에 저장
    for (var i = 0; i < kcalElements.length; i++) {
-     var kcalValue = document.getElementById("userKcal_" + i).value;
-     var carbsValue = document.getElementById("userCarbs_" + i).value;
-     var proteinValue = document.getElementById("userProtein_" + i).value;
-     var fatValue = document.getElementById("userFat_" + i).value;
+     var kcalValue = document.getElementById("kcal_" + i).value;
+     var carbsValue = document.getElementById("carbs_" + i).value;
+     var proteinValue = document.getElementById("protein_" + i).value;
+     var fatValue = document.getElementById("fat_" + i).value;
    
      userKcals.push(kcalValue);
      userCarbs.push(carbsValue);

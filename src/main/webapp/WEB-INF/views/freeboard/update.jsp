@@ -21,20 +21,22 @@
 	<!-- 중간영역 -->
 	<div class="main">	
 		<form action="updateOK" method="post" enctype="multipart/form-data" onsubmit="return insertCheck()">
-			<table class="table table-sm"
-				style="width: 800px; margin-left: auto; margin-right: auto; vertical-align: middle; border: 1px solid #bfbfbf;">
+			<table cellpadding="4" cellspacing="20" style="width: 700px; margin-left: auto; margin-right: auto; vertical-align: middle;">
+				<tr>
+					<th colspan="4" style="text-align: center;"><span style="background: #baffda; font-size: 45px;"><수정할 내용을 입력하세요></span></th>
+				</tr>
 				<tr style="font-weight: 800;">
-					<td style="width: 100px; text-align: center; background: lavender;">
-						<span style="font-size: 22pt;">No.</span>
+					<td style="width: 300px; text-align: center;">
+						<span style="background: lavender; font-size: 22pt;">No.</span>
 					</td>
-					<td style="width: 250px; text-align: center; background: lavender;">
-						<span style="font-size: 22pt;">이름</span>
+					<td style="width: 250px; text-align: center;">
+						<span style="background: lavender; font-size: 22pt;">이름</span>
 					</td>
-					<td style="width: 150px; text-align: center; background: lavender;">
-						<span style="font-size: 22pt;">작성일</span>
+					<td style="width: 150px; text-align: center;">
+						<span style="background: lavender; font-size: 22pt;">작성일</span>
 					</td>
-					<td style="width: 100px; text-align: center; background: lavender;">
-						<span style="font-size: 22pt;">조회수</span>
+					<td style="width: 100px; text-align: center;">
+						<span style="background: lavender; font-size: 22pt;">조회수</span>
 					</td>
 				</tr>
 				<tr>
@@ -58,79 +60,63 @@
 					<td align="center">${vo.hit}</td>
 				</tr>
 				<tr>
-					<th style="background: #e8ffed; text-align: center; vertical-align: middle;">
-						<span style="font-size: 22pt;">제목</span> :
+					<th>
+						<span style="background: lavender; font-size: 22pt;">제목</span> :
 					</th>
 					<td colspan="2">
 						<input 
 							id="subject" 
 							type="text" 
 							name="subject"
-							style="font-size: 18pt; padding: 5px; width:500px; margin-left:20px;
-								border: 2px solid #956fd6; border-radius: 10px;"
+							style="width: 430px; padding: 5px;"
 							value="${vo.subject}"/>
 					</td>
-					<th width="100" style="background: #e8ffed; text-align: center; vertical-align: middle;">
+					<th width="100" style="text-align: center;">
 						공지글 : 
 						<c:if test="${fn:trim(vo.notice) == 'on'}">
-							<input type="checkbox" name="notice" checked="checked" style="accent-color: #7a33ff;"/>
+							<input class="form-check-input" type="checkbox" name="notice" checked="checked"/>
 						</c:if>
 						<c:if test="${fn:trim(vo.notice) != 'on'}">
-							<input type="checkbox" name="notice" style="accent-color: #7a33ff;"/>
+							<input class="form-check-input" type="checkbox" name="notice"/>
 						</c:if>
 					</th>
 				</tr>
 				<tr>
-					<th style="background: #e8ffed; text-align: center; vertical-align: middle;">
-						<span style="font-size: 22pt;">내용</span>
+					<th class="align-middle">
+						<span style="background: lavender; font-size: 22pt;">내용</span>
 					</th>
 					<td colspan="3">
 						<textarea 
 							id="content" 
-							rows="5"
+							rows="6" 
 							name="content"
-							style="resize: none; font-size: 20pt; padding: 10px; width:620px; margin-left:20px;
-							border: 2px solid #956fd6; border-radius: 10px;"
+							style="width: 550px; padding: 5px; resize: none;"
 							>${vo.content}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="3" align="center">
 						<c:if test="${not empty vo.picture}">
-							<img id="output" src="/upload/freeboard/${vo.picture}" style="max-width: 450px; max-height: 300px;">
-							&nbsp;&nbsp;
-							<button id="deleteBtn" type="button" onclick="photoDelete()" style="background: none; border: 0; cursor: pointer;">
-								<span style="background: #baffda; font-size: 30px; font-weight: 900;">사진 삭제</span>
-							</button>
+							<img id="output" src="/upload/${vo.picture}" style="max-width: 450px; max-height: 300px;">
 						</c:if>
 					</td>
 				</tr>
 				<tr>
-					<th style="font-size: 20pt; text-align: center; background: #d9ffed;">
-						<label for="picture" style="font-size: 18pt;">사진 첨부</label>
+					<th>
+						<span style="background: lavender; font-size: 18pt;">사진 첨부</span> :
 					</th>
 					<td colspan="3">
-		        			<input id="picture" class="form-control form-control-sm" type="file" accept="image/*" name="fileName" onchange="photoView(event)" value="파일 선택"
-		        				style="font-size: 15pt; color: #b49bde; width: 650px; height: 20px;"/>
+		        		<input type="file" accept="image/*" name="fileName" onchange="photoView(event)" value="파일 선택"
+		        			style="font-size: 10pt;"/>
+						<img id="output" style="max-width: 450px; max-height: 300px;"/><br/>
 					</td>
 				</tr>
-				<tr>
-					<th style="font-size: 18pt; text-align: center; background: #ede8ff;">
-						<span>미리보기</span>
-					</th>
-					<td colspan="3">
-						<img id="output" style="max-width: 450px; max-height: 300px; margin: 20px;"/><br/>
-					</td>
-				</tr>
-			</table>
 				<input type="hidden" name="idx" value="${vo.idx}"/>
 				<input type="hidden" name="currentPage" value="${currentPage}"/>
 				<input type="hidden" name="name" value="${vo.name}"/>
 				<input type="hidden" name="id" value="${vo.id}"/>
-				<input id="picture" type="hidden" name="picture" value="${vo.picture}"/>
-					<div style="text-align: center;">
-							<button
+				<input type="hidden" name="picture" value="${vo.picture}"/>
+				<tr class="table-secondary">
+					<td></td>
+					<td colspan="3" align="center">
+						<div style="width: 90%; margin-left: auto; margin-right: auto;">
+							<button 
 								type="submit" 
 								style="border: 0; background: none; cursor: pointer;">
 								<span style="background: #fafcd9; font-size: 25pt;; font-weight: 800;">수정하기</span>&nbsp;&nbsp;&nbsp;
@@ -153,6 +139,9 @@
 								<span style="background: #fafcd9; font-size: 25pt; font-weight: 800;">목록보기</span>
 							</button> 
 						</div>
+					</td>
+				</tr>
+			</table>
 		</form>
 	</div>
 	<div class="footer">

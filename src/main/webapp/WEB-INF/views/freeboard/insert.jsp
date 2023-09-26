@@ -10,11 +10,55 @@
 <title>자유게시판 쓰기</title>
 <link rel="stylesheet" href="../css/threeGrid.css"/>
 <script type="text/javascript" src="../js/jquery-3.7.0.js"></script>
+<script type="text/javascript" src="../js/freeInsert.js"></script>
 <script defer type="text/javascript" src="../js/FreeboardUpload.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body onload = "showNutrient()">
+<div class="container">
+<div class="main" style="text-align: center;" align="center">
+<input id="id" type="hidden" name="id" value="${rvo.id}"/>
+<input id="height" type="hidden" name="height" value="${rvo.height}">
+<input id="currentWeight" type="hidden" name="currentWeight" value="${rvo.currentWeight}">
+<input id="goalWeight" type="hidden" name="goalWeight" value="${rvo.goalWeight}">
+<input id="age" type="hidden" name="age" value="${rvo.age}">
+<input id="gender" type="hidden" name="gender" value="${rvo.gender}"/>
+<c:if test="${rvo.state eq 'health'}">
+    <input id="health" type="radio" name="mode" value="health" checked="checked" style="display: none;"/>
+    <input id="diet" type="radio" name="mode" value="diet" style="display: none;"/>
+</c:if>
+<c:if test="${rvo.state eq 'diet'}">
+    <input id="health" type="radio" name="mode" value="health" style="display: none;"/>
+    <input id="diet" type="radio" name="mode" value="diet" checked="checked" style="display: none;"/>
+</c:if>
+<c:set var="active" value="${rvo.active}"/>
+<select name="active" style="height: 40px; display: none;">
+   <option value="다시" name="active" 
+      <c:if test="${active == '다시'}">selected="selected"
+      </c:if>>활동량 선택
+   </option>
+     <option value="1.2" name="active" 
+        <c:if test="${active == '1.2'}">selected="selected"
+        </c:if>>많이 앉아있는 경우
+     </option>
+   <option value="1.375" name="active" 
+      <c:if test="${active == '1.375'}">selected="selected"
+      </c:if>>앉아있는 일이 적은 경우
+   </option>
+   <option value="1.55" name="active" 
+      <c:if test="${active == '1.55'}">selected="selected"
+      </c:if>>움직임이 많은 경우
+   </option>
+   <option value="1.725" name="active" 
+      <c:if test="${active == '1.725'}">selected="selected"
+      </c:if>>운동 될 움직임을 할 경우
+   </option>
+   <option value="1.9" name="active" 
+      <c:if test="${active == '1.9'}">selected="selected"
+      </c:if>>매우 많은 운동량
+   </option>
+</select>
+   ${javascriptCode}
+</div>
 <div class="container">
 	<!-- 헤더 영역 -->
 	<div class="header">
@@ -22,48 +66,40 @@
 	</div>
 	<!-- 중간영역 -->
 	<div class="main">
-<<<<<<< HEAD
 	<br/><br/>
 		<form action="insertOK" method="post" enctype="multipart/form-data" onsubmit="return insertCheck()">
 			<table cellpadding="5" cellspacing="20" style="width: 700px; margin-left: auto; margin-right: auto; vertical-align: middle;">
 				<tr>
 					<th colspan="4" style="text-align: center;"><span style="background: #baffda; font-size: 45px;"><아무 말이나 끄적여 보세요></span></th>
 				</tr>
-=======
-		<form action="insertOK" method="post" enctype="multipart/form-data" onsubmit="return insertCheck()">
-			<table class="table table-sm"
-				style="width: 800px; margin-left: auto; margin-right: auto; vertical-align: middle; border: 1px solid #bfbfbf;">
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 				<!-- 이름입력 -->
 				<tr>
-					<th width="200" style="font-size: 20pt; text-align: center; background: lavender;">
-						<label for="name">이름</label>
+					<th width="250" style="font-size: 20pt;">
+						<label for="name">이름 :</label>
 					</th>
-					<td width="520" style="font-size: 20pt;">
+					<td width="450" style="font-size: 20pt;">
 						<input 
 							id="name"
 							type="text" 
 							name="name"
 							value="${rvo.username}"
-							style="padding: 5px; border: 0px;" readonly="readonly"/>
+							style="width: 200px; padding: 5px;" readonly="readonly"/>
 					</td>
 					<!-- 공지여부 -->
-					<th width="100" style="text-align: center; font-size: 20pt; background: #d9ffed;">
-						공지글 : &nbsp;<input type="checkbox" name="notice" style="accent-color: #7a33ff;"/>
+					<th width="100" style="text-align: center; font-size: 20pt;">
+						공지글 : &nbsp; <input type="checkbox" name="notice"/>
 					</th>
 				</tr>
 				<!-- hidden으로 id넘기기 -->
-				<input id="id" type="hidden" name="id" value="${rvo.id}"/>
-				<tr>
-					<th style="font-size: 20pt; text-align: center;  background: #d9ffed;">
-						<label for="subject" style="font-size: 20pt;">제목</label>
+					<input id="id" type="hidden" name="id" value="${rvo.id}" style="width: 200px;"/>
+					<tr>
+					<th>
+						<label for="subject" style="font-size: 20pt;">제목 :</label>
 					</th>
 					<td colspan="2">
-						<input id="subject" type="text" name="subject"
-							style="font-size: 18pt; padding: 5px; width:650px; border: 2px solid #956fd6; border-radius: 10px;"/>
+						<input id="subject" type="text" name="subject" style="font-size: 20pt; padding: 5px; width:450px;"/>
 					</td>
 				</tr>
-<<<<<<< HEAD
 			   <tr>
 		            <td align="center">
 		 				<button  type="button" onclick="openPopup()" style="background: none; border: 0; cursor: pointer;">
@@ -74,23 +110,23 @@
          		<tr> 
 			<tr>
 			${shareDietList}
-         		<c:if test="${vo.gup != null}">
+         		<c:if test="${!shareDietList.isEmpty()}">
  				<c:forEach items="${shareDietList}" var="svo" varStatus="status">
 			   <tr>
 			      <th class="kcals" id="kcal"><span style="background: lavender; font-size: 25pt;">음식 이름</span> :&nbsp; 
-			         <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${svo.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
+			         <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${svo.foodName}" style="width: 52%; height: 50%; text-align: center;" readonly="readonly"/>      
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">칼로리</span> :&nbsp; 
-			         <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${svo.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
+			         <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${svo.kcal}" style="width: 20%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">탄수화물</span> :&nbsp; 
-			         <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${svo.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			         <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${svo.carbs}" style="width: 20%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">단백질</span> :&nbsp; 
-			         <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${svo.protein}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
+			         <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${svo.protein}" style="width: 20%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">지방</span> :&nbsp; 
-			         <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${svo.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			         <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${svo.fat}" style="width: 20%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
 			      </th>
 			   </tr>
 			   </c:forEach>
@@ -147,40 +183,31 @@
 			</tr>
 			</c:if>
                 </tr> 
-=======
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 				<tr>
-					<th style="font-size: 20pt; text-align: center; background: lavender;">
-						<label for="content" style="font-size: 18pt;">내용</label>
+					<th>
+						<label for="content" style="font-size: 20pt;">내용</label>
 					</th>
 					<td colspan="2">
 						<textarea
 							id="content" 
-							rows="5"
+							rows="10"
 							name="content"
-							style="resize: none; font-size: 20pt; padding: 10px; width:650px; border: 2px solid #956fd6; border-radius: 10px;"
-							></textarea>
+							style="resize: none; font-size: 20pt; padding: 10px; width:450px;"></textarea>
+					</td>
+					  <!-- 음식검색 팝업창 띄우는 버튼 -->
+				</tr>
+				<tr>
+					<th>
+						<label for="subject" style="font-size: 20pt;">사진 첨부 :</label>
+					</th>
+					<td colspan="2">
+		        		<input type="file" accept="image/*" name="fileName" onchange="photoView(event)" value="파일 선택"
+		        			style="font-size: 20pt;"/>
+						<img id="output" style="max-width: 450px; max-height: 300px;"/><br/>
 					</td>
 				</tr>
 				<tr>
-					<th style="font-size: 20pt; text-align: center; background: #d9ffed;">
-						<label for="picture" style="font-size: 18pt;">사진 첨부</label>
-					</th>
-					<td colspan="2">
-		        			<input id="picture" class="form-control form-control-sm" type="file" accept="image/*" name="fileName" onchange="photoView(event)" value="파일 선택"
-		        				style="font-size: 15pt; color: #b49bde; width: 650px; height: 20px;"/>
-					</td>
-				</tr>
-				<tr>
-					<th style="font-size: 18pt; text-align: center; background: #ede8ff;">
-						<span>미리보기</span>
-					</th>
-					<td colspan="2">
-						<img id="output" style="max-width: 450px; max-height: 300px; margin: 20px;"/><br/>
-					</td>
-				</tr>
-			</table>
-					<div style="text-align: center;">
+					<td colspan="3" align="center">
 						<button 
 							type="submit" 
 							style="border: 0; background: none; cursor: pointer;">
@@ -196,8 +223,11 @@
 							onclick="history.back()">
 							<span style="background: #fafcd9; font-size: 25pt;; font-weight: 800;">목록보기</span>
 						</button>
-					</div>
+					</td>
+				</tr>
+			</table>
 		</form>
+		<br/><br/>
 	</div>
 	<!-- Footer 영역 -->
 	<div class="footer">

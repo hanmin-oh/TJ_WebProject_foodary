@@ -162,31 +162,30 @@
 					</c:if>
 				</td>
 			</tr>
-			<c:if test="${vo.userfood_gup != 0}">
+			</table>
+			<table>
+			<c:if test="${!shareDietList.isEmpty()}">
 			<tr>
-			${userFoodList}
-		  <%--  <c:set var="list" value="${userFoodList.UserFoodVO}"/> 
-		   <c:forEach var="uvo" items="${UserFoodVO.list}" varStatus="status">--%>
-<%-- 		    <c:forEach var="uvo" items="${list}" varStatus="status"> --%>
- 				<c:forEach items="${userFoodList}" var="uvo" varStatus="status">
+ 				<c:forEach items="${shareDietList}" var="svo" varStatus="status">
 			   <tr>
 			      <th class="kcals" id="kcal"><span style="background: lavender; font-size: 25pt;">음식 이름</span> :&nbsp; 
-			         <input type="text" id="userFoodName_${status.index}" name="userFoodName_${status.index}" value="${uvo.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
+			         <input type="text" id="foodName_${status.index}" name="foodName_${status.index}" value="${svo.foodName}" style="width: 50%; height: 50%; text-align: center;" readonly="readonly"/>      
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">칼로리</span> :&nbsp; 
-			         <input type="text" id="userKcal_${status.index}" name="userKcal_${status.index}" value="${uvo.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
+			         <input type="text" id="kcal_${status.index}" name="kcal_${status.index}" value="${svo.kcal}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;kcal 
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">탄수화물</span> :&nbsp; 
-			         <input type="text" id="userCarbs_${status.index}" name="userCarbs_${status.index}" value="${uvo.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			         <input type="text" id="carbs_${status.index}" name="carbs_${status.index}" value="${svo.carbs}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">단백질</span> :&nbsp; 
-			         <input type="text" id="userProtein_${status.index}" name="userProtein_${status.index}" value="${uvo.protein}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
+			         <input type="text" id="protein_${status.index}" name="protein_${status.index}" value="${svo.protein}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g  
 			      </th>
 			      <th><span style="background: lavender; font-size: 25pt;">지방</span> :&nbsp; 
-			         <input type="text" id="userFat_${status.index}" name="userFat_${status.index}" value="${uvo.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
+			         <input type="text" id="fat_${status.index}" name="fat_${status.index}" value="${svo.fat}" style="width: 30%; height: 50%; text-align: center;" readonly="readonly"/> &nbsp;g
 			      </th>
 			   </tr>
 			   </c:forEach>
+		   </table>
 		   <!-- 영양소 그래프 -->
 		    <table width="1400" align="center" border="0" cellpadding="10" cellspacing="10">
 		    <tr style="height: 30px;"></tr>

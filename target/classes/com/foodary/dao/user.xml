@@ -47,11 +47,6 @@
 		select password from userregister where username = #{username} and id = #{id}
 	</select>
 	
-	<!-- gup = 0인 userfood 데이터를 삭제한다. -->
-	<delete id="deleteGupZero">
-		delete from userfood where gup = 0
-	</delete>
-	
 </mapper>
 
 

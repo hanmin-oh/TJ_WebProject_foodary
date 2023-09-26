@@ -26,8 +26,6 @@ public interface UserDAO {
 	List<UserRegisterVO> findId(HashMap<String, String> hmap);
 
 	UserRegisterVO findPassword(HashMap<String, String> hmap);
-
-	void deleteGupZero();
 	
 	
 

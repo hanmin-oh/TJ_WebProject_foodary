@@ -4,13 +4,8 @@
 
 	<!-- 메인글 1건을 저장한다. -->
 	<insert id="freeboardInsert" parameterType="vo">
-<<<<<<< HEAD
 		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath, sharediet_gup) 
 		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath}, #{sharediet_gup})
-=======
-		insert into freeboard (idx, name, subject, content, notice, picture, id, realFilePath) 
-		values (freeboard_idx_seq.nextval, #{name}, #{subject}, #{content}, #{notice}, #{picture}, #{id}, #{realFilePath})
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 	</insert>
 	
 	<!-- 메인글 전체 개수를 얻어온다. -->
@@ -53,33 +48,37 @@
 	<select id="freeboardSelectNotice" resultType="vo">
 		select * from freeboard where notice = 'on' order by idx desc
 	</select>
-	
-<<<<<<< HEAD
-	<select id="selectUserFood" parameterType="int" resultType="uvo">
-		select * from userfood where gup = #{userfood_gup}
-	</select>
-	
-	<select id="selectDiet" parameterType="int" resultType="dvo">
-      	select * from diet where gup = #{userfood_gup}
-   </select>
    
+   <!-- 식단 공유 테이블과 게시판 테이블의 gup에 넣어줄 idx를 불러온다. -->
    <select id="getIdx" parameterType="int" resultType="vo">
 		select * from freeboard where sharediet_gup = 0
 	</select>
-=======
-	<!-- gup = 0인 userfood 데이터를 삭제한다. -->
-	<delete id="deleteGupZero">
-		delete from userfood where gup = 0
-	</delete>
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 	
+	<!-- 게시판에 gup를 넣어준다. -->
 	<update id="setFreeboardGup" parameterType="int">
 		update freeboard set sharediet_gup = #{idx} where sharediet_gup = 0
 	</update>
 	
+	<!-- 식단 공유 테이블에 gup를 넣어준다. -->
 	<update id="setShareDietGup" parameterType="int">
 		update sharediet set gup = #{idx} where gup = 0
 	</update>
+	
+	<!-- shareTag를 넣기 위해 식단을 공유한 유무를 판별하기 위해 불러온다. -->
+	<select id="setShareFree" parameterType="int" resultType="svo">
+		select * from sharediet where gup = 0
+	</select>
+	
+	<!-- 식단 공유를 했으면 shareTag에 YES를 넣어준다. -->
+	<update id="shareTagYes" parameterType="String">
+		update freeboard set shareTag = 'YES' where sharediet_gup = 0
+	</update> 
+	
+	<!-- 메인글에 공유한 식단을 불러온다. -->
+	<select id="selectShareDiet" parameterType="int" resultType="svo">
+		select * from sharediet where gup = #{sharediet_gup}
+	</select>
+	
 </mapper>
 
 

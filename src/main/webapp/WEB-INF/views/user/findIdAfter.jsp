@@ -19,7 +19,10 @@
 </head>
 <body>
 <body>
-<div class="container" style="margin-top: 13%;">
+<div class="container">
+   <div class="header">
+      <jsp:include page="./headerAfter.jsp"></jsp:include>
+   </div>
    <div style="text-align: center;" align="center">
       <form>
       <c:choose>
@@ -50,6 +53,9 @@
             </button>
          </div>
       </form>
+   </div>
+   <div class="footer">
+      <jsp:include page="./footerAfter.jsp"></jsp:include>
    </div>
 </div>
 </body>

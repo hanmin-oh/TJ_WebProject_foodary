@@ -16,19 +16,13 @@ public class FreeboardVO {
 	private int commentCount; // 댓글의 개수
 	private String id;
 	private String realFilePath;
-<<<<<<< HEAD
 	private int sharediet_gup;
+	private String shareTag;
 	
-=======
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
 	public FreeboardVO() { }
 
 	public FreeboardVO(int idx, String subject, String content, Date writeDate, int hit, String name, String notice,
-<<<<<<< HEAD
-			String picture, int commentCount, String id, String realFilePath, int sharediet_gup) {
-=======
-			String picture, int commentCount, String id, String realFilePath) {
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
+			String picture, int commentCount, String id, String realFilePath, int sharediet_gup, String shareTag) {
 		super();
 		this.idx = idx;
 		this.subject = subject;
@@ -41,10 +35,8 @@ public class FreeboardVO {
 		this.commentCount = commentCount;
 		this.id = id;
 		this.realFilePath = realFilePath;
-<<<<<<< HEAD
 		this.sharediet_gup = sharediet_gup;
-=======
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
+		this.shareTag = shareTag;
 	}
 
 	public int getIdx() {
@@ -134,7 +126,6 @@ public class FreeboardVO {
 	public void setRealFilePath(String realFilePath) {
 		this.realFilePath = realFilePath;
 	}
-<<<<<<< HEAD
 
 	public int getSharediet_gup() {
 		return sharediet_gup;
@@ -144,21 +135,21 @@ public class FreeboardVO {
 		this.sharediet_gup = sharediet_gup;
 	}
 
-=======
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
+	public String getShareTag() {
+		return shareTag;
+	}
+
+	public void setShareTag(String shareTag) {
+		this.shareTag = shareTag;
+	}
+
 	@Override
 	public String toString() {
 		return "FreeboardVO [idx=" + idx + ", subject=" + subject + ", content=" + content + ", writeDate=" + writeDate
 				+ ", hit=" + hit + ", name=" + name + ", notice=" + notice + ", picture=" + picture + ", commentCount="
-<<<<<<< HEAD
 				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + ", sharediet_gup=" + sharediet_gup
-				+ "]";
-=======
-				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + "]";
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
+				+ ", shareTag=" + shareTag + "]";
 	}
-	
-	
 	
 	
 }

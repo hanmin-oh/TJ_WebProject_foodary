@@ -9,25 +9,19 @@
 <link rel="stylesheet" href="../css/bootstrap.css"/>
 </head>
 <body>
-<script type="text/javascript">
-   var message = "${message}";
-   if (message) {
-      alert(message);
-   }
-</script>
 	<div class="main" align="center">
 		<div style="margin-top: 13%;">
 			<form action="loginOK" method="post">
 			    <table width="700px;" cellpadding="5" cellspacing="5" align="center">
 			       <tr>
 			          <th style="text-align: center; font-size: 28pt; padding-right: 40px;">
-			         	 <label for="id"><span style="background: #fafcd9; font-size: 28pt;">ID :</span> </label>&nbsp;&nbsp;
+			         	 <label for="id"><span style="background: #fafcd9; font-size: 30pt;">ID:</span> </label>
 			         	 <input type="text" name="id" width="10px" style="width: 200px; height: 33px; border-left:0; border-right:0; border-top:0; border-bottom:5;">
 			          </th>
 			       </tr>
 			       <tr>
 			          <th style="text-align: center; font-size: 28pt; padding-right: 40px;">
-			             <label for="password"><span style="background: #fafcd9; font-size: 28pt;">PW : </span> </label>&nbsp;&nbsp;
+			             <label for="password"><span style="background: #fafcd9; font-size: 30pt;">PW:</span> </label>
 			             <input id="password" type="password" name="password"
 			             	style="width: 200px; height: 33px; border-left:0; border-right:0; border-top:0; border-bottom: 5; font-family: D2Coding;">
 			          </th>

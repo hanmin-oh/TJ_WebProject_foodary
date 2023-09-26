@@ -11,7 +11,10 @@
 <link rel="stylesheet" href="../css/threeGrid.css"/>
 </head>
 <body>
-<div class="container" style="margin-top: 13%;">
+<div class="container">
+      <div class="header">
+      <jsp:include page="./headerAfter.jsp"></jsp:include>
+   </div>
    <div style="text-align: center;" align="center">
       <form action="findPasswordOK" method="post" enctype="multipart/form-data" onsubmit="return changePasswordBefore()">
          <div>

@@ -22,15 +22,5 @@ function insertCheck() {
 	else {
 		return true;
 	}
+	
 }
-
-function photoDelete() {
-	var confirmation = confirm("사진을 삭제하시겠습니까?");
-	if (confirmation) {
-		$('#output').remove();
-		$('#deleteBtn').remove();
-		$('#picture').val('');
-	}
-}
-
-

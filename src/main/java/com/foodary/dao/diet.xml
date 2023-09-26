@@ -60,11 +60,11 @@
    </select>
    
 	<update id="updateDiet" parameterType="dvo">
-      update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime}, dietPicture = #{dietPicture}
+      update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime}
          where idx = #{idx}
    </update>
 	
-	<!-- dietView에 해당 dietWriteDate의 모든 dietWriteTime의 gup 값 불러오기 -->
+	   <!-- dietView에 해당 dietWriteDate의 모든 dietWriteTime의 gup 값 불러오기 -->
    <select id="selectGup" parameterType="java.util.HashMap" resultType="dvo">
       select id, gup from diet where dietWriteDate = #{dietWriteDate} and id = #{id} order by dietWriteTime
    </select>
@@ -73,7 +73,6 @@
       select * from diet where gup = #{gup}
    </select>
    
-<<<<<<< HEAD
    	<select id="dateGetDiet" parameterType="String" resultType="dvo">
 		select * from diet where dietWriteDate = #{dietWriteDate}
 	</select>
@@ -115,12 +114,6 @@
 	       value (shareDiet_idx_seq.nextval, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime}) 
 	    </foreach>
 	</insert> -->
-=======
-   	<!-- gup = 0인 userfood 데이터를 삭제한다. -->
-	<delete id="deleteGupZero">
-		delete from userfood where gup = 0
-	</delete>
->>>>>>> 370244fb95e8ea81ec8105779759cadf1c02ca29
    
 </mapper>
 

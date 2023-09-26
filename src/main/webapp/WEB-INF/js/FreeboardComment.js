@@ -1,8 +1,8 @@
 function insertCheck() {
-	if ($('#ccontent').val().trim() === "") {
+	if ($('#content').val().trim() === "") {
 		alert('댓글을 입력해주세요')
-		$('#ccontent').val('');
-		$('#ccontent').focus();
+		$('#content').val('');
+		$('#content').focus();
 		return false;
 	}
 	else if ($('#name').val().trim() === "") {

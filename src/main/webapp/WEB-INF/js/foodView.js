@@ -2,11 +2,11 @@ function addData() {
 	var selectedRadios = document.querySelectorAll('input[name="foodName"]:checked');
 	var id = document.getElementsByName("id")[0].value;
   if (selectedRadios.length > 0) {
-    var foodNames = [];
-    var kcals = [];
-    var carbss = [];
-    var proteins = [];
-    var fats = [];
+	  var foodNames = [];
+	  var kcals = [];
+	  var carbss = [];
+	  var proteins = [];
+	  var fats = [];
     selectedRadios.forEach(function(selectedRadio) {
       var parentRow = selectedRadio.closest('tr');
       var foodName = parentRow.querySelector('td:nth-child(2)').innerHTML.trim();
@@ -36,17 +36,6 @@ function addData() {
     window.close(); // 팝업 창 닫기
     window.opener.refreshParent();
   }
-}
-
-window.onbeforeunload = function() {
-	var url = './popupClose'
-	window.location.href = url;
-}
-
-function popupClose() {
-	var url = './popupClose'
-	window.location.href = url;
-	window.close();
 }
 
 

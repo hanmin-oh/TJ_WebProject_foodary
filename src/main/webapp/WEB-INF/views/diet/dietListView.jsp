@@ -28,35 +28,6 @@
 <title>식단 목록</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../css/threeGrid.css"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<style type="text/css">
-	th {font-size: 20pt; text-align: center;}
-	th#sunday {
-		color: red;
-	}
-	th#saturday {
-		color: blue;
-	}
-	td {
-	    font-size: 15pt;
-		text-align: center;
-	}
-	td.sun {
-		color: red;
-	}
-	td.sat {
-		color: blue;
-	}
-	.button {
-		background: white;
-		border: 0;
-	}
-	button {
-		background: white;
-		border: 0;
-	}
-</style>
 </head>
 <body>
 <div class="container">
@@ -64,6 +35,7 @@
       <jsp:include page="./headerAfter.jsp"></jsp:include>
    </div>
    <div class="main" style="display: flex;">
+   
 <%
    request.setCharacterEncoding("UTF-8");
 %>
@@ -83,6 +55,7 @@
 		   year = date.getYear();
 		   month = date.getMonthValue();
 		   day = date.getDayOfMonth();
+		   
 		
 		   try {
 		      year = Integer.parseInt(request.getParameter("year"));
@@ -97,52 +70,13 @@
 		         month = 12;
 		      }
 		   }catch(NumberFormatException e) { }
-		 	%>
-	<div>
-		<table width="600" height="600" border="0" align="center" cellpadding="10" cellspacing="20" style="text-align: center;">
+		  %>
+		<div>
+		<table width="700" border="0" align="center" cellpadding="10" cellspacing="20" style="text-align: center;">
 		   <tr>
-			<th>
-				<c:if test="<%=month == 1%>">
-					<button type="button" 
-						onclick="location.href='dietListView?dietWriteDate=<%=year-1%>-12-01&id=${rvo.id}'"
-					>◀</button>
-				</c:if>
-				<c:if test="<%=month != 1%>">
-					<c:if test="<%=month <= 10%>">
-						<button type="button" 
-							onclick="location.href='dietListView?dietWriteDate=<%=year%>-0<%=month-1%>-01&id=${rvo.id}'"
-						>◀</button>
-					</c:if>
-				</c:if>				
-				<c:if test="<%=month > 10%>">
-					<button type="button" 
-						onclick="location.href='dietListView?dietWriteDate=<%=year%>-<%=month-1%>-01&id=${rvo.id}'"
-					>◀</button>
-				</c:if>
-			</th>					   
-	     	<th id="title" colspan="5">
-	        	<span style="background: #baffda; font-size: 35pt; font-weight: 900;"><%=year%>년 <%=month%>월</span>
-	     	</th>
-	     	<th>
-		    	<c:if test="<%=month == 12%>">
-					<button type="button" 
-						onclick="location.href='dietListView?dietWriteDate=<%=year+1%>-01-01&id=${rvo.id}'"
-					>▶</button>
-				</c:if>
-				<c:if test="<%=month != 12%>">
-					<c:if test="<%=month < 9%>">
-						<button type="button" 
-							onclick="location.href='dietListView?dietWriteDate=<%=year%>-0<%=month+1%>-01&id=${rvo.id}'"
-						>▶</button>
-					</c:if>
-					<c:if test="<%=month >= 9%>">
-						<button type="button" 
-							onclick="location.href='dietListView?dietWriteDate=<%=year%>-<%=month+1%>-01&id=${rvo.id}'"
-						>▶</button>
-					</c:if>
-				</c:if>				
-			</th>	  
-		      
+		      <th id="title" colspan="7">
+		         <span style="background: #fafcd9; font-size: 35pt; font-weight: 900;"><%=year%>년 <%=month%>월</span>
+		      </th>
 		   </tr>   
 		   <tr>
 		      <th id="sunday" style="color: red; font-size: 25pt;">일</th>
@@ -206,43 +140,42 @@
 		%>
 		   
 		   </tr>
-		   <tr style="height: 50px;"></tr>
 		   <!-- 년, 월을 선택된 년도와 달의 달력으로 한번에 넘어가게 한다. -->
 		   <tr>
-			<td id="choice" colspan="7" >
-			   <form action="?dietWriteDate=<%=year%>-<%=String.format("%02d", month)%>-<%=String.format("%02d", day)%>&id=${rvo.id}" method="post" onsubmit="navigateToSelectedMonth(event)">
-			         <select class="select" name="year" style="width:100px; height: 40px;">
-			<%
-			            for(int i=1900; i<=2100; i++) {
-			               if(calendar.get(Calendar.YEAR) == i) {
-			                  out.println("<option selected='selected'>" + i + "</option>");               
-			               }else {
-			                  out.println("<option>" + i + "</option>");                     
-			               }
-			            }
-			%>                  
-			         </select> 년&nbsp; &nbsp;
-			         <select class="select" name="month" style="width:100px; height: 40px;">
-			<%
-			            for(int i=1; i<=12; i++) {
-			               if(calendar.get(Calendar.MONTH) + 1 == i) {
-			                  out.println("<option selected='selected'>" + i + "</option>");   
-			               }else {
-			                  out.println("<option>" + i + "</option>");               
-			               }
-			            }
-			%>                     
-			         </select> 월&nbsp; &nbsp;
-			         <button class="select" type="submit" style="background: none; border: 0; cursor: pointer;">
-			         	<span style="background: lavender; font-size: 27pt; font-weight: 900;">달력 보기</span>
-			         </button>
-			      </form> 
-			     </td>
-			   </tr>
-			</table>
+		      <td id="choice" colspan="7" >
+		   <form action="?dietWriteDate=<%=year%>-<%=String.format("%02d", month)%>-<%=String.format("%02d", day)%>&id=${rvo.id}" method="post" onsubmit="navigateToSelectedMonth(event)">
+		         <select class="select" name="year" style="width:100px; height: 40px;">
+		<%
+		            for(int i=1900; i<=2100; i++) {
+		               if(calendar.get(Calendar.YEAR) == i) {
+		                  out.println("<option selected='selected'>" + i + "</option>");               
+		               }else {
+		                  out.println("<option>" + i + "</option>");                     
+		               }
+		            }
+		%>                  
+		         </select> 년&nbsp; &nbsp;
+		         <select class="select" name="month" style="width:100px; height: 40px;">
+		<%
+		            for(int i=1; i<=12; i++) {
+		               if(calendar.get(Calendar.MONTH) + 1 == i) {
+		                  out.println("<option selected='selected'>" + i + "</option>");   
+		               }else {
+		                  out.println("<option>" + i + "</option>");               
+		               }
+		            }
+		%>                     
+		         </select> 월&nbsp; &nbsp;
+		         <button class="select" type="submit" style="background: none; border: 0; cursor: pointer;">
+		         	<span style="background: lavender; font-size: 27pt; font-weight: 900;">달력 보기</span>
+		         </button>
+		      </form> 
+		     </td>
+		   </tr>
+		</table>
 	</div>
-	<div style="margin-left: 120px;">
-		  <div class="diet-table">
+	<div style="margin-left: 100px;">
+		   <div class="diet-table">
 		   <br>
 		      <span style="background: #fafcd9; font-size: 27pt; font-weight: 900;">${dietWriteDate} 식단 목록</span><br/><br/>
 		      
@@ -266,18 +199,14 @@
 				            </td>
 				         </tr>
 		               </c:forEach>
-	      		</table><br/><br/>
-	      			<div style="text-align: right;">
-		               <c:if test="${list.size() != 0}">
-			               	 	<button type="button" 
-				                     style="background: none; border: 0; 
-				                     cursor: pointer;"
-				                     onclick="location.href='dietViewAll?dietWriteDate=${dietWriteDate}&id=${rvo.id}'">
-				                     <span style="background: lavender; font-size: 27pt; font-weight: 900;">전체 보기</span>
-				               </button>
-			          	</c:if>
-			       	</div>
+	      		</table><br/> 
 	   		</div>
+	   		<button type="button" 
+                     style="background: none; border: 0; 
+                     cursor: pointer;"
+                     onclick="location.href='dietViewAll?dietWriteDate=${dietWriteDate}&id=${rvo.id}'">
+                     <span style="background: lavender; font-size: 27pt; font-weight: 900;">식단 보기</span>
+               </button>
 		</div>
 	</div>
    <div class="footer">

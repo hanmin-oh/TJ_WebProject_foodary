@@ -60,10 +60,9 @@ ${msg}
         	</a>
 		</div>
 	</header>
-<!-- 영양소 계산기 -->
-	<div id="calculator" class="alt" align="center" style="display: flex; text-align: center;">
-		<table width="600px" style="margin-left: 20%; margin-right: 20%;" cellspacing="0px" cellpadding="5">
-		<tr height="50px;"></tr>
+<!-- 메인 콘텐츠 -->
+	<div id="calculator" class="alt" align="center" style="display: flex; text-align: center; ">
+		<table width="600px" style="margin-left: 20%; margin-right: 20%" border="0" cellspacing="5px" cellpadding="10px">
 			<tr>
 				<th style="text-align: center;">
 					<span style="background: #fafcd9; font-size: 25pt;">

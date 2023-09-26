@@ -12,8 +12,6 @@
 <link rel="stylesheet" href="../css/threeGrid.css"/>
 <script type="text/javascript" src="../js/setting.js" defer="defer"></script>
 <script defer type="text/javascript" src="../js/FreeboardComment.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -21,19 +19,23 @@
 	   <jsp:include page="./headerAfter.jsp"></jsp:include>
 	</div>
 	<div class="main">
-		<table style="width: 1000px; margin-left: auto; margin-right: auto; margin-top: 10px; " class="table table-sm">
+		<table cellspacing="10" style="width: 700px; margin-left: auto; margin-right: auto; margin-top: 0px;">
+			<tr>
+				<th colspan="4" style="text-align: center;"><span style="background: #baffda; font-size: 40px;"><게시글 보기></span></th>
+			</tr>
+			<tr style="height: 30px;"></tr>
 			<tr style="font-weight: 800;">
-				<td style="width: 100px; text-align: center; background: #e0ffe9;">
-					<span style="font-size: 22pt;">No.</span>
+				<td style="width: 100px; text-align: center;">
+					<span style="background: lavender; font-size: 22pt;">No.</span>
 				</td>
-				<td style="width: 350px; text-align: center; background: #e0ffe9;">
-					<span style="font-size: 22pt;">이름</span>
+				<td style="width: 350px; text-align: center;">
+					<span style="background: lavender; font-size: 22pt;">이름</span>
 				</td>
-				<td style="width: 150px; text-align: center; background: #e0ffe9;">
-					<span style="font-size: 22pt;">작성일</span>
+				<td style="width: 150px; text-align: center;">
+					<span style="background: lavender; font-size: 22pt;">작성일</span>
 				</td>
-				<td style="width: 100px; text-align: center; background: #e0ffe9;">
-					<span style="font-size: 22pt;">조회수</span>
+				<td style="width: 100px; text-align: center;">
+					<span style="background: lavender; font-size: 22pt;">조회수</span>
 				</td>
 			</tr>
 			<tr>
@@ -56,10 +58,9 @@
 				</td>
 				<td align="center" style="font-size: 22pt;">${vo.hit}</td>
 			</tr>
+			<tr style="height: 20px;"></tr>
 			<tr>
-				<th style="text-align: center; vertical-align: middle; background: #fffdf5;">
-					<span style="font-size: 22pt;">제목</span>
-				</th>
+				<th><span style="background: lavender; font-size: 22pt;">제목</span></th>
 			 	<td colspan="3" style="font-size: 22pt;  margin-bottom: 20px;" align="center">
 					<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
 					<c:set var="subject" value="${fn:replace(subject, '>', '&gt;')}"/>
@@ -68,25 +69,19 @@
 			</tr>
 			<tr style="padding: 30px;"></tr>
 			<tr>
-				<th style="text-align: center; vertical-align: middle; background: #fffdf5;">
-					<span style="font-size: 22pt;">내용</span>
-				</th>
+				<th><span style="background: lavender; font-size: 22pt;">내용</span></th>
 				<td colspan="3" style="font-size: 22pt; padding: 10px;">
 					<c:set var="content" value="${fn:replace(vo.content, '<', '&lt;')}"/>
 					<c:set var="content" value="${fn:replace(content, '>', '&gt;')}"/>
 					<c:set var="content" value="${fn:replace(content, enter, '<br/>')}"/>
 					${content}<br/>
+					<c:if test="${not empty vo.picture}">
+						<img src="/upload/freeboard/${vo.picture}" style="max-width: 450px; max-height: 300px;">
+					</c:if>
 				</td>
 			</tr>
-			<c:if test="${not empty vo.picture}">
-				<tr>
-					<td align="center" colspan="4" style="text-align: center;">
-						<img src="../upload/freeboard/${vo.picture}" style="max-width: 450px; max-height: 300px;" />
-					</td>
-				</tr>
-			</c:if>
 			<tr class="table-secondary">
-				<td colspan="4" align="center" style="background: #f7f2ff;">
+				<td colspan="4" align="center">
 					<c:if test="${rvo.id eq vo.id}">
 					<button 
 						type="button" 
@@ -96,7 +91,7 @@
 					<button
 						type="button" 
 						style="background: none; border: 0; cursor: pointer;"
-						onclick="deleteOK()">
+						onclick="location.href='selectByIdx?idx=${vo.idx}&currentPage=${currentPage}&job=delete'">
 						<span style="background: #fafcd9; font-size: 25pt;; font-weight: 800;">삭제하기</span></button>&nbsp;&nbsp;&nbsp;
 					</c:if>
 					<button
@@ -108,49 +103,44 @@
 			</tr>
 		</table>
 	<br/>
-	<hr style="color: gray; width: 1000px; margin-left: auto; margin-right: auto;"/>
+	<hr style="color: red; width: 700px; margin-left: auto; margin-right: auto;"/>
 	<br/>
 	<!-- 댓글 폼 -->
 		<form action="commentOK" method="post" name="commentForm" onsubmit="return insertCheck()">
-			<table style="width: 700px; margin-left: auto; margin-right: auto; margin-top: 10px; " class="table table-sm">
+			<table cellpadding="5" cellspacing="5" style="width: 700px; margin-left: auto; margin-right: auto;">
 				<tr>
-					<th colspan="4" style="text-align: center;"><span style="background: #baffda; font-size: 40px;">댓글</span></th>
+					<th colspan="4" style="text-align: center;"><span style="background: #baffda; font-size: 40px;"><댓글 보기></span></th>
 				</tr>
 			
 				<!-- 이 줄은 원래 보이면 안되는 줄로 작업이 완료되면 화면에 표시되지 않게 한다. -->
 				<!-- <tr> -->
 				<tr style="display: none;">
 					<td colspan="4">
-						idx: <input id="idx" type="text" name="idx" value="${vo.idx}" size="1"/>
+						idx: <input type="text" name="idx" value="${vo.idx}" size="1"/>
 						gup: <input type="text" name="gup" value="${vo.idx}" size="1"/>
 						mode: <input type="text" name="mode" value="1" size="1"/>
-						currentPage: <input id="currentPage" type="text" name="currentPage" value="${currentPage}" size="1"/>
+						currentPage: <input type="text" name="currentPage" value="${currentPage}" size="1"/>
 						ip: <input type="text" name="ip" value="${pageContext.request.remoteAddr}"/>
 					</td>
 				</tr>
 				<tr style="padding: 20px;"></tr>
 				<tr style="margin-bottom: 20px; padding: 10px;">
-					<th style="background: #fffdf5; text-align: center; vertical-align: middle;">
-						<span style="font-size: 22pt;">이름: </span>
-					</th>
+					<th><span style="background: lavender; font-size: 22pt;">이름: </span></th>
 					<td style="width: 250px;">
 						<input id="name" type="text" name="name" value="${rvo.username}" readonly="readonly"
-							style="text-align: center; border: 0px; font-size: 22pt; "/>
+							style="text-align: center; border-bottom: 1px; border-left: 0; border-right: 0; border-top: 0; font-size: 22pt;"/>
 					</td>
 				</tr>
 				<tr></tr>
 				<input id="id" type="hidden" name="id" value="${rvo.id}"/>
 				<tr>
-					<th style="background: #fffdf5; text-align: center; vertical-align: middle;">
-						<span style="font-size: 22pt;">내용: </span>
-					</th>
+					<th><span style="background: lavender; font-size: 22pt;">내용: </span></th>
 					<td colspan="3" style="width: 600px;">
 						<textarea 
 							id="ccontent"
 							rows="3"
-							name="content"
-							style="resize: none; width: 95%; height: 70%; vertical-align: middle; padding: 10px; margin-left: 10px;
-					               border: 2px solid #956fd6; border-radius: 30px;"></textarea>
+							name="content" 
+							style="resize: none; width: 580px; padding: 5px;"></textarea>
 					</td>
 				</tr>
 				<tr style="margin-bottom: 20px;">
@@ -158,25 +148,32 @@
 						<button 
 							type="submit" 
 							style="background: none; border: 0; cursor: pointer;"
-							name="commentBtn"
-							>
-							<span id="commentBtnText" style="background: lavender; font-size: 25pt; font-weight: 800;">댓글저장</span>
+							name="commentBtn">
+							<span name="text" style="background: #fafcd9; font-size: 25pt; font-weight: 800;">댓글저장</span>
 						</button>&nbsp;&nbsp;&nbsp;
 						<button 
 							type="reset" 
 							style="background: none; border: 0; cursor: pointer;"
 							onclick="setting(0, 1, '댓글저장', '', '')">
-							<span style="background: lavender; font-size: 25pt; font-weight: 800;">다시쓰기</span>
+							<span style="background: #fafcd9; font-size: 25pt; font-weight: 800;">다시쓰기</span>
 						</button>
 					</td>
 				</tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
+				<tr style="padding: 20px; margin: 20px;"></tr>
 				<!-- 댓글을 출력한다. -->
 				<c:set var="comment" value="${freeboardCommentList.list}"></c:set>
 				
 				<!-- 댓글이 없는 경우 -->
 				<c:if test="${comment.size() == 0}">
 				<tr>
-					<td colspan="4" style="text-align: center; vertical-align: middle;">
+					<td colspan="4">
 						<marquee>아직 작성된 댓글이 없습니다ㅠㅡㅜ</marquee>
 					</td>
 				</tr>
@@ -186,10 +183,10 @@
 				<c:forEach var="co" items="${comment}">
 				<tr>
 					<td colspan="4">
-						<span style="background: lavender; font-weight: 600;">
+						<span style="background: lavender; font-weight: 600;">${co.idx}.
 						<c:set var="name" value="${fn:replace(co.name, '<', '&lt;')}"/>
 						<c:set var="name" value="${fn:replace(name, '>', '&gt;')}"/>
-						${name}&nbsp;
+						${name}
 						<fmt:formatDate value="${co.writeDate}" pattern="yyyy.MM.dd(E) HH:mm:ss"/></span>
 						<div align="right">
 							<!-- 글에 저장되어있는 정보와 현재 로그인중인 회원 정보가 일치하면 아래 버튼 다 나오고 다르면  -->
