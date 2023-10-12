@@ -30,19 +30,19 @@
 		    <div class="collapse navbar-collapse" id="navbarColor06">
 		      <ul class="navbar-nav me-auto">
 		        <li class="nav-item">
-		          <a class="nav-link" href="dietInsertView?id=${rvo.id}"
+		          <a class="nav-link" href="../diet/dietInsertView?id=${rvo.id}"
 		         style="font-size: 18pt;
 					color: black; 
 					text-decoration: none;"><span style="background: #fafcd9">Foodary 쓰기</span></a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}"
+		          <a class="nav-link" href="../diet/dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}"
 		          style="font-size: 18pt;
 					color: black; 
 					text-decoration: none;"><span style="background: #fafcd9">Foodary 보기</span></a>
 		        </li>
 		        <li class="nav-item">
-		          <a class="nav-link" href="../freeboard/listView"
+		          <a class="nav-link" href="listView"
 		          style="font-size: 18pt;
 					color: black; 
 					text-decoration: none;"><span style="background: #fafcd9">자유게시판</span></a>
@@ -56,7 +56,7 @@
 		          	 style="font-size: 18pt;
 					color: black; 
 					text-decoration: none;">
-		          <span style="background: lavender; font-size: 20pt;">${rvo.username}</span> 님
+		          	<span style="background: lavender; font-size: 20pt;">${rvo.username}</span> 님
 		          </a>
 		          <div class="dropdown-menu align-center">
 		            <a class="dropdown-item" href="../user/myPageOK"

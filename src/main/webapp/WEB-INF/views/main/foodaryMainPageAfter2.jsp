@@ -69,6 +69,17 @@
 				<jsp:include page="./mainFreeboardListAfter.jsp"/>
 			</div>
 		</div>
+		
+		<!-- 관리자 공지글 테스트 -->
+		<div style="width: 100%; height: auto;" align="center">
+			<div align="center">
+				<button  onclick="location.href='../admin/listView?id=${rvo.id}'" style="cursor: pointer; margin-left: 30px; background: none; border: 0;">
+		          <span class="mb-0" style="font-size: 50pt; font-weight: 900; background: #FFF08F;">관리자 공지글</span>&nbsp;&nbsp;
+		          <img src="../images/note3.png" style="width: 60px; height: 60px;"/>&nbsp;&nbsp;
+		        </button>
+			</div>
+		</div>
+		
 		<!-- 영상, 오메추 -->
 		<div id="slider-div">
 			<div style="text-align: center; background-image:url('../images/monun2.jpg'); height: 400px; vertical-align: middle; display: flex;">

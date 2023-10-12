@@ -18,11 +18,12 @@ public class FreeboardVO {
 	private String realFilePath;
 	private int sharediet_gup;
 	private String shareTag;
+	private String admin;
 	
 	public FreeboardVO() { }
 
 	public FreeboardVO(int idx, String subject, String content, Date writeDate, int hit, String name, String notice,
-			String picture, int commentCount, String id, String realFilePath, int sharediet_gup, String shareTag) {
+			String picture, int commentCount, String id, String realFilePath, int sharediet_gup, String shareTag, String admin) {
 		super();
 		this.idx = idx;
 		this.subject = subject;
@@ -37,6 +38,7 @@ public class FreeboardVO {
 		this.realFilePath = realFilePath;
 		this.sharediet_gup = sharediet_gup;
 		this.shareTag = shareTag;
+		this.admin = admin;
 	}
 
 	public int getIdx() {
@@ -141,6 +143,15 @@ public class FreeboardVO {
 
 	public void setShareTag(String shareTag) {
 		this.shareTag = shareTag;
+	}
+	
+	
+	public String getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(String admin) {
+		this.admin = admin;
 	}
 
 	@Override

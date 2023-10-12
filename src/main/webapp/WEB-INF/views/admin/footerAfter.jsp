@@ -25,17 +25,17 @@
 		<fmt:formatDate  value="${date}" pattern="yyyy-MM-dd" var="dietWriteDate"/>
 		<fmt:formatDate  value="${time}" pattern="HH:mm" var="dietWriteTime"/>
       <li class="nav-item">
-      	<a href="dietInsertView?id=${rvo.id}" class="nav-link px-2 text-body-secondary" style="color: black;">
+      	<a href="../diet/dietInsertView?id=${rvo.id}" class="nav-link px-2 text-body-secondary" style="color: black;">
       		Foodary 쓰기
       	</a>
       </li>
       <li class="nav-item">
-      	<a href="dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}" class="nav-link px-2 text-body-secondary" style="color: black;">
+      	<a href="../diet/dietListView?id=${rvo.id}&dietWriteDate=${dietWriteDate}" class="nav-link px-2 text-body-secondary" style="color: black;">
       		Foodary 보기
       	</a>
       </li>
       <li class="nav-item">
-      	<a href="../freeboard/listView" class="nav-link px-2 text-body-secondary" style="color: black;">
+      	<a href="listView" class="nav-link px-2 text-body-secondary" style="color: black;">
       		자유게시판
       	</a>
       </li>

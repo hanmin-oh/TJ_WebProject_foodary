@@ -296,7 +296,7 @@ public class FreeboardController {
   			FreeboardCommentList freeboardCommentList = ctx.getBean("freeboardCommentList", FreeboardCommentList.class);
   			freeboardCommentList.setList(mapper.selectCommentList(idx));
   			model.addAttribute("freeboardCommentList", freeboardCommentList);
-	      return "freeboard/contentView2";
+	      return "freeboard/contentView";
 	   }
 	   
 	   @RequestMapping("/freeboard/selectByIdx")

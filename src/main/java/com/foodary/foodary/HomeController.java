@@ -89,6 +89,6 @@ public class HomeController {
 		model.addAttribute("freeboardList", freeboardList);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("msg", request.getParameter("msg"));
-		return "main/foodaryMainPageAfter";
+		return "main/foodaryMainPageAfter2";
 	}
 }

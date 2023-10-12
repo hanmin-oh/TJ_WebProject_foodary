@@ -16,7 +16,7 @@
 		height: 30px;
 	}
 	th {
-		font-size: 10pt;
+		font-size: 15pt;
 		width: 30px;
 		text-align: center;
 	}
@@ -27,7 +27,7 @@
 		color: blue;
 	}
 	td {
-	    font-size: 10pt;
+	    font-size: 15pt;
 		text-align: center;
 	}
 	td.sun {
@@ -49,7 +49,6 @@
 <body>
 <%
 Calendar calendar = Calendar.getInstance();
-	String id = request.getParameter("id");
 	int year = calendar.get(Calendar.YEAR);
 	int month = calendar.get(Calendar.MONTH) + 1;
 	int hour = calendar.get(Calendar.HOUR);
@@ -69,15 +68,15 @@ Calendar calendar = Calendar.getInstance();
 		
 	}
 %>
-  <table width="290" align="center" cellpadding="5" cellspacing="2">
-	<tr>
+  <table width="450" height="300" align="center" cellpadding="5" cellspacing="5">
+	<tr style="text-align: center;">
 		<th>
 			<button type="button" 
 				onclick="location.href='foodaryMainPageAfter?year=<%=year%>&month=<%=month - 1%>'"
 			>◀</button>
 		</th>
-		<th id="title" colspan="5" style="font-size: 15pt;">
-			<%=year%>년 <%=month%>월
+		<th id="title" colspan="5">
+			<span style="font-size: 25pt; background: #d2c2ff;"><%=year%>년 <%=month%>월</span>
 		</th>
 		<th>
 			<button type="button" 
@@ -86,14 +85,14 @@ Calendar calendar = Calendar.getInstance();
 			</button>
 		</th>
 	</tr>
-	<tr>
-		<th id="sunday" style="font-size: 13pt;">일</th>
-		<th style="font-size: 13pt;">월</th>
-		<th style="font-size: 13pt;">화</th>
-		<th style="font-size: 13pt;">수</th>
-		<th style="font-size: 13pt;">목</th>
-		<th style="font-size: 13pt;">금</th>
-		<th id="saturday" style="font-size: 13pt;">토</th>
+	<tr style="text-align: center;">
+		<th id="sunday" style="font-size: 20pt;">일</th>
+		<th style="font-size: 20pt;">월</th>
+		<th style="font-size: 20pt;">화</th>
+		<th style="font-size: 20pt;">수</th>
+		<th style="font-size: 20pt;">목</th>
+		<th style="font-size: 20pt;">금</th>
+		<th id="saturday" style="font-size: 20pt;">토</th>
 	</tr>
 	<tr>
 	
@@ -105,20 +104,20 @@ Calendar calendar = Calendar.getInstance();
 		} else {
 			start = FoodaryCalendar.lastDay(year, month - 1) - week;
 		}
-		
+		String id = (String) session.getAttribute("id");
 		String dietWriteDate = year + "-" + String.format("%02d", month) + "-";
 		
 		/* 이전 달 */
 		for (int i=0; i<week; i++) {
 			if (i == 0) {
 				out.println("<td><a id='beforesun'" + 
-				"style='font-size: 11pt; text-decoration: none; cursor: pointer; color: black;'" +
+				"style='font-size: 15pt; text-decoration: none; cursor: pointer; color: black;'" +
 				"href='../diet/dietListView?dietWriteDate=" + year + "-" + String.format("%02d", (month == 1 ? 12 : month - 1)) + "-" +
 				String.format("%02d", ++start) + "&id=" + id + "'>"
 				+ (month == 1 ? 12 : month - 1) + "/" + start + "</a></td>");
 			} else {
 				out.println("<td><a class='before'" +
-				"style='font-size: 11pt; text-decoration: none; cursor: pointer; color: black;'" +
+				"style='font-size: 15pt; text-decoration: none; cursor: pointer; color: black;'" +
 				"href='../diet/dietListView?dietWriteDate="+ year + "-"  + String.format("%02d", (month == 1 ? 12 : month - 1)) + "-" + 
 				String.format("%02d", ++start) + "&id=" + id + "'>"
 				+ (month == 1 ? 12 : month - 1) + "/" + start + "</a></td>");
@@ -129,17 +128,17 @@ Calendar calendar = Calendar.getInstance();
 			switch (FoodaryCalendar.weekDay(year, month, i)) {
 			
 			case 0: 
-				out.println("<td><a class='sun' style='font-size: 13pt; font-weight: 800; text-decoration: none; cursor: pointer; color: black;'" +
+				out.println("<td><a class='sun' style='font-size: 15pt; font-weight: 800; text-decoration: none; cursor: pointer; color: black;'" +
 						"href='../diet/dietListView?dietWriteDate=" + dietWriteDate + String.format("%02d", i) + "&id=" + id +"'>"
 					+ i + "</a></td>");
 				break;
 			case 6: 
-				out.println("<td><a class='sat' style='font-size: 13pt; font-weight: 800; text-decoration: none; cursor: pointer; color: black;'" +
+				out.println("<td><a class='sat' style='font-size: 15pt; font-weight: 800; text-decoration: none; cursor: pointer; color: black;'" +
 						"href='../diet/dietListView?dietWriteDate=" + dietWriteDate + String.format("%02d", i) + "&id=" + id +"'>"
 					+ i + "</a></td>");
 				break;
 			default:
-				out.println("<td><a id='day' style='font-size: 13pt; font-weight: 800; text-decoration: none; cursor: pointer; color: black;'" +
+				out.println("<td><a id='day' style='font-size: 15pt; font-weight: 800; text-decoration: none; cursor: pointer; color: black;'" +
 						"href='../diet/dietListView?dietWriteDate=" + dietWriteDate + String.format("%02d", i) + "&id=" + id +"'>"
 					+ i + "</a></td>");
 			break;
@@ -161,12 +160,12 @@ Calendar calendar = Calendar.getInstance();
 			start = 1;
 			for (int i = week; i <= 6; i++) {
 				if (i==6) {
-					out.println("<td><a id='aftersat' style='font-size: 11pt; text-decoration: none; cursor: pointer; color: black;'"
+					out.println("<td><a id='aftersat' style='font-size: 15pt; text-decoration: none; cursor: pointer; color: black;'"
 						+ "href='../diet/dietListView?dietWriteDate=" + year + "-" + String.format("%02d", (month == 12 ? 1 : month + 1)) +
 						"-" + String.format("%02d", start) + "&id=" + id +"'>"
 						+ (month == 12 ? 1 : month + 1) + "/" + start++ + "</a></td>");
 				} else {
-					out.println("<td><a class='after' style='font-size: 11pt; text-decoration: none; cursor: pointer; color: black;'"
+					out.println("<td><a class='after' style='font-size: 15pt; text-decoration: none; cursor: pointer; color: black;'"
 						+ "href='../diet/dietListView?dietWriteDate=" + year + "-" + String.format("%02d", (month == 12 ? 1 : month + 1)) + 
 						"-" + String.format("%02d", start) + "&id=" + id +"'>"
 						+ (month == 12 ? 1 : month + 1) + "/" + start++ + "</a></td>");

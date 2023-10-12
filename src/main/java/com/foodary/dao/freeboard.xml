@@ -76,7 +76,7 @@
 	
 	<!-- 메인글에 공유한 식단을 불러온다. -->
 	<select id="selectShareDiet" parameterType="int" resultType="svo">
-		select * from sharediet where gup = #{sharediet_gup}
+		select * from sharediet where gup = #{sharediet_gup} order by dietTime
 	</select>
 	
 </mapper>

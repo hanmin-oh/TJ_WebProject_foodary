@@ -6,11 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>자유게시판</title>
+<title>관리자 공지글 게시판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <link rel="stylesheet" href="../css/threeGrid.css"/>
-<script type="text/javascript" src="../js/Freenotice.js" defer="defer"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -24,7 +23,7 @@ ${result}
 		<table style="width: 1000px; margin-left: auto; margin-right: auto;" class="table table-hover table-sm">
 			<tr style="background: lavender; height: 30px;">
 				<th colspan="5" style="text-align: center;">
-					<span style="font-size: 40px; background: #fcf9dc;">< 자유게시판 ></span>
+					<span style="font-size: 40px; background: #fcf9dc;">< 관리자 공지글 ></span>
 				</th>
 			</tr>
 			<tr style="background: #fffdf5;">
@@ -39,6 +38,8 @@ ${result}
 				<td style="width: 150px; text-align: center;"><span style="background: lavender;">작성일</span></td>
 				<td style="width: 70px; text-align: center;"><span style="background: lavender;">조회수</span></td>
 			</tr>
+			<tr></tr>
+			<tr></tr>
 			<!-- 오늘 날짜를 기억하는 Date 클래스 객체를 useBean으로 만든다. -->
 			<jsp:useBean id="date" class="java.util.Date"/>
 			<!-- 공지글을 출력한다. -->
@@ -90,19 +91,9 @@ ${result}
 			
 			<!-- 메인글이 있으면 메인글의 개수만큼 반복하며 글 제목을 출력한다. -->
 			<c:if test="${list.size() != 0}">
-			<c:set var="lastNO" value="${num % 10}" />
-			<c:set var="i" value="${totalPage - currentPage}" />
-			<c:set var="no" value="${i * 10 + lastNO}" />
 			<c:forEach var="vo" items="${list}">
 			<tr>
-				<c:if test="${vo.shareTag == 'YES'}">
-					<td align="center" style="width: 70px;">[식단공유]${no}</td>
-				</c:if>
-				<c:if test="${vo.shareTag == 'NO'}">
-					<td align="center" style="width: 70px;">${no}</td>
-				</c:if>
-					<c:set var="no" value="${no - 1}" />
-				
+				<td align="center" style="width: 70px;">${vo.idx}</td>
 				<td style="width: 610px; text-align: center;">
 					<!-- 제목에 태그를 적용할 수 없게 한다. -->
 					<c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
@@ -110,7 +101,7 @@ ${result}
 					
 					<!-- 제목에 하이퍼링크를 걸어준다. -->
 					<!-- 하이퍼링크를 클릭하면 조회수를 증가시키고 클릭한 메인글의 내용을 표시한다. -->
-					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}&sharediet_gup=${vo.sharediet_gup}" style="color: black; text-decoration: none;">
+					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}" style="color: black; text-decoration: none;">
 						${subject}(${vo.commentCount})
 					</a>
 					
@@ -144,7 +135,6 @@ ${result}
 				</td>
 				<td align="center" style="width: 70px;">${vo.hit}</td>
 			</tr>
-				
 			</c:forEach>
 			</c:if>
 			<tr></tr><tr></tr><tr></tr>
@@ -229,22 +219,7 @@ ${result}
 						>▶▶</button>
 					</c:if>
 				</td>
-				<!-- admin 계정으로 로그인했을 때 -->
-				<c:if test="${rvo.id eq 'admin'}">
-				<td width="150">
-					<button type="button" onclick="location.href='insertNotice'" style="background: none; border:0;">
-						<span style="background:#f29886; font-size: 30px; font-weight: 800; cursor: pointer;">공지글 쓰기</span>
-					</button>
-				</td>
-				</c:if>
-				<c:if test="${rvo.id ne 'admin'}">
-				<td width="150">
-					<button id="notice" type="button" onclick="location.href='insertNotice'" style="background: none; border:0;">
-						<span style="background:#f29886; font-size: 30px; font-weight: 800; cursor: pointer;">공지글 쓰기</span>
-					</button>
-				</td>
-				</c:if>
-				<td align="right" width="100">
+				<td align="right">
 					<button type="button" onclick="location.href='insert'" style="background: none; border:0;">
 						<span style="background:#baffda; font-size: 30px; font-weight: 800; cursor: pointer;">글쓰기</span>
 					</button>
