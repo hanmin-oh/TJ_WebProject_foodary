@@ -35,7 +35,16 @@ function foodPlus(index) {
 }
 
 function photoView(event) {
-	   $('#output').attr('src', URL.createObjectURL(event.target.files[0]));
+	$('#output').attr('src', URL.createObjectURL(event.target.files[0]));
+}
+
+function photoDelete() {
+	var confirmation = confirm("사진을 삭제하시겠습니까?");
+	if (confirmation) {
+		$('#output').remove();
+		$('#deleteBtn').remove();
+		$('#dietPictuer').val('no picture');
+	}
 }
 
 //idx활용, index활용 수정 완료!! 
@@ -178,4 +187,15 @@ function dietUpdateUserFood(idx , index) {
       $('#age').val('');
       $('#height').val('');
    }
+}
+ 
+function insertCheck() {
+	if ($('#memo').val().trim() === "") {
+		alert('메모를 입력해주세요')
+		$('#memo').val('');
+		$('#memo').focus();
+		return false;
+	} else {
+		return true;
+	}
 }

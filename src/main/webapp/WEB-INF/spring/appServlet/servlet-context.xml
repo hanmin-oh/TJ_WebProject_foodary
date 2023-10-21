@@ -17,6 +17,7 @@
 	<resources mapping="/images/**" location="/WEB-INF/images/" /> <!-- image -->
 	<resources mapping="/upload/diet/**" location="/WEB-INF/upload/diet/" /> <!-- diet image -->
 	<resources mapping="/upload/freeboard/**" location="/WEB-INF/upload/freeboard/" /> <!-- freeboard image -->
+	<resources mapping="/upload/admin/**" location="/WEB-INF/upload/admin/" /> <!-- admin image -->
 	<resources mapping="/css/**" location="/WEB-INF/css/" /> <!-- css -->
 	<resources mapping="/js/**" location="/WEB-INF/js/" /> <!-- javascript -->
 

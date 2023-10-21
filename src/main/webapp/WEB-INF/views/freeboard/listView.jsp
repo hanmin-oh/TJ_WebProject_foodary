@@ -39,6 +39,8 @@ ${result}
 				<td style="width: 150px; text-align: center;"><span style="background: lavender;">작성일</span></td>
 				<td style="width: 70px; text-align: center;"><span style="background: lavender;">조회수</span></td>
 			</tr>
+			<tr></tr>
+			<tr></tr>
 			<!-- 오늘 날짜를 기억하는 Date 클래스 객체를 useBean으로 만든다. -->
 			<jsp:useBean id="date" class="java.util.Date"/>
 			<!-- 공지글을 출력한다. -->
@@ -94,13 +96,8 @@ ${result}
 			<c:set var="i" value="${totalPage - currentPage}" />
 			<c:set var="no" value="${i * 10 + lastNO}" />
 			<c:forEach var="vo" items="${list}">
-			<tr>
-				<c:if test="${vo.shareTag == 'YES'}">
-					<td align="center" style="width: 70px;">[식단공유]${no}</td>
-				</c:if>
-				<c:if test="${vo.shareTag == 'NO'}">
+				<tr>
 					<td align="center" style="width: 70px;">${no}</td>
-				</c:if>
 					<c:set var="no" value="${no - 1}" />
 				
 				<td style="width: 610px; text-align: center;">
@@ -110,7 +107,7 @@ ${result}
 					
 					<!-- 제목에 하이퍼링크를 걸어준다. -->
 					<!-- 하이퍼링크를 클릭하면 조회수를 증가시키고 클릭한 메인글의 내용을 표시한다. -->
-					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}&sharediet_gup=${vo.sharediet_gup}" style="color: black; text-decoration: none;">
+					<a href="increment?idx=${vo.idx}&currentPage=${currentPage}" style="color: black; text-decoration: none;">
 						${subject}(${vo.commentCount})
 					</a>
 					

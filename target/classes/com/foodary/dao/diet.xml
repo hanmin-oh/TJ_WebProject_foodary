@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.foodary.dao.DietDAO">
-	
+
 	<insert id="insertDiet" parameterType="dvo">
 		insert into diet (idx, dietMemo, dietWriteDate, dietWriteTime, id, dietPicture) 
 		values (diet_idx_seq.nextval, #{dietMemo}, #{dietWriteDate}, #{dietWriteTime}, #{id}, #{dietPicture})
 	</insert>
-	   
-   	<update id="setDietGup" parameterType="int">
-		update diet set gup = #{idx} where gup = 0
-	</update>
-
-	<select id="getIdx" parameterType="int" resultType="dvo">
-		select * from diet where gup = 0
-	</select>
 	
 	<select id="selectDiet" parameterType="java.util.HashMap" resultType="dvo">
 		select * from diet where dietWriteDate = #{dietWriteDate} and dietWriteTime = #{dietWriteTime} and id = #{id}
+	</select>
+
+	<select id="getIdx" parameterType="int" resultType="dvo">
+		select * from diet where gup = 0
 	</select>
 	
 	<select id="updateDeleteFoodDiet" parameterType="int" resultType="dvo">
@@ -53,18 +49,21 @@
    		delete from diet where idx = #{idx}
    </delete>
    
-
    <!-- dietListView.jsp에서 날짜, 시간 띄우기 -->
    <select id="selectDateTime" parameterType="String" resultType="dvo">
       select dietWriteDate, dietWriteTime from diet where dietWriteDate = #{dietWriteDate} order by dietWriteTime
    </select>
    
 	<update id="updateDiet" parameterType="dvo">
-      update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime}
+      update diet set dietMemo = #{dietMemo}, dietWriteDate = #{dietWriteDate}, dietWriteTime = #{dietWriteTime}, dietPicture = #{dietPicture}
          where idx = #{idx}
    </update>
+   
+   	<update id="setDietGup" parameterType="int">
+		update diet set gup = #{idx} where gup = 0
+	</update>
 	
-	   <!-- dietView에 해당 dietWriteDate의 모든 dietWriteTime의 gup 값 불러오기 -->
+	<!-- dietView에 해당 dietWriteDate의 모든 dietWriteTime의 gup 값 불러오기 -->
    <select id="selectGup" parameterType="java.util.HashMap" resultType="dvo">
       select id, gup from diet where dietWriteDate = #{dietWriteDate} and id = #{id} order by dietWriteTime
    </select>
@@ -73,47 +72,10 @@
       select * from diet where gup = #{gup}
    </select>
    
-   	<select id="dateGetDiet" parameterType="String" resultType="dvo">
-		select * from diet where dietWriteDate = #{dietWriteDate}
-	</select>
-   
-   	<select id="getFoodListGup" parameterType="java.util.Arrays" resultType="uvo">
-   	 SELECT * FROM userfood WHERE gup IN
-	  <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-	    #{item}
-	  </foreach>
-  	</select>
-  	
-	<insert id="insertShare" parameterType="svo">
-    		INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime, gup) VALUES
-	        (shareDiet_idx_seq.nextval, #{foodName}, #{kcal}, #{carbs}, #{protein}, #{fat}, #{dietDate}, #{dietTime}, 0)
-	</insert> 
-	
-<!-- 	<insert id="insertShare" parameterType="svo">
-	    <selectKey keyProperty="idx" resultType="int" order="BEFORE">
-	        SELECT shareDiet_idx_seq.nextval FROM DUAL
-	    </selectKey>
-	  		  INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime)
-	    <foreach collection="list" item="list" separator="UNION">
-	       SELECT (#{idx}, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime}) FROM dual
-	    </foreach>
-	</insert> -->
-<!-- 	<update id="insertShare" parameterType="java.util.HashMap">
-		 <selectKey keyProperty="idx" resultType="int" order="BEFORE">
-	        SELECT shareDiet_idx_seq.nextval FROM DUAL
-	    </selectKey>
-	    <foreach collection="shareDietVOList" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
-	        INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime) VALUES
-	        (#{item.idx}, #{item.foodName}, #{item.kcal}, #{item.carbs}, #{item.protein}, #{item.fat}, #{item.dietDate}, #{item.dietTime})
-	    </foreach>
-	</update> -->
-	
-<!-- 	 <insert id="insertShare" parameterType="svo">
-	    <foreach collection="list" item="list">
-  		   INSERT INTO shareDiet (idx, foodName, kcal, carbs, protein, fat, dietdate, diettime)
-	       value (shareDiet_idx_seq.nextval, #{list.foodName}, #{list.kcal}, #{list.carbs}, #{list.protein}, #{list.fat}, #{list.dietDate}, #{list.dietTime}) 
-	    </foreach>
-	</insert> -->
+   	<!-- gup = 0인 userfood 데이터를 삭제한다. -->
+	<delete id="deleteGupZero">
+		delete from userfood where gup = 0
+	</delete>
    
 </mapper>
 

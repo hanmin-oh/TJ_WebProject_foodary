@@ -14,6 +14,9 @@ public class FreeboardCommentVO {
 	public int getIdx() {
 		return idx;
 	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
 	public int getGup() {
 		return gup;
 	}
@@ -44,15 +47,11 @@ public class FreeboardCommentVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
-	}
+	
 	@Override
 	public String toString() {
 		return "FreeboardCommentVO [idx=" + idx + ", gup=" + gup + ", name=" + name + ", content=" + content
 				+ ", writeDate=" + writeDate + ", id=" + id + "]";
 	}
-	
-	
 	
 }

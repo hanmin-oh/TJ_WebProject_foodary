@@ -16,14 +16,12 @@ public class FreeboardVO {
 	private int commentCount; // 댓글의 개수
 	private String id;
 	private String realFilePath;
-	private int sharediet_gup;
-	private String shareTag;
 	private String admin;
 	
 	public FreeboardVO() { }
 
 	public FreeboardVO(int idx, String subject, String content, Date writeDate, int hit, String name, String notice,
-			String picture, int commentCount, String id, String realFilePath, int sharediet_gup, String shareTag, String admin) {
+			String picture, int commentCount, String id, String realFilePath, String admin) {
 		super();
 		this.idx = idx;
 		this.subject = subject;
@@ -36,8 +34,6 @@ public class FreeboardVO {
 		this.commentCount = commentCount;
 		this.id = id;
 		this.realFilePath = realFilePath;
-		this.sharediet_gup = sharediet_gup;
-		this.shareTag = shareTag;
 		this.admin = admin;
 	}
 
@@ -129,23 +125,6 @@ public class FreeboardVO {
 		this.realFilePath = realFilePath;
 	}
 
-	public int getSharediet_gup() {
-		return sharediet_gup;
-	}
-
-	public void setSharediet_gup(int sharediet_gup) {
-		this.sharediet_gup = sharediet_gup;
-	}
-
-	public String getShareTag() {
-		return shareTag;
-	}
-
-	public void setShareTag(String shareTag) {
-		this.shareTag = shareTag;
-	}
-	
-	
 	public String getAdmin() {
 		return admin;
 	}
@@ -158,8 +137,7 @@ public class FreeboardVO {
 	public String toString() {
 		return "FreeboardVO [idx=" + idx + ", subject=" + subject + ", content=" + content + ", writeDate=" + writeDate
 				+ ", hit=" + hit + ", name=" + name + ", notice=" + notice + ", picture=" + picture + ", commentCount="
-				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + ", sharediet_gup=" + sharediet_gup
-				+ ", shareTag=" + shareTag + "]";
+				+ commentCount + ", id=" + id + ", realFilePath=" + realFilePath + ", admin=" + admin + "]";
 	}
 	
 	

@@ -12,6 +12,5 @@
 		<typeAlias type="com.foodary.vo.FoodVO" alias="fvo"/>
 		<typeAlias type="com.foodary.vo.UserFoodVO" alias="uvo"/>
 		<typeAlias type="com.foodary.foodary.Param" alias="pvo"/>
-		<typeAlias type="com.foodary.vo.ShareDietVO" alias="svo"/>
 	</typeAliases>
 </configuration>

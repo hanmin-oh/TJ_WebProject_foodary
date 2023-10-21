@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.foodary.dao.DietDAO">
 
+	<insert id="userFoodInsert" parameterType="uvo">
+		insert into userfood (idx, gup, foodName, kcal, carbs, protein, fat, id) 
+		values (userfood_idx_seq.nextval, #{gup}, #{foodName}, #{kcal}, #{carbs}, #{protein}, #{fat}, #{id})
+	</insert>
+	
+	<select id="userFoodList" parameterType="int" resultType="uvo">
+		select * from userfood where gup = 0 order by IDX desc
+	</select>
+
 	<select id="foodSelectCount" resultType="int">
 		select count(*) from food
 	</select>
@@ -32,19 +41,14 @@
 		]]>
 	</select>
 	
-	<insert id="userFoodInsert" parameterType="uvo">
-		insert into userfood (idx, gup, foodName, kcal, carbs, protein, fat, id) 
-		values (userfood_idx_seq.nextval, #{gup}, #{foodName}, #{kcal}, #{carbs}, #{protein}, #{fat}, #{id})
-	</insert>
-	
-	<select id="userFoodList" resultType="uvo">
-		select * from userfood where gup = 0 order by IDX desc
-	</select> 
-	
 	<update id="updateUserFood" parameterType="uvo">
 		update userfood set foodName = #{foodName}, kcal = #{kcal}, carbs = #{carbs}, protein = #{protein}, fat = #{fat} where idx = #{idx}
 	</update>
-
+	
+	<delete id="deleteUserFood" parameterType="int">
+		delete from userfood where idx = #{idx}
+	</delete>
+	
 	<update id="setUserFoodGup" parameterType="int">
 		update userfood set gup = #{idx} where gup = 0
 	</update>
@@ -65,15 +69,11 @@
 	<delete id="diteDeleteUserFood" parameterType="int">
 		delete from userfood where idx = #{idx}
 	</delete>
-		
-	<delete id="deleteUserFood" parameterType="int">
-		delete from userfood where idx = #{idx}
-	</delete>
 	
 	<delete id="deleteDietUserFood" parameterType="int">
 		delete from userfood where gup = #{gup}
 	</delete>
-	
+		
 </mapper>
 
 

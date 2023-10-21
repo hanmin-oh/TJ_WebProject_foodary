@@ -3,12 +3,9 @@ package com.foodary.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.foodary.vo.DietVO;
 import com.foodary.vo.FreeboardCommentList;
 import com.foodary.vo.FreeboardCommentVO;
 import com.foodary.vo.FreeboardVO;
-import com.foodary.vo.ShareDietVO;
-import com.foodary.vo.UserFoodVO;
 
 public interface FreeboardDAO {
 
@@ -38,23 +35,13 @@ public interface FreeboardDAO {
 
 	ArrayList<FreeboardCommentVO> selectCommentList(int idx);
 
-	ArrayList<UserFoodVO> selectUserFood(int gup);
+	void deleteGupZero();
 
-	FreeboardVO getIdx();
+	void freeboardNoticeInsert(FreeboardVO freeboardVO); // admin 공지글 저장
 
-	void setFreeboardGup(int idx);
+	ArrayList<FreeboardVO> freeboardSelectAdminNotice(); // admin 공지글 불러오기
 
-	void setShareDietGup(int idx);
-
-	ArrayList<ShareDietVO> selectShareDiet(int sharediet_gup);
-
-	ArrayList<ShareDietVO> setShareFree(int i);
-
-	void shareTagYes();
-
-
-
-
+	void freeboardOrderByIdx(); // 전체 글번호 정리?
 	
 
 
