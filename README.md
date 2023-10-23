@@ -1,7 +1,7 @@
 # 식단과 간단한 일기를 기록하는 웹사이트 프로젝트입니다.
 
 ## 개발 환경
- - Languages : Java, JSP, JavsScript
+ - Languages : Java, JavsScript
  - FrameWork : Spring, Mybatis
  - Server : apache-tomcat9.0
  - DBMS : Oracle
