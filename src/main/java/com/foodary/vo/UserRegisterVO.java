@@ -1,4 +1,4 @@
-package com.foodary.vo;
+ package com.foodary.vo;
 
 public class UserRegisterVO {
 	

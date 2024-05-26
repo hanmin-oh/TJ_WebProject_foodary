@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,9 +18,10 @@ import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.foodary.dao.DietDAO;
 import com.foodary.vo.DietList;
@@ -141,35 +143,40 @@ public class DietController {
 	         hmap.put("startNo", foodList.getStartNo());
 	         hmap.put("endNo", foodList.getEndNo());
 	         foodList.setList(mapper.foodSelectList(hmap));
+	         System.out.println("foodList : " + foodList);
 	      
 		
 	         model.addAttribute("foodList", foodList);
-		      model.addAttribute("currentPage", currentPage);
+		     model.addAttribute("currentPage", currentPage);
 		return "diet/foodListView";
 	}
 
 
-	@RequestMapping(value = {"/diet/userFoodInsert", "/diet/updateUserFoodInsert"})
-	public String userFoodInsert(HttpServletRequest request, Model model, UserFoodVO userFoodVO, DietVO dvo) {
+	@RequestMapping(value = "/diet/userFoodInsert" , method = {RequestMethod.POST})
+//	@ResponseBody
+	public String userFoodInsert(@RequestParam Map<String, Object> dto, HttpServletRequest request, Model model) {
 		logger.info("userFoodInsert 메소드 실행");
 		DietDAO mapper = sqlSession.getMapper(DietDAO.class);
-		logger.info("{}", userFoodVO);
+//		logger.info("userFoodVO : {}", userFoodVO);
+		logger.info("dto : " +  dto);
 		HttpSession session = request.getSession();
 		
 		String id = (String) session.getAttribute("id");
-		logger.info("{}", id);
+		logger.info("세션의 id : {}", id);
 		
 		if (request.getServletPath().equals("/diet/userFoodInsert")) {
-		 	mapper.userFoodInsert(userFoodVO);
+			logger.info("세션의 dto : {}", dto);
+//		 	mapper.userFoodInsert(userFoodVO);
 		 	session.removeAttribute("foodName");
 	    	return "redirect:dietInsertView";
+//	    	return "test";
 	    } else if(request.getServletPath().equals("/diet/updateUserFoodInsert")){
 	    	System.out.println("======= updateUserFoodInsert");
-	    	int gup = dvo.getGup();
-	    	System.out.println(gup);
-	    	userFoodVO.setGup(gup);
-	    	session.removeAttribute("foodName");
-	    	mapper.userFoodInsert(userFoodVO);
+//	    	int gup = dvo.getGup();
+//	    	System.out.println(gup);
+//	    	userFoodVO.setGup(gup);
+//	    	session.removeAttribute("foodName");
+//	    	mapper.userFoodInsert(userFoodVO);
 	    	return null;
 	    } else {
 	    	return null;
@@ -319,6 +326,8 @@ public class DietController {
             hmap.put("dietWriteTime", dietWriteTime);
             hmap.put("id", id);
             DietVO dvo = mapper.selectDiet(hmap);
+            
+            ModelAndView mav = null;
             
             userFoodList.setList(mapper.userFoodListGup(dvo.getGup()));
             logger.info("userFoodList: {}", userFoodList);

@@ -147,7 +147,7 @@ ${result}
 			<tr></tr><tr></tr><tr></tr>
 			<!-- 페이지 이동 버튼 -->
 			<tr style="background: #fffdf5;">
-				<td colspan="4" align="center">
+				<td colspan="3" align="center">
 					<!-- 처음으로 -->
 					<c:if test="${freeboardList.currentPage > 1}">
 						<button 

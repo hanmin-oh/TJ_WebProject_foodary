@@ -205,7 +205,7 @@
 		            <span style="background: lavender; font-size: 25pt;">시간:</span> &nbsp;&nbsp;&nbsp;
 		            <input
 		             	type="time"
-		             	id="dietWriteDate"
+		             	id="dietWriteTime"
 		             	name="dietWriteTime"
 		             	data-placeholder="시간 선택"
 		             	required
@@ -221,8 +221,7 @@
 	        </tr>
 	      	<tr>
 	        	<td colspan="2">
-	            	<textarea 
-		               id="memo"
+	            	<textarea id="memo"
 		               rows="5" 
 		               name="dietMemo" 
 		               style="resize: none; width: 70%; height: 75%; vertical-align: middle; padding: 10px;

@@ -33,7 +33,7 @@
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
 		<beans:property name="username" value="hanmin"/>
-		<beans:property name="password" value="0707"/>
+		<beans:property name="password" value="0515"/>
 	</beans:bean>
 	
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

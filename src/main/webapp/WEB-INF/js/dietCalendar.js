@@ -2,7 +2,6 @@ function dayCheck() {
 //	let year = getyear;
 /*	let month = getmonth; */
 	
-	console.log('테스트');
 	var url = 'selectDiet.jsp';
 	location.href = url;
 //	$('#sendYear').val() = year;
@@ -11,7 +10,8 @@ function dayCheck() {
 };
 	//submit
 function navigateToSelectedMonth(event) {
-    event.preventDefault(); // 기본 form submit 동작 막기
+    
+//	event.preventDefault(); // 기본 form submit 동작 막기
 
     var form = event.target; // form 요소 가져오기
     var year = form.elements.year.value; // 선택한 년도 값 가져오기
@@ -25,7 +25,7 @@ function navigateToSelectedMonth(event) {
 	var url = 'dietListView.jsp?dietWriteDate=' + year + '-' + month + '-01';
 
     // URL로 이동
-  window.location.href = url;
+	window.location.href = url;
   }
 
 

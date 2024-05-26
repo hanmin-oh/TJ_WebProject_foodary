@@ -42,7 +42,7 @@ public class AdminController {
 	@RequestMapping("/admin/insertOK")
 	public String insertOK(MultipartHttpServletRequest request, Model model, FreeboardVO freeboardVO,
 			UserRegisterVO userRegisterVO) {
-		logger.info("insertOK() 메소드 실행 -  커맨드 객체 사용");
+//		logger.info("insertOK() 메소드 실행 -  커맨드 객체 사용");
 		FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);
 		/*
 		String rootUploadDir = "C:\\k_digital\\Spring_pj_foodary\\workspace\\foodary\\src\\main\\webapp\\WEB-INF\\upload\\admin"; // 업로드 될 파일 경로
@@ -91,7 +91,7 @@ public class AdminController {
 		} catch (NumberFormatException e) {
 		}
 		*/
-		logger.info("admin의 listView() 메소드");
+//		logger.info("admin의 listView() 메소드");
 
 		/*
 		FreeboardDAO mapper = sqlSession.getMapper(FreeboardDAO.class);

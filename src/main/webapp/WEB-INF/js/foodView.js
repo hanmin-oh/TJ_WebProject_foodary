@@ -1,7 +1,10 @@
 function addData() {
+	console.log("addData 메소드 실행");
 	var selectedRadios = document.querySelectorAll('input[name="foodName"]:checked');
 	var id = document.getElementsByName("id")[0].value;
   if (selectedRadios.length > 0) {
+    let food = [];
+
     var foodNames = [];
     var kcals = [];
     var carbss = [];
@@ -9,6 +12,7 @@ function addData() {
     var fats = [];
     selectedRadios.forEach(function(selectedRadio) {
       var parentRow = selectedRadio.closest('tr');
+
       var foodName = parentRow.querySelector('td:nth-child(2)').innerHTML.trim();
       var kcal = parentRow.querySelector('td:nth-child(3)').innerHTML.trim();
       var carbs = parentRow.querySelector('td:nth-child(4)').innerHTML.trim();
@@ -18,23 +22,63 @@ function addData() {
       foodNames.push(foodName);
       kcals.push(kcal);
       carbss.push(carbs);
-      proteins.push(protein);
-      fats.push(fat);
+       proteins.push(protein);
+        fats.push(fat);
     });
-    
-  for (var i = 0; i < foodNames.length; i++) {
-	  var url = './userFoodInsert?' +
-      'foodName=' + foodNames[i] +
-      '&kcal=' + kcals[i] +
-      '&carbs=' + carbss[i] +
-      '&protein=' + proteins[i] +
-      '&fat=' + fats[i] + 
-      '&id=' + id;
-    	window.location.href = url;
-  }
-//  부모 창으로 데이터 전송 후 팝업 창 닫기
-    window.close(); // 팝업 창 닫기
-    window.opener.refreshParent();
+      var foods = {}
+    var foodList = [];
+    console.log('foodList type : ' , typeof foodList);
+    console.log('foodNames type : ' , typeof foodNames);
+    console.log('kcals type : ' , typeof kcals);
+    console.log('carbss type : ' , typeof carbss);
+    console.log('fats type : ' , typeof fats);
+    for(var j = 0 ; j < foods.length ; j++) {
+    	
+    }
+    foodList = [
+    	{
+    		"foodName" : foodNames[0],
+    		"kcal" : parseFloat(kcals[0]),
+    		"carbs" : parseFloat(carbss[0]),
+    		"protein" : parseFloat(proteins[0]),
+    		"fat" : parseFloat(fats[0])
+    	}
+    ]
+    console.log('foodList : ' ,foodList);
+  // for (var i = 0; i < foodNames.length; i++) {
+	//   var url = './userFoodInsert?' +
+  //     'foodName=' + foodNames[i] +
+  //     '&kcal=' + kcals[i] +
+  //     '&carbs=' + carbss[i] +
+  //     '&protein=' + proteins[i] +
+  //     '&fat=' + fats[i] +
+  //     '&id=' + id;
+  // }
+  $.ajax({
+	 url : './userFoodInsert',
+	 type : "POST",
+	 dataType : "json",
+	 async: false ,
+	 contentType:  "application/json; charset:UTF-8",
+	 data: JSON.stringify(foodList),
+     error : function(){
+
+     }, success: function (data, textstatus) {
+          alert('success')
+          console.log('success');
+      }, beforeSend: function () {
+
+      }, complete: function () {
+          console.log('complete의 foodNames : ' , foodNames);
+          console.log('complete의 foodList : ' , foodList);
+          console.log('complete의 type : ' , typeof foodList);
+          console.log('complete');
+      }
+  });
+//  window.location.href = url;
+////  부모 창으로 데이터 전송 후 팝업 창 닫기
+//    window.close(); // 팝업 창 닫기
+//    window.opener.refreshParent();
   }
 }
 
